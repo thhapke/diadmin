@@ -74,8 +74,12 @@ def get_all_policies() :
         logging.info(f"Get details: {p['id']}")
         pd_list.append(json.loads(get_policy_get(p['id'],format='json')))
 
+    # add integer id to each policy for easing later analysis
+
     return pd_list
 
+# depracted
+# id is created when downloading the policy details
 num_id = -1
 def gen_id() :
     global num_id
@@ -294,9 +298,11 @@ if __name__ == '__main__':
 
     #### LOGIN
     di_login(params)
+    
+    run_policy_network()
 
-    result, resources = get_policy_resources()
-    pprint(resources)
+    #result, resources = get_policy_resources()
+    #pprint(resources)
 
 
 

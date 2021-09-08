@@ -78,4 +78,6 @@ nx.draw_networkx_nodes(g, pos, policy_path_nodes, node_color="dimgrey", **option
 nx.draw_networkx_edges(g,pos,policy_path_edges, width=0.1,edge_color='blue')
 nx.draw_networkx_edges(g,pos,root_path_edges, width=0.1,edge_color='red')
 
-plt.show()
+plt.savefig('policy_network.png')
+
+print
