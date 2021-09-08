@@ -1,0 +1,2695 @@
+[
+    {
+        "id": "34d54dcc_e672_48bb_93f0_72fd05c077a2_conn_config",
+        "description": "Write access to all connection configurations bound to tenant pm-dev1",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "system",
+        "changedBy": "system",
+        "createdAt": "2021-08-20T11:55:11.217Z",
+        "changedAt": "2021-08-20T11:55:11.217Z",
+        "predelivered": false,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "connectionConfiguration",
+                "contentData": {
+                    "activity": "write",
+                    "technicalName": "*"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 1
+    },
+    {
+        "id": "HANA_QM",
+        "description": "HANA QM Connection",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "thorstenh",
+        "changedBy": "thorstenh",
+        "createdAt": "2021-04-26T08:28:08.875Z",
+        "changedAt": "2021-04-26T08:59:28.907Z",
+        "predelivered": false,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "connection",
+                "contentData": {
+                    "activity": "write",
+                    "connectionId": "HANA_QM"
+                }
+            },
+            {
+                "resourceType": "connection",
+                "contentData": {
+                    "activity": "read",
+                    "connectionId": "HANA_QM"
+                }
+            },
+            {
+                "resourceType": "connectionContent",
+                "contentData": {
+                    "activity": "manage",
+                    "connectionId": "HANA_QM"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 2
+    },
+    {
+        "id": "Rules_Dashboard",
+        "description": "Ability to create rule dashboard",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "axels",
+        "changedBy": "axels",
+        "createdAt": "2021-06-16T17:28:55.093Z",
+        "changedAt": "2021-06-16T17:28:55.093Z",
+        "predelivered": false,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "app.datahub-app-data.qualityDashboard",
+                "contentData": {
+                    "activity": "manage"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 3
+    },
+    {
+        "id": "app.datahub-app-core.connectionCredentialsUnmasked",
+        "description": "Selected connection credentials (user names, etc) are fully displayed",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "",
+        "changedBy": "system",
+        "createdAt": "2021-03-30T14:38:22.884Z",
+        "changedAt": "2021-07-17T11:02:53.931Z",
+        "predelivered": false,
+        "ownerApplication": "datahub-app-core",
+        "resources": [
+            {
+                "resourceType": "app.datahub-app-core.connectionCredentials",
+                "contentData": {
+                    "activity": "showUnmasked"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 4
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "description": "Metadata Explorer Administrator",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "system",
+        "changedBy": "system",
+        "createdAt": "2021-05-21T11:19:45.895Z",
+        "changedAt": "2021-07-17T11:02:54.117Z",
+        "predelivered": false,
+        "ownerApplication": "datahub-app-data",
+        "resources": [
+            {
+                "resourceType": "app.datahub-app-data.profile",
+                "contentData": {
+                    "activity": "execute"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.qualityRulebook",
+                "contentData": {
+                    "activity": "execute"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.system",
+                "contentData": {
+                    "activity": "admin"
+                }
+            }
+        ],
+        "policyReferences": [
+            {
+                "id": "app.datahub-app-data.metadataUser"
+            }
+        ],
+        "inheritedResources": [
+            {
+                "policyId": "app.datahub-app-data.metadataUser",
+                "resources": [
+                    {
+                        "resourceType": "app.datahub-app-data.catalog",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.glossary",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.profile",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.tagHierarchy",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    }
+                ]
+            }
+        ],
+        "num_id": 5
+    },
+    {
+        "id": "app.datahub-app-data.businessUser",
+        "description": "Metadata Explorer Business User",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "system",
+        "changedBy": "system",
+        "createdAt": "2021-05-21T11:19:45.861Z",
+        "changedAt": "2021-07-17T11:02:54.072Z",
+        "predelivered": false,
+        "ownerApplication": "datahub-app-data",
+        "resources": [
+            {
+                "resourceType": "app.datahub-app-data.catalog",
+                "contentData": {
+                    "activity": "annotate"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.qualityDashboard",
+                "contentData": {
+                    "activity": "read"
+                }
+            }
+        ],
+        "policyReferences": [
+            {
+                "id": "app.datahub-app-data.metadataUser"
+            }
+        ],
+        "inheritedResources": [
+            {
+                "policyId": "app.datahub-app-data.metadataUser",
+                "resources": [
+                    {
+                        "resourceType": "app.datahub-app-data.catalog",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.glossary",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.profile",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.tagHierarchy",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    }
+                ]
+            }
+        ],
+        "num_id": 6
+    },
+    {
+        "id": "app.datahub-app-data.dataSteward",
+        "description": "Metadata Explorer Data Steward",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "system",
+        "changedBy": "system",
+        "createdAt": "2021-05-21T11:19:45.866Z",
+        "changedAt": "2021-07-17T11:02:54.078Z",
+        "predelivered": false,
+        "ownerApplication": "datahub-app-data",
+        "resources": [
+            {
+                "resourceType": "app.datahub-app-data.catalog",
+                "contentData": {
+                    "activity": "manage"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.glossary",
+                "contentData": {
+                    "activity": "read"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.glossary",
+                "contentData": {
+                    "activity": "manage"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.glossary",
+                "contentData": {
+                    "activity": "admin"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.profile",
+                "contentData": {
+                    "activity": "manage"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.profile",
+                "contentData": {
+                    "activity": "execute"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.qualityRule",
+                "contentData": {
+                    "activity": "read"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.qualityRule",
+                "contentData": {
+                    "activity": "manage"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.qualityRulebook",
+                "contentData": {
+                    "activity": "read"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.qualityRulebook",
+                "contentData": {
+                    "activity": "manage"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.qualityRulebook",
+                "contentData": {
+                    "activity": "execute"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.tagHierarchy",
+                "contentData": {
+                    "activity": "admin"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.tagHierarchy",
+                "contentData": {
+                    "activity": "manage"
+                }
+            }
+        ],
+        "policyReferences": [
+            {
+                "id": "app.datahub-app-data.businessUser"
+            }
+        ],
+        "inheritedResources": [
+            {
+                "policyId": "app.datahub-app-data.businessUser",
+                "resources": [
+                    {
+                        "resourceType": "app.datahub-app-data.catalog",
+                        "contentData": {
+                            "activity": "annotate"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.qualityDashboard",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "app.datahub-app-data.metadataUser",
+                "resources": [
+                    {
+                        "resourceType": "app.datahub-app-data.catalog",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.glossary",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.profile",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.tagHierarchy",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    }
+                ]
+            }
+        ],
+        "num_id": 7
+    },
+    {
+        "id": "app.datahub-app-data.metadataUser",
+        "description": "Metadata Explorer User",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "system",
+        "changedBy": "system",
+        "createdAt": "2021-05-21T11:19:45.856Z",
+        "changedAt": "2021-07-17T11:02:54.065Z",
+        "predelivered": false,
+        "ownerApplication": "datahub-app-data",
+        "resources": [
+            {
+                "resourceType": "app.datahub-app-data.catalog",
+                "contentData": {
+                    "activity": "read"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.glossary",
+                "contentData": {
+                    "activity": "read"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.profile",
+                "contentData": {
+                    "activity": "read"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.tagHierarchy",
+                "contentData": {
+                    "activity": "read"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 8
+    },
+    {
+        "id": "app.datahub-app-data.preparationUser",
+        "description": "Data Preparation User",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "system",
+        "changedBy": "system",
+        "createdAt": "2021-05-21T11:19:45.887Z",
+        "changedAt": "2021-07-17T11:02:54.108Z",
+        "predelivered": false,
+        "ownerApplication": "datahub-app-data",
+        "resources": [
+            {
+                "resourceType": "app.datahub-app-data.preparation",
+                "contentData": {
+                    "activity": "execute"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.preparation",
+                "contentData": {
+                    "activity": "read"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.preparation",
+                "contentData": {
+                    "activity": "manage"
+                }
+            }
+        ],
+        "policyReferences": [
+            {
+                "id": "app.datahub-app-data.metadataUser"
+            }
+        ],
+        "inheritedResources": [
+            {
+                "policyId": "app.datahub-app-data.metadataUser",
+                "resources": [
+                    {
+                        "resourceType": "app.datahub-app-data.catalog",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.glossary",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.profile",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.tagHierarchy",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    }
+                ]
+            }
+        ],
+        "num_id": 9
+    },
+    {
+        "id": "app.datahub-app-data.publisher",
+        "description": "Metadata Explorer Publisher",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "system",
+        "changedBy": "system",
+        "createdAt": "2021-05-21T11:19:45.88Z",
+        "changedAt": "2021-07-17T11:02:54.097Z",
+        "predelivered": false,
+        "ownerApplication": "datahub-app-data",
+        "resources": [
+            {
+                "resourceType": "app.datahub-app-data.publication",
+                "contentData": {
+                    "activity": "execute"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.publication",
+                "contentData": {
+                    "activity": "read"
+                }
+            },
+            {
+                "resourceType": "app.datahub-app-data.publication",
+                "contentData": {
+                    "activity": "manage"
+                }
+            }
+        ],
+        "policyReferences": [
+            {
+                "id": "app.datahub-app-data.businessUser"
+            }
+        ],
+        "inheritedResources": [
+            {
+                "policyId": "app.datahub-app-data.businessUser",
+                "resources": [
+                    {
+                        "resourceType": "app.datahub-app-data.catalog",
+                        "contentData": {
+                            "activity": "annotate"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.qualityDashboard",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "app.datahub-app-data.metadataUser",
+                "resources": [
+                    {
+                        "resourceType": "app.datahub-app-data.catalog",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.glossary",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.profile",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    },
+                    {
+                        "resourceType": "app.datahub-app-data.tagHierarchy",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    }
+                ]
+            }
+        ],
+        "num_id": 10
+    },
+    {
+        "id": "connection_S4_Test",
+        "description": "Test",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "daniel",
+        "changedBy": "daniel",
+        "createdAt": "2021-06-01T16:25:22.066Z",
+        "changedAt": "2021-06-01T16:31:23.835Z",
+        "predelivered": false,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-connection"
+                }
+            },
+            {
+                "resourceType": "connection",
+                "contentData": {
+                    "activity": "read",
+                    "connectionId": "S4*"
+                }
+            }
+        ],
+        "policyReferences": [
+            {
+                "id": "sap.dh.shared.start"
+            },
+            {
+                "id": "sap.dh.systemAccess"
+            },
+            {
+                "id": "sap.dh.connectionMgtStart"
+            },
+            {
+                "id": "sap.dh.datahubAppLaunchpad.start"
+            },
+            {
+                "id": "sap.dh.datahubAppTask.start"
+            }
+        ],
+        "inheritedResources": [
+            {
+                "policyId": "sap.dh.connectionMgtStart",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-connection"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.datahubAppLaunchpad.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-launchpad"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.datahubAppTask.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-task"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.shared.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "shared"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.systemAccess",
+                "resources": [
+                    {
+                        "resourceType": "systemManagement",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    }
+                ]
+            }
+        ],
+        "num_id": 11
+    },
+    {
+        "id": "monitor",
+        "description": "",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "daniel",
+        "changedBy": "daniel",
+        "createdAt": "2021-07-01T10:53:20.278Z",
+        "changedAt": "2021-07-01T10:59:38.74Z",
+        "predelivered": false,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-logging"
+                }
+            },
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "metrics-explorer"
+                }
+            }
+        ],
+        "policyReferences": [
+            {
+                "id": "sap.dh.systemAccess"
+            }
+        ],
+        "inheritedResources": [
+            {
+                "policyId": "sap.dh.systemAccess",
+                "resources": [
+                    {
+                        "resourceType": "systemManagement",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    }
+                ]
+            }
+        ],
+        "num_id": 12
+    },
+    {
+        "id": "sap.dh.admin",
+        "description": "Administrate tenant. Combines access to user, policy, application management, and to connection management for the tenant.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [],
+        "policyReferences": [
+            {
+                "id": "sap.dh.applicationAllStart"
+            },
+            {
+                "id": "sap.dh.certificate.manage"
+            },
+            {
+                "id": "sap.dh.connectionsAllRead"
+            },
+            {
+                "id": "sap.dh.connectionsAllWrite"
+            },
+            {
+                "id": "sap.dh.stopAppsForOtherUsers"
+            },
+            {
+                "id": "sap.dh.systemAccess"
+            },
+            {
+                "id": "sap.dh.systemMgtWrite"
+            }
+        ],
+        "inheritedResources": [
+            {
+                "policyId": "sap.dh.applicationAllStart",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "**"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.certificate.manage",
+                "resources": [
+                    {
+                        "resourceType": "certificate",
+                        "contentData": {
+                            "activity": "manage"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.connectionsAllRead",
+                "resources": [
+                    {
+                        "resourceType": "connection",
+                        "contentData": {
+                            "activity": "read",
+                            "connectionId": "*"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.connectionsAllWrite",
+                "resources": [
+                    {
+                        "resourceType": "connection",
+                        "contentData": {
+                            "activity": "write",
+                            "connectionId": "*"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.stopAppsForOtherUsers",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "stop",
+                            "canStopForUser": "**",
+                            "name": "**"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.systemAccess",
+                "resources": [
+                    {
+                        "resourceType": "systemManagement",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.systemMgtWrite",
+                "resources": [
+                    {
+                        "resourceType": "systemManagement",
+                        "contentData": {
+                            "activity": "write"
+                        }
+                    }
+                ]
+            }
+        ],
+        "num_id": 13
+    },
+    {
+        "id": "sap.dh.applicationAllStart",
+        "description": "Allows to start all applications in the tenant. Overrides any other start policies.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "**"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 14
+    },
+    {
+        "id": "sap.dh.automl.start",
+        "description": "Start AutoML",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "automl"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 15
+    },
+    {
+        "id": "sap.dh.axinoService.start",
+        "description": "Start Axino",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "axino-service"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 16
+    },
+    {
+        "id": "sap.dh.certificate.manage",
+        "description": "Manage server certificates (uploading, deleting)",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "certificate",
+                "contentData": {
+                    "activity": "manage"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 17
+    },
+    {
+        "id": "sap.dh.connectionContentAllManage",
+        "description": "Access content of all connections in the tenant in Metadata Explorer.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "connectionContent",
+                "contentData": {
+                    "activity": "manage",
+                    "connectionId": "*"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 18
+    },
+    {
+        "id": "sap.dh.connectionContentOwnerManage",
+        "description": "Access content of the user's own connections in Metadata Explorer.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "connectionContent",
+                "contentData": {
+                    "activity": "ownerManage",
+                    "connectionId": "*"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 19
+    },
+    {
+        "id": "sap.dh.connectionCredentialsUnmasked",
+        "description": "Selected connection credential fields like user names are fully displayed.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "connectionCredential",
+                "contentData": {
+                    "activity": "showUnmasked"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 20
+    },
+    {
+        "id": "sap.dh.connectionMgtStart",
+        "description": "Start Connection Management",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-connection"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 21
+    },
+    {
+        "id": "sap.dh.connectionsAllRead",
+        "description": "Read access to all connection definitions in the tenant.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "connection",
+                "contentData": {
+                    "activity": "read",
+                    "connectionId": "*"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 22
+    },
+    {
+        "id": "sap.dh.connectionsAllWrite",
+        "description": "Write access to all connection definitions in the tenant.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "connection",
+                "contentData": {
+                    "activity": "write",
+                    "connectionId": "*"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 23
+    },
+    {
+        "id": "sap.dh.connectionsOwnerRead",
+        "description": "Read access to the user's own connection definitions.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "connection",
+                "contentData": {
+                    "activity": "ownerRead",
+                    "connectionId": "*"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 24
+    },
+    {
+        "id": "sap.dh.connectionsOwnerWrite",
+        "description": "Write access to the user's own connection definitions.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "connection",
+                "contentData": {
+                    "activity": "ownerWrite",
+                    "connectionId": "*"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 25
+    },
+    {
+        "id": "sap.dh.dataHubFlowAgent.start",
+        "description": "Start Flowagent",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "data-hub-flow-agent"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 26
+    },
+    {
+        "id": "sap.dh.datahubAppAuditlog.start",
+        "description": "Start Audit Log Viewer",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-auditlog"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 27
+    },
+    {
+        "id": "sap.dh.datahubAppCore.start",
+        "description": "Start Core Application",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-core"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 28
+    },
+    {
+        "id": "sap.dh.datahubAppDaemon.start",
+        "description": "Start Data App Daemon",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-daemon"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 29
+    },
+    {
+        "id": "sap.dh.datahubAppData.start",
+        "description": "Start Data Application",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-data"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 30
+    },
+    {
+        "id": "sap.dh.datahubAppDatabase.start",
+        "description": "Start Data Intelligence App DB",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-database"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 31
+    },
+    {
+        "id": "sap.dh.datahubAppDex.start",
+        "description": "Start Customer Data Export",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-dex"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 32
+    },
+    {
+        "id": "sap.dh.datahubAppLaunchpad.start",
+        "description": "Start Launchpad",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-launchpad"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 33
+    },
+    {
+        "id": "sap.dh.datahubAppLogging.start",
+        "description": "Start Monitoring",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-logging"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 34
+    },
+    {
+        "id": "sap.dh.datahubAppPolicy.start",
+        "description": "Start Policy Management",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-policy"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 35
+    },
+    {
+        "id": "sap.dh.datahubAppPreparation.start",
+        "description": "Start Data Preparation",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-preparation"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 36
+    },
+    {
+        "id": "sap.dh.datahubAppScheduler.start",
+        "description": "Start Scheduler",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-scheduler"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 37
+    },
+    {
+        "id": "sap.dh.datahubAppSystemManagement.start",
+        "description": "Start System Management",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-system-management"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 38
+    },
+    {
+        "id": "sap.dh.datahubAppTask.start",
+        "description": "Start Task Application",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-task"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 39
+    },
+    {
+        "id": "sap.dh.developer",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [],
+        "policyReferences": [
+            {
+                "id": "sap.dh.connectionMgtStart"
+            },
+            {
+                "id": "sap.dh.connectionsAllRead"
+            },
+            {
+                "id": "sap.dh.datahubAppLogging.start"
+            },
+            {
+                "id": "sap.dh.modelerStart"
+            },
+            {
+                "id": "sap.dh.modelerUI.start"
+            },
+            {
+                "id": "sap.dh.voraTools.start"
+            }
+        ],
+        "inheritedResources": [
+            {
+                "policyId": "sap.dh.connectionMgtStart",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-connection"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.connectionsAllRead",
+                "resources": [
+                    {
+                        "resourceType": "connection",
+                        "contentData": {
+                            "activity": "read",
+                            "connectionId": "*"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.datahubAppLogging.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-logging"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.modelerStart",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "pipeline-modeler"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.modelerUI.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "modeler-ui"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.voraTools.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "vora-tools"
+                        }
+                    }
+                ]
+            }
+        ],
+        "num_id": 40
+    },
+    {
+        "id": "sap.dh.dspGitServer.start",
+        "description": "Start Git Server",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "dsp-git-server"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 41
+    },
+    {
+        "id": "sap.dh.jupyter.start",
+        "description": "Start Jupyter Lab",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "jupyter"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 42
+    },
+    {
+        "id": "sap.dh.licenseManager.start",
+        "description": "Start License Management",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "license-manager"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 43
+    },
+    {
+        "id": "sap.dh.member",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [],
+        "policyReferences": [
+            {
+                "id": "sap.dh.axinoService.start"
+            },
+            {
+                "id": "sap.dh.connectionsOwnerRead"
+            },
+            {
+                "id": "sap.dh.metricsExplorer.start"
+            },
+            {
+                "id": "sap.dh.mlTracking.start"
+            },
+            {
+                "id": "sap.dh.resourceplanService.start"
+            },
+            {
+                "id": "sap.dh.mlDmApi.start"
+            },
+            {
+                "id": "sap.dh.trainingService.start"
+            },
+            {
+                "id": "sap.dh.automl.start"
+            },
+            {
+                "id": "sap.dh.datahubAppData.start"
+            },
+            {
+                "id": "sap.dh.datahubAppLaunchpad.start"
+            },
+            {
+                "id": "sap.dh.datahubAppSystemManagement.start"
+            },
+            {
+                "id": "sap.dh.shared.start"
+            },
+            {
+                "id": "sap.dh.datahubAppTask.start"
+            },
+            {
+                "id": "sap.dh.jupyter.start"
+            },
+            {
+                "id": "sap.dh.voraadapter.start"
+            },
+            {
+                "id": "sap.dh.connectionMgtStart"
+            },
+            {
+                "id": "sap.dh.datahubAppDaemon.start"
+            },
+            {
+                "id": "sap.dh.datahubAppDatabase.start"
+            },
+            {
+                "id": "sap.dh.mlDeploymentApi.start"
+            },
+            {
+                "id": "sap.dh.mlDmApp.start"
+            },
+            {
+                "id": "sap.dh.connectionContentOwnerManage"
+            },
+            {
+                "id": "sap.dh.dspGitServer.start"
+            },
+            {
+                "id": "sap.dh.mlApi.start"
+            },
+            {
+                "id": "sap.dh.systemAccess"
+            },
+            {
+                "id": "sap.dh.dataHubFlowAgent.start"
+            },
+            {
+                "id": "sap.dh.datahubAppCore.start"
+            },
+            {
+                "id": "sap.dh.connectionsOwnerWrite"
+            },
+            {
+                "id": "sap.dh.datahubAppScheduler.start"
+            },
+            {
+                "id": "sap.dh.mlApiImporter.start"
+            },
+            {
+                "id": "sap.dh.mlScenarioManager.start"
+            }
+        ],
+        "inheritedResources": [
+            {
+                "policyId": "sap.dh.automl.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "automl"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.axinoService.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "axino-service"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.connectionContentOwnerManage",
+                "resources": [
+                    {
+                        "resourceType": "connectionContent",
+                        "contentData": {
+                            "activity": "ownerManage",
+                            "connectionId": "*"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.connectionMgtStart",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-connection"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.connectionsOwnerRead",
+                "resources": [
+                    {
+                        "resourceType": "connection",
+                        "contentData": {
+                            "activity": "ownerRead",
+                            "connectionId": "*"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.connectionsOwnerWrite",
+                "resources": [
+                    {
+                        "resourceType": "connection",
+                        "contentData": {
+                            "activity": "ownerWrite",
+                            "connectionId": "*"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.dataHubFlowAgent.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "data-hub-flow-agent"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.datahubAppCore.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-core"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.datahubAppDaemon.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-daemon"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.datahubAppData.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-data"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.datahubAppDatabase.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-database"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.datahubAppLaunchpad.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-launchpad"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.datahubAppScheduler.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-scheduler"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.datahubAppSystemManagement.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-system-management"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.datahubAppTask.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "datahub-app-task"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.dspGitServer.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "dsp-git-server"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.jupyter.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "jupyter"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.metricsExplorer.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "metrics-explorer"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.mlApi.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "ml-api"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.mlApiImporter.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "ml-api-importer"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.mlDeploymentApi.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "ml-deployment-api"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.mlDmApi.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "ml-dm-api"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.mlDmApp.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "ml-dm-app"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.mlScenarioManager.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "ml-scenario-manager"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.mlTracking.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "ml-tracking"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.resourceplanService.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "resourceplan-service"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.shared.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "shared"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.systemAccess",
+                "resources": [
+                    {
+                        "resourceType": "systemManagement",
+                        "contentData": {
+                            "activity": "read"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.trainingService.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "training-service"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.voraadapter.start",
+                "resources": [
+                    {
+                        "resourceType": "application",
+                        "contentData": {
+                            "activity": "start",
+                            "name": "voraadapter"
+                        }
+                    }
+                ]
+            }
+        ],
+        "num_id": 44
+    },
+    {
+        "id": "sap.dh.metadata",
+        "description": "DEPRECATED. Use app.datahub-app-data.fullAccess instead. Working with Metadata Explorer. Allows to start the Metadata Explorer and to manage connections. For some role in the Metadata Explorer, permission to start the Pipeline Modeler might also be needed.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": true,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [],
+        "policyReferences": [
+            {
+                "id": "sap.dh.connectionContentAllManage"
+            },
+            {
+                "id": "sap.dh.connectionsAllRead"
+            }
+        ],
+        "inheritedResources": [
+            {
+                "policyId": "sap.dh.connectionContentAllManage",
+                "resources": [
+                    {
+                        "resourceType": "connectionContent",
+                        "contentData": {
+                            "activity": "manage",
+                            "connectionId": "*"
+                        }
+                    }
+                ]
+            },
+            {
+                "policyId": "sap.dh.connectionsAllRead",
+                "resources": [
+                    {
+                        "resourceType": "connection",
+                        "contentData": {
+                            "activity": "read",
+                            "connectionId": "*"
+                        }
+                    }
+                ]
+            }
+        ],
+        "num_id": 45
+    },
+    {
+        "id": "sap.dh.metadataStart",
+        "description": "DEPRECATED. app.datahub-app-data.fullAccess is a close replacement. Start Metadata Explorer",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "datahub-app-metadata"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 46
+    },
+    {
+        "id": "sap.dh.metricsExplorer.start",
+        "description": "Start Metrics Explorer",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "metrics-explorer"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 47
+    },
+    {
+        "id": "sap.dh.mlApi.start",
+        "description": "Start ML API",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "ml-api"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 48
+    },
+    {
+        "id": "sap.dh.mlApiImporter.start",
+        "description": "Start ML API Importer",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "ml-api-importer"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 49
+    },
+    {
+        "id": "sap.dh.mlDeploymentApi.start",
+        "description": "Start ML Deployment API",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "ml-deployment-api"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 50
+    },
+    {
+        "id": "sap.dh.mlDmApi.start",
+        "description": "Start ML DM API",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "ml-dm-api"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 51
+    },
+    {
+        "id": "sap.dh.mlDmApp.start",
+        "description": "Start ML Data Manager",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "ml-dm-app"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 52
+    },
+    {
+        "id": "sap.dh.mlScenarioManager.start",
+        "description": "Start ML Scenario Manager",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "ml-scenario-manager"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 53
+    },
+    {
+        "id": "sap.dh.mlTracking.start",
+        "description": "Start ML Tracking API",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "ml-tracking"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 54
+    },
+    {
+        "id": "sap.dh.modelerStart",
+        "description": "Start Pipeline Modeler",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "pipeline-modeler"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 55
+    },
+    {
+        "id": "sap.dh.modelerUI.start",
+        "description": "Start the Pipeline Modeler UI",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "modeler-ui"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 56
+    },
+    {
+        "id": "sap.dh.resourceplanService.start",
+        "description": "Start Resource Plan Service",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "resourceplan-service"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 57
+    },
+    {
+        "id": "sap.dh.shared.start",
+        "description": "Start Shared",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "shared"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 58
+    },
+    {
+        "id": "sap.dh.stopAppsForOtherUsers",
+        "description": "Stop application instances started by any other user. Allows a user to stop even applications owned by an admin.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "stop",
+                    "canStopForUser": "**",
+                    "name": "**"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 59
+    },
+    {
+        "id": "sap.dh.systemAccess",
+        "description": "Basic access to cluster",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "systemManagement",
+                "contentData": {
+                    "activity": "read"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 60
+    },
+    {
+        "id": "sap.dh.systemMgtWrite",
+        "description": "Access the system management and policy management. This policy is nested in the sap.dh.admin policy and provides most permissions. vSystem APIs grant full tenant-wide access to users with this policy.",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "systemManagement",
+                "contentData": {
+                    "activity": "write"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 61
+    },
+    {
+        "id": "sap.dh.trainingService.start",
+        "description": "Start Training Service",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "training-service"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 62
+    },
+    {
+        "id": "sap.dh.voraTools.start",
+        "description": "Start Vora Tools",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "vora-tools"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 63
+    },
+    {
+        "id": "sap.dh.voraadapter.start",
+        "description": "Start voraadapter",
+        "tenant": "pm-dev1",
+        "enabled": true,
+        "exposed": false,
+        "createdBy": "SAP",
+        "changedBy": "SAP",
+        "createdAt": "1970-01-01T00:00:00Z",
+        "changedAt": "1970-01-01T00:00:00Z",
+        "predelivered": true,
+        "ownerApplication": "",
+        "resources": [
+            {
+                "resourceType": "application",
+                "contentData": {
+                    "activity": "start",
+                    "name": "voraadapter"
+                }
+            }
+        ],
+        "policyReferences": [],
+        "inheritedResources": [],
+        "num_id": 64
+    }
+]

@@ -1,0 +1,1106 @@
+[
+    {
+        "id": "34d54dcc_e672_48bb_93f0_72fd05c077a2_conn_config",
+        "tenant": "pm-dev1",
+        "user": "admin",
+        "description": "Write access to all connection configurations bound to tenant pm-dev1",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "34d54dcc_e672_48bb_93f0_72fd05c077a2_conn_config",
+        "tenant": "pm-dev1",
+        "user": "axels",
+        "description": "Write access to all connection configurations bound to tenant pm-dev1",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "34d54dcc_e672_48bb_93f0_72fd05c077a2_conn_config",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Write access to all connection configurations bound to tenant pm-dev1",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "34d54dcc_e672_48bb_93f0_72fd05c077a2_conn_config",
+        "tenant": "pm-dev1",
+        "user": "daniel",
+        "description": "Write access to all connection configurations bound to tenant pm-dev1",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "34d54dcc_e672_48bb_93f0_72fd05c077a2_conn_config",
+        "tenant": "pm-dev1",
+        "user": "jens",
+        "description": "Write access to all connection configurations bound to tenant pm-dev1",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "34d54dcc_e672_48bb_93f0_72fd05c077a2_conn_config",
+        "tenant": "pm-dev1",
+        "user": "martin",
+        "description": "Write access to all connection configurations bound to tenant pm-dev1",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "34d54dcc_e672_48bb_93f0_72fd05c077a2_conn_config",
+        "tenant": "pm-dev1",
+        "user": "thorstenh",
+        "description": "Write access to all connection configurations bound to tenant pm-dev1",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "HANA_QM",
+        "tenant": "pm-dev1",
+        "user": "admin",
+        "description": "HANA QM Connection",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "HANA_QM",
+        "tenant": "pm-dev1",
+        "user": "thorstenh",
+        "description": "HANA QM Connection",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "Rules_Dashboard",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Ability to create rule dashboard",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-core.connectionCredentialsUnmasked",
+        "tenant": "pm-dev1",
+        "user": "admin",
+        "description": "Selected connection credentials (user names, etc) are fully displayed",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-core.connectionCredentialsUnmasked",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Selected connection credentials (user names, etc) are fully displayed",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "abdulm",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "axels",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "brittat",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "christians",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "christiant",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "daisy",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "daniel",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "dimitriv",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "eduardoh",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "eduardos",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "gaetans",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "jasonh",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "jens",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "ketanp",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "kevinp",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "lynnel",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "martin",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "matthiask",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "michaelp",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "monaw",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "monitor",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "newuser3",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "paule",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "philipph",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "rms-technical-user",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "royz",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "shibajeed",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "silvioa",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "swapans",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "test",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "thorstenh",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "tobiask",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.administrator",
+        "tenant": "pm-dev1",
+        "user": "venkatm",
+        "description": "Metadata Explorer Administrator",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.businessUser",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Metadata Explorer Business User",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.businessUser",
+        "tenant": "pm-dev1",
+        "user": "monaw",
+        "description": "Metadata Explorer Business User",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.dataSteward",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Metadata Explorer Data Steward",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.dataSteward",
+        "tenant": "pm-dev1",
+        "user": "monaw",
+        "description": "Metadata Explorer Data Steward",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.metadataUser",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Metadata Explorer User",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.metadataUser",
+        "tenant": "pm-dev1",
+        "user": "monaw",
+        "description": "Metadata Explorer User",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.preparationUser",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Data Preparation User",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.publisher",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Metadata Explorer Publisher",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "app.datahub-app-data.publisher",
+        "tenant": "pm-dev1",
+        "user": "monaw",
+        "description": "Metadata Explorer Publisher",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "connection_S4_Test",
+        "tenant": "pm-dev1",
+        "user": "test",
+        "description": "Test",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "monitor",
+        "tenant": "pm-dev1",
+        "user": "monitor",
+        "description": "",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.admin",
+        "tenant": "pm-dev1",
+        "user": "admin",
+        "description": "Administrate tenant. Combines access to user, policy, application management, and to connection management for the tenant.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.admin",
+        "tenant": "pm-dev1",
+        "user": "axels",
+        "description": "Administrate tenant. Combines access to user, policy, application management, and to connection management for the tenant.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.admin",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Administrate tenant. Combines access to user, policy, application management, and to connection management for the tenant.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.admin",
+        "tenant": "pm-dev1",
+        "user": "daniel",
+        "description": "Administrate tenant. Combines access to user, policy, application management, and to connection management for the tenant.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.admin",
+        "tenant": "pm-dev1",
+        "user": "jens",
+        "description": "Administrate tenant. Combines access to user, policy, application management, and to connection management for the tenant.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.admin",
+        "tenant": "pm-dev1",
+        "user": "martin",
+        "description": "Administrate tenant. Combines access to user, policy, application management, and to connection management for the tenant.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.admin",
+        "tenant": "pm-dev1",
+        "user": "thorstenh",
+        "description": "Administrate tenant. Combines access to user, policy, application management, and to connection management for the tenant.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.certificate.manage",
+        "tenant": "pm-dev1",
+        "user": "admin",
+        "description": "Manage server certificates (uploading, deleting)",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.certificate.manage",
+        "tenant": "pm-dev1",
+        "user": "daniel",
+        "description": "Manage server certificates (uploading, deleting)",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.connectionContentAllManage",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Access content of all connections in the tenant in Metadata Explorer.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.connectionContentAllManage",
+        "tenant": "pm-dev1",
+        "user": "monaw",
+        "description": "Access content of all connections in the tenant in Metadata Explorer.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.connectionContentOwnerManage",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Access content of the user's own connections in Metadata Explorer.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.connectionContentOwnerManage",
+        "tenant": "pm-dev1",
+        "user": "monaw",
+        "description": "Access content of the user's own connections in Metadata Explorer.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.connectionCredentialsUnmasked",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Selected connection credential fields like user names are fully displayed.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.connectionsAllRead",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Read access to all connection definitions in the tenant.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "abdulm",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "axels",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "brittat",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "christians",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "christiant",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "daisy",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "daniel",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "dimitriv",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "eduardoh",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "eduardos",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "gaetans",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "jasonh",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "jens",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "ketanp",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "kevinp",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "lynnel",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "martin",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "matthiask",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "michaelp",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "monaw",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "newuser3",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "paule",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "philipph",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "rms-technical-user",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "royz",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "shibajeed",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "silvioa",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "swapans",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "thorstenh",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "tobiask",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.developer",
+        "tenant": "pm-dev1",
+        "user": "venkatm",
+        "description": "Working with Pipeline Modeler. Allows to start the Modeler and to manage connections.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "abdulm",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "axels",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "bengtm",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "brittat",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "christians",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "christiant",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "daisy",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "daniel",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "dimitriv",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "eduardoh",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "eduardos",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "gaetans",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "jasonh",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "jens",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "ketanp",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "kevinp",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "lynnel",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "martin",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "matthiask",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "michaelp",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "monaw",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "monitor",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "newuser3",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "paule",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "philipph",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "rms-technical-user",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "royz",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "shibajeed",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "silvioa",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "swapans",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "thorstenh",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "tobiask",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.member",
+        "tenant": "pm-dev1",
+        "user": "venkatm",
+        "description": "Member of tenant. Gives access to connection management to configure their own connections. Needs additional application start policies for running apps.",
+        "createdManual": true,
+        "createdByMapping": false
+    },
+    {
+        "id": "sap.dh.metadata",
+        "tenant": "pm-dev1",
+        "user": "admin",
+        "description": "DEPRECATED. Use app.datahub-app-data.fullAccess instead. Working with Metadata Explorer. Allows to start the Metadata Explorer and to manage connections. For some role in the Metadata Explorer, permission to start the Pipeline Modeler might also be needed.",
+        "createdManual": true,
+        "createdByMapping": false
+    }
+]
