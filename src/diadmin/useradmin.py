@@ -1,3 +1,8 @@
+#
+#  SPDX-FileCopyrightText: 2021 Thorsten Hapke <thorsten.hapke@sap.com>
+#
+#  SPDX-License-Identifier: Apache-2.0
+#
 # Using vctl
 # URL: https://help.sap.com/viewer/0b99871a1d994d2ea89598fe59d16cf9/3.0.2/en-US/38f6d81551c44f5da0f10bd0249d67f1.html#loio38f6d81551c44f5da0f10bd0249d67f1
 
@@ -147,7 +152,7 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.INFO)
 
-    with open('../config.yaml') as yamls:
+    with open('../../config.yaml') as yamls:
         params = yaml.safe_load(yamls)
 
 

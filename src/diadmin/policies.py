@@ -1,3 +1,8 @@
+#
+#  SPDX-FileCopyrightText: 2021 Thorsten Hapke <thorsten.hapke@sap.com>
+#
+#  SPDX-License-Identifier: Apache-2.0
+#
 
 from subprocess import check_output, run
 import logging
@@ -6,9 +11,11 @@ from pprint import pprint
 import json
 import sys
 import random
+from copy import deepcopy
 
 import yaml
 import networkx as nx
+import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 
@@ -70,21 +77,18 @@ def get_all_policies() :
     policies = json.loads(list_policies)
 
     pd_list = list()
+    num_id = 1
     for p in policies :
         logging.info(f"Get details: {p['id']}")
-        pd_list.append(json.loads(get_policy_get(p['id'],format='json')))
+        policy_str = get_policy_get(p['id'],format='json')
+        policy = json.loads((policy_str))
+        policy['num_id'] = num_id
+        pd_list.append(policy)
+        num_id +=1
 
     # add integer id to each policy for easing later analysis
 
     return pd_list
-
-# depracted
-# id is created when downloading the policy details
-num_id = -1
-def gen_id() :
-    global num_id
-    num_id += 1
-    return num_id
 
 ##### PRINT
 def print_edges(graph,att_filter=None,node_filter=None) :
@@ -105,8 +109,9 @@ def print_edges(graph,att_filter=None,node_filter=None) :
             print(f"{graph.nodes[fn]['num_id']}/{fn} -> {graph.nodes[tn]['num_id']}/{tn}: {att['type']}")
     logging.info(f"Filtered: {num_passed_edges}/{len(graph.edges)}")
 
-def print_nodes(graph,att_filter=None,node_filter=None) :
-    print("=== NODES ===")
+def print_nodes(graph, att_filter=None, node_filter=None, only_id = False) :
+    #print("=== NODES ===")
+    nodes_str =''
     num_passed_items = 0
     for node,att in graph.nodes(data=True) :
         passed = True
@@ -120,13 +125,21 @@ def print_nodes(graph,att_filter=None,node_filter=None) :
                 passed = False
         if passed :
             num_passed_items += 1
-            print(f"{graph.nodes[node]['num_id']}/{node}: {att} ")
+            node_str = ''
+            if not only_id :
+                node_str = f"{graph.nodes[node]['num_id']:>3},{node}: {att}"
+            else :
+                node_str = f"{graph.nodes[node]['num_id']:>3},{node}"
+            print(node_str)
+            nodes_str += node_str + '\n'
+
     logging.info(f"Filtered: {num_passed_items}/{len(graph.nodes)}")
+    return nodes_str
 
 def print_node_connection(graph,filter,nodes=None):
     print("=== NODE CONNECTIONS ===")
     if not nodes :
-        nodes = G.nodes
+        nodes = graph.nodes
     num_passed_nodes = 0
     for p in nodes:
         # filter nodes
@@ -145,26 +158,29 @@ def print_node_connection(graph,filter,nodes=None):
     logging.info(f"Filtered: {num_passed_nodes}/{len(nodes)}")
 
 # longest path from root to node
-def add_max_distance(G):
+def add_levels(graph):
     '''
     Calculates the maximum direct path to root
-    :param G: networkx directed graph
+    :param graph: networkx directed graph
     :return: None
     '''
     max_graph_distance = 2
-    for n,att in G.nodes(data=True) :
-        spaths = nx.all_simple_paths(G,'root',n)
+    for n,att in graph.nodes(data=True) :
+        if n == 'root' :
+            graph.nodes['root']['max_distance'] = 0
+            continue
+        spaths = nx.all_simple_paths(graph,'root',n)
         maxs = 2
         for s in spaths :
             if len(s) > maxs :
                 maxs = len(s)
-        G.nodes[n]['max_distance'] = maxs -1
+        graph.nodes[n]['max_distance'] = maxs -1
         if maxs > max_graph_distance :
             max_graph_distance = maxs
-    G.nodes['root']['max_graph_distance'] = max_graph_distance
+    graph.nodes['root']['max_graph_distance'] = max_graph_distance
 
 # Calculates the position of the nodes
-def calc_pos(G, nodes, width=1., height = 1.0,y_width_band = 0.03 ):
+def calc_pos(graph, nodes, width=1., height = 1.0, y_width_band = 0.03):
     '''
     Calculates the position of the nodes in a box (1.,1)
     :param G: networkx graph
@@ -174,23 +190,26 @@ def calc_pos(G, nodes, width=1., height = 1.0,y_width_band = 0.03 ):
     :param y_width_band: scatters nodes within this band
     :return: node positions
     '''
-    dx = width/len(nodes)
-    dy = height/G.nodes['root']['max_graph_distance']
+
+    dy = height/graph.nodes['root']['max_graph_distance']
     ddy = y_width_band * height
-    x = 0
     pos = {'root':(width*0.5,1.)}
-    i_1 = -1.
-    for node in nodes :
-        i_1 = -1. if i_1 == 1 else 1.
-        if node == 'root' :
-            continue
-        y = 1.0 - (dy * G.nodes[node]['max_distance']) + (ddy *  i_1)
-        x += dx
-        pos[node]=(x,y)
+    for level in range(1,graph.nodes['root']['max_graph_distance']) :
+        nodes_level = [n for n,att in graph.nodes(data=True) if att['max_distance']==level]
+        #print(f'LEVEL: {level}')
+        #print_nodes(graph,node_filter=nodes_level)
+        dx = width/len(nodes_level)
+        x = dx*0.5 - dx
+        i_1 = -1.
+        for node in nodes_level :
+            i_1 = -1. if i_1 == 1 else 1.
+            y = 1.0 - (dy * level) + (ddy *  i_1)
+            x += dx
+            pos[node]=(x,y)
     return pos
 
 # Draws network with distance levels
-def draw_graph(graph) :
+def draw_graph(graph,filename = 'policies.png') :
     '''
     Draws network with horizontal levels with a additional 'root'-node
     :param graph: network graph
@@ -209,13 +228,14 @@ def draw_graph(graph) :
     nx.draw_networkx_labels(graph,pos,labels,font_size=8,font_color='w')
 
     #nodes
-    options = {"edgecolors": "tab:gray", "node_size": 100, "alpha": 0.9}
-    nx.draw_networkx_nodes(graph, pos, policy_path_nodes, node_color="dimgrey", **options)
+    options = {"node_color": 'orange', "node_size": 140, "alpha": 0.9}
+    nx.draw_networkx_nodes(graph, pos, policy_path_nodes, **options)
 
     #edges
-    nx.draw_networkx_edges(graph,pos,policy_path_edges, width=0.1,edge_color='blue')
-    nx.draw_networkx_edges(graph,pos,root_path_edges, width=0.1,edge_color='red')
+    nx.draw_networkx_edges(graph,pos,policy_path_edges, width=0.5,edge_color='cornflowerblue')
+    nx.draw_networkx_edges(graph,pos,root_path_edges, width=1,edge_color='dimgray')
 
+    plt.savefig(filename)
     plt.show()
 
 
@@ -230,14 +250,14 @@ def build_network(policies) :
     g = nx.DiGraph()
 
     # Hierarchical graph needs a root graph
-    g.add_node('root',tenant=policies[0]['tenant'],path_node=True,num_id = gen_id(),exposed=False)
+    g.add_node('root',tenant=policies[0]['tenant'],path_node=True,num_id = 0,exposed=False)
 
     # Add all policies as node and connect 'exposed' to root node
     for p in policies :
         if not p['enabled'] :
             continue
 
-        g.add_node(p['id'],path_node = False, num_id = gen_id(),exposed=p['exposed'] )
+        g.add_node(p['id'],path_node = False, num_id = p['num_id'],exposed=p['exposed'])
 
         if p['exposed'] :   # if exposed == False then it cannot be assigned directly to user
             g.add_edge('root',p['id'],type='root_policy')
@@ -245,46 +265,102 @@ def build_network(policies) :
     # Add edges from inherited policies
     for p in policies :
         for pih in p['inheritedResources'] :
-            if g.has_node(pih['policyId']) :
-                g.nodes[p['id']]['path_node'] = True
-                g.nodes[pih['policyId']]['path_node'] = True
-                g.add_edge(pih['policyId'],p['id'],type ='policy_policy')
-            else :
-                logging.warning(f"{p[id]} - Inherited Node not in Graph: {pih[id]})")
+            g.nodes[p['id']]['path_node'] = True
+            g.nodes[pih['policyId']]['path_node'] = True
+            g.add_edge(pih['policyId'],p['id'],type ='policy_policy')
+
+    add_levels(g)
 
     return g
 
-def create_resources_list(policies) :
+# recursively acrue resources
+def get_inherited_resources(graph,node) :
+    pn = [n for n in graph.predecessors(node) if not n == 'root']
+    for pn_node in pn :
+        inh_r = get_inherited_resources(graph,pn_node)
+        for r in inh_r :
+            r['inheritedFrom'] = r['inheritedFrom']+':'+r['policyId'] if 'inheritedFrom' in r else r['policyId']
+            r['policyId'] = node
+        graph.nodes[node]["resources"].extend(inh_r)
+    return deepcopy(graph.nodes[node]["resources"])
+
+def flatten_resources(policy_id,tenant,policy_resources) :
     resources = list()
-    for p in policies :
-        for r in p['resources'] :
-            con_id = r['contentData']['connectionId'] if "connectionId" in r['contentData'] else ''
-            resource = {'policy_id':p,
-                        'resource_type':r['resourceType'],
-                        'activity':r['contentData']['activity'],
-                        'connection_id':con_id}
-            resources.append(resource)
+    for r in policy_resources :
+        resource = { k: v for k,v in r.items() if not isinstance(v,dict)}
+        resource.update(r['contentData'])
+        resource['tenant'] = tenant
+        resource['policyId'] = policy_id
+        resources.append(resource)
     return resources
 
-def run_policy_network() :
-    filename = '../data/policy_details.json'
+def add_resources(graph, policies) :
+
+    # add resources to each node
+    graph.nodes['root']['resources'] = list()
+    for p in policies :
+        graph.nodes[p['id']]['resources'] = flatten_resources(p['id'],graph.nodes['root']['tenant'],p['resources'])
+
+    # add inherited resources to policy resources
+    resources = list()
+    for node in graph.nodes :
+        resources.extend(get_inherited_resources(graph,node))
+
+    return resources
+
+
+# save acrued and flattened
+def save_resources(filename, resources) :
+    '''
+    Save the resources including the inherited ones to file as csv
+    :param filename:  filename with path to save resources
+    :param resources: list of resource dictionariers
+    :return: None
+    '''
+
+    # Test if new resource attributes had been found
+    resource_attributes = {s  for r in resources for s in r.keys()}
+    header = ('tenant','policyId','inheritedFrom','duplicatesYN','resourceType','activity','name','connectionId','canStopForUser','technicalName')
+    if not len(resource_attributes-set(header)) == 0 :
+        logging.warning(f"More resource attributes than expected: {resource_attributes-header}")
+
+    # writing resource after sorting it for a convenient usage
+    with open(filename, 'w') as csv_file:
+        fwriter = csv.writer(csv_file)
+        fwriter.writerow(header)
+        for r in resources:
+            row = list()
+            for h in header :
+                row.append(r[h] if h in r else '')
+            fwriter.writerow(row)
+
+
+def check_duplicate_resources(resources) :
+    df = pd.DataFrame(resources).fillna('')
+    check_on = ('tenant','policyId','resourceType','activity','name','connectionId','canStopForUser','technicalName')
+    check_on = [ col for col in df.columns if col in check_on]
+    df['duplicatesYN'] = df.duplicated(subset=check_on,keep=False).replace({True:'Y',False:'N'})
+    logging.info(f"Number of duplicate resources: {df.loc[df['duplicatesYN']== 'Y'].shape[0]}")
+    return df.to_dict('records')
+
+def run_policy_network(filename) :
     #policy_details = get_all_policies()
     #with open(filename, 'w') as json_file:
     #    json.dump(policy_details,json_file,indent=4)
 
     with open(filename, 'r') as json_file:
         policies = json.load(json_file)
-    if len(policies) == 0 :
-        raise ValueError("<policies> list has no members!")
 
     G = build_network(policies)
-    add_max_distance(G)
 
     #print_node_connection(G,filter={'path_node':True})
     #print_edges(G,filter={'type':'root_policy'})
     #print_edges(G,att_filter={},node_filter=['root'])
 
+
     draw_graph(G)
+
+    #print_nodes(G,att_filter={'path_node':True},only_id=True)
 
 
 ############### MAIN #######################
@@ -293,13 +369,18 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.INFO)
 
-    with open('../config.yaml') as yamls:
+    with open('../../config.yaml') as yamls:
         params = yaml.safe_load(yamls)
 
     #### LOGIN
-    di_login(params)
+    #di_login(params)
     
-    run_policy_network()
+    run_policy_network('../data/policy_list.json')
+
+    resources = add_resources('../data/policy_list.json')
+    resources = check_duplicate_resources(resources)
+    save_resources('../../data/resources.csv', resources)
+
 
     #result, resources = get_policy_resources()
     #pprint(resources)
