@@ -15,6 +15,11 @@ baseset = [i for i in baseset if not i in 'Il0O']
 # baseset = baseset + special_chars
 
 def gen_pwd(len_pwd=8) :
+    '''
+    Generate password with a given length with ascii excluding ambigiuos characters
+    :param len_pwd: Passeword length (default 8)
+    :return: password
+    '''
     while True:
         # create passwords from baseset that containts at least one upper-, lowercase and digit
         password = ''.join(secrets.choice(baseset) for i in range(len_pwd))
@@ -25,6 +30,13 @@ def gen_pwd(len_pwd=8) :
     return password
 
 def gen_user_pwd_list(num_user = 10, len_pwd = 8, prefix = 'user_') :
+    '''
+    Generates a generic user-password list with a given user prefix. Used for workshops
+    :param num_user: Number of users (default 10)
+    :param len_pwd: Lenght of password (default 8)
+    :param prefix: User prefix (default user_
+    :return: dictionary (dict[user]=pwd
+    '''
     zfillnum = 3 if num_user  > 100 else 2
 
     user_pwd = dict()
