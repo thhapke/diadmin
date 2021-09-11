@@ -13,6 +13,8 @@ sql.txt
 .vscode/*
 localtest/*
 
+*.egg-info
+
 dist/
 data/
 
