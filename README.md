@@ -8,6 +8,16 @@ SPDX-License-Identifier: Apache-2.0
 
 This tools help me to manage the user and the security of my DEMO Data Intelligence systems. The pre-requiste is to first install vctl (System Management Command-line) that can be dowloaded from the [SAP Download Center](https://launchpad.support.sap.com/#/softwarecenter/template/products/%20_APP=00200682500000001943&_EVENT=DISPHIER&HEADER=Y&FUNCTIONBAR=N&EVENT=TREE&NE=NAVIGATE&ENR=73554900100800002981&V=INST&TA=ACTUAL&PAGE=SEARCH/DATA%20INTELLIGENCE-SYS%20MGMT%20CLI). 
 
+## diadmin
+
+Reads policy data from SAP Data Intelligence and provides a policy network, chart and a resources.csv file for further analysis. 
+
+```
+
+
+```
+
+
 ## genpwds 
 
 ###  genpwd

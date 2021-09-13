@@ -12,7 +12,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="diadmin",
-    version="0.0.1",
+    version="0.0.5",
     author="Thorsten Hapke",
     author_email="thorsten.hapke@sap.com",
     description="Utility scripts for SAP Data Intelligence user & policy management",
@@ -24,6 +24,18 @@ setuptools.setup(
          "Programming Language :: Python :: 3.9",
          "License :: OSI Approved :: Apache Software License",
          "Operating System :: OS Independent",
+    ],
+    entry_points={
+        'console_scripts': [
+            "diadmin = diadmin.dipolicies:main"
+        ]
+    },
+    include_package_data=True,
+    install_requires=[
+        'PyYaml',
+        'networkx',
+        'pandas',
+        'matplotlib'
     ],
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),

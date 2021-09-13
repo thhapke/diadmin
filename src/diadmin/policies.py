@@ -7,10 +7,9 @@
 from subprocess import check_output, run
 import logging
 import csv
-from pprint import pprint
+
 import json
-import sys
-import random
+
 from copy import deepcopy
 
 import yaml
