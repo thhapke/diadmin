@@ -13,14 +13,7 @@ import json
 import yaml
 
 from login import di_login
-from policies import \
-    get_all_policies, \
-    build_network, \
-    draw_graph, \
-    print_nodes, \
-    add_resources, \
-    check_duplicate_resources, \
-    save_resources
+from policies import *
 
 #
 # command line args
@@ -48,46 +41,54 @@ if args.generate :
               'TENANT': 'default',
               'USER' : 'demo',
               'PWD' : 'demo123',
-              'OUTPUT_PATH': '../data'}
+              'OUTPUT_PATH': '../data',
+              'RESOURCE_CLASSES':get_default_resource_classes()}
 
     with open(config_file, 'w') as outfile:
         yaml.dump(params, outfile, default_flow_style=False)
     sys.exit(1)
 
-
 with open(config_file) as yamls:
     logging.info(f"Reads config file: {config_file}")
     params = yaml.safe_load(yamls)
+
+if 'RESOURCE_CLASSES' in params :
+    resource_classes = params['RESOURCE_CLASSES']
+else :
+    resource_classes = get_default_resource_classes()
 
 if args.file :
     filename = join(params['OUTPUT_PATH'],'policies.json')
     logging.info(f"Read policies from: {filename}")
     with open(filename, 'r') as json_file:
-        policies = json.load(json_file)
+        policies_dict = json.load(json_file)
 else :
     logging.info(f"Login to {params['URL']}")
     di_login(params)
     logging.info('Download policy details')
-    policies = get_all_policies()
+    policies_dict = get_all_policies()
     filename = join(params['OUTPUT_PATH'],'policies.json')
     with open(filename, 'w') as json_file:
-        json.dump(policies,json_file,indent=4)
+        json.dump(policies_dict,json_file,indent=4)
 
 
-G = build_network(policies)
-draw_graph(G,filename=join(params['OUTPUT_PATH'],'policies.png'))
+G = build_network(policies_dict,resource_classes)
+
+resources = add_inherited_resources(G)
+resources = check_duplicate_resources(resources)
+resources = classify_policy(G,resources)
+
+
+# DRAWING
+draw_graph(G,resource_classes,filename=join(params['OUTPUT_PATH'],'policies.png'))
+
+#SAVING
+
+filename = join(params['OUTPUT_PATH'],'resources.csv')
+save_resources(filename,resources)
 
 filename = join(params['OUTPUT_PATH'],'chart_policy_ids.csv')
 with open(filename, 'w') as txt_file:
+    logging.info(f"Save policyIDs used in graph to \"{filename}\"")
     str_nodes = print_nodes(G, att_filter={'path_node':True}, only_id=True)
     txt_file.write(str_nodes)
-
-logging.info("Add resources to graph and accrue inherited resources")
-resources = add_resources(G,policies)
-logging.info("Check for duplicates")
-resources = check_duplicate_resources(resources)
-
-filename = join(params['OUTPUT_PATH'],'resources.csv')
-logging.info("Save resources to \"resources.csv\"")
-save_resources(filename,resources)
-

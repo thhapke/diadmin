@@ -17,7 +17,6 @@ import yaml
 import networkx as nx
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 
 
 from login import di_login
@@ -26,6 +25,35 @@ from login import di_login
 #    policies_cmd = ['vctl','policy','policies','--format',format]
 #    policies = check_output(policies_cmd).decode('utf-8')
 #    return policies
+
+
+def get_default_resource_classes() :
+    return  {
+        "connectionConfiguration":"admin",
+        "connection":"admin",
+        "connectionContent":"data",
+        "app.datahub-app-data.qualityDashboard":"metadata",
+        "app.datahub-app-core.connectionCredentials":"metadata",
+        "app.datahub-app-data.profile":"metadata",
+        "app.datahub-app-data.qualityRulebook":"metadata",
+        "app.datahub-app-data.system":"metadata",
+        "app.datahub-app-data.catalog":"metadata",
+        "app.datahub-app-data.glossary":"metadata",
+        "app.datahub-app-data.tagHierarchy":"metadata",
+        "app.datahub-app-data.qualityRule":"metadata",
+        "app.datahub-app-data.preparation":"metadata",
+        "app.datahub-app-data.publication":"metadata",
+        "application":"application",
+        "systemManagement":"admin",
+        "certificate":"admin",
+        "connectionCredential":"admin"
+    }
+
+def get_policy_class_map(resource_classes) :
+    rclasses = set(resource_classes.values())
+    rdict =  { r: (i+1.0)/(len(rclasses)+1.) for i,r in enumerate(rclasses)}
+    rdict['multiple'] = 0
+    return rdict
 
 
 def get_policy(policy_id) :
@@ -209,7 +237,7 @@ def calc_pos(graph, nodes, width=1., height = 1.0, y_width_band = 0.03):
     return pos
 
 # Draws network with distance levels
-def draw_graph(graph,filename = 'policies.png') :
+def draw_graph(graph,resource_classes,filename = 'policies.png') :
     '''
     Draws network with horizontal levels with a additional 'root'-node
     :param graph: network graph
@@ -217,9 +245,11 @@ def draw_graph(graph,filename = 'policies.png') :
     '''
 
     # filter nodes and edges
-    policy_path_nodes = [n for n,att in graph.nodes(data=True) if att['path_node']==True]
+
     policy_path_edges = [(f,t) for f,t,att in graph.edges(data=True) if att['type'] =='policy_policy']
     root_path_edges = [(f,t) for f,t,att in graph.edges(data=True) if att['type'] =='root_policy' and graph.nodes[t]['path_node'] == True]
+
+    policy_path_nodes = [n for n,att in graph.nodes(data=True) if att['path_node']==True]
 
     pos = calc_pos(graph,policy_path_nodes)
 
@@ -228,7 +258,10 @@ def draw_graph(graph,filename = 'policies.png') :
     nx.draw_networkx_labels(graph,pos,labels,font_size=8,font_color='w')
 
     #nodes
-    options = {"node_color": 'orange', "node_size": 140, "alpha": 0.9}
+
+    color_map={'multiple':'grey','admin':'black','application':'orange','data':'blue','metadata':'green'}
+    node_color =  [color_map[graph.nodes[n]['policyClass']] for n in policy_path_nodes]
+    options = {"node_color": node_color, "node_size": 140, "alpha": 0.9}
     nx.draw_networkx_nodes(graph, pos, policy_path_nodes, **options)
 
     #edges
@@ -240,7 +273,7 @@ def draw_graph(graph,filename = 'policies.png') :
 
 
 # network of policies
-def build_network(policies) :
+def build_network(policies,resource_classes) :
     '''
     Build network form policies with a root node that connects to all 'exposed' nodes. In addition edges
     connect policy nodes that inherit from policy nodes
@@ -250,14 +283,17 @@ def build_network(policies) :
     g = nx.DiGraph()
 
     # Hierarchical graph needs a root graph
-    g.add_node('root',tenant=policies[0]['tenant'],path_node=True,num_id = 0,exposed=False)
+    g.add_node('root',tenant=policies[0]['tenant'],path_node=True,num_id = 0,exposed=False,
+               resources=list(),inherited=list(),policyClass = 'multiple')
 
     # Add all policies as node and connect 'exposed' to root node
     for p in policies :
         if not p['enabled'] :
             continue
 
-        g.add_node(p['id'],path_node = False, num_id = p['num_id'],exposed=p['exposed'])
+        resources = flatten_resources(p['id'],p['tenant'],p['resources'],resource_classes)
+        g.add_node(p['id'],path_node = False, num_id = p['num_id'],exposed=p['exposed'],
+                   resources = resources,inherited = list())
 
         if p['exposed'] :   # if exposed == False then it cannot be assigned directly to user
             g.add_edge('root',p['id'],type='root_policy')
@@ -281,31 +317,28 @@ def get_inherited_resources(graph,node) :
         for r in inh_r :
             r['inheritedFrom'] = r['inheritedFrom']+':'+r['policyId'] if 'inheritedFrom' in r else r['policyId']
             r['policyId'] = node
-        graph.nodes[node]["resources"].extend(inh_r)
-    return deepcopy(graph.nodes[node]["resources"])
+        graph.nodes[node]["inherited"].extend(inh_r)
+    new_inh_resources = deepcopy(graph.nodes[node]["resources"])
+    new_inh_resources.extend(deepcopy(graph.nodes[node]["inherited"]))
+    return  new_inh_resources
 
-def flatten_resources(policy_id,tenant,policy_resources) :
+def flatten_resources(policy_id,tenant,policy_resources,resource_classes) :
     resources = list()
     for r in policy_resources :
         resource = { k: v for k,v in r.items() if not isinstance(v,dict)}
         resource.update(r['contentData'])
         resource['tenant'] = tenant
         resource['policyId'] = policy_id
+        resource['resourceClass'] = resource_classes[resource['resourceType']]
         resources.append(resource)
     return resources
 
-def add_resources(graph, policies) :
-
-    # add resources to each node
-    graph.nodes['root']['resources'] = list()
-    for p in policies :
-        graph.nodes[p['id']]['resources'] = flatten_resources(p['id'],graph.nodes['root']['tenant'],p['resources'])
-
-    # add inherited resources to policy resources
+# add inherited resources to policy resources
+def add_inherited_resources(graph) :
+    logging.info("Add resources to graph and accrue inherited resources")
     resources = list()
     for node in graph.nodes :
         resources.extend(get_inherited_resources(graph,node))
-
     return resources
 
 
@@ -318,9 +351,11 @@ def save_resources(filename, resources) :
     :return: None
     '''
 
+    logging.info("Save resources to \"resources.csv\"")
+
     # Test if new resource attributes had been found
     resource_attributes = {s  for r in resources for s in r.keys()}
-    header = ('tenant','policyId','inheritedFrom','duplicatesYN','resourceType','activity','name','connectionId','canStopForUser','technicalName')
+    header = ('tenant','policyId','policyClass','inheritedFrom','duplicatesYN','resourceClass','resourceType','activity','name','connectionId','canStopForUser','technicalName')
     if not len(resource_attributes-set(header)) == 0 :
         logging.warning(f"More resource attributes than expected: {resource_attributes-header}")
 
@@ -336,11 +371,27 @@ def save_resources(filename, resources) :
 
 
 def check_duplicate_resources(resources) :
+    logging.info("Check for duplicates")
     df = pd.DataFrame(resources).fillna('')
     check_on = ('tenant','policyId','resourceType','activity','name','connectionId','canStopForUser','technicalName')
     check_on = [ col for col in df.columns if col in check_on]
     df['duplicatesYN'] = df.duplicated(subset=check_on,keep=False).replace({True:'Y',False:'N'})
     logging.info(f"Number of duplicate resources: {df.loc[df['duplicatesYN']== 'Y'].shape[0]}")
+    return df.to_dict('records')
+
+def classify_policy(graph,resources) :
+    logging.info("Classify policies")
+    df = pd.DataFrame(resources).fillna('')
+    rc_df = df.groupby(['policyId','resourceClass'])['resourceType'].count().reset_index()
+    rc_df = rc_df.groupby('policyId')['resourceClass'].agg(['count','first'])
+    rc_df.loc[rc_df['count'] >1,'first'] = 'multiple'
+    for n in graph.nodes :
+        if n == 'root':
+            continue
+        graph.nodes[n]['policyClass'] = rc_df.loc[n]['first']
+    rc_df.reset_index(inplace=True)
+    df = pd.merge(df,rc_df,how='left',on='policyId').drop(columns=['count'])
+    df.rename(columns = {'first':'policyClass'},inplace = True)
     return df.to_dict('records')
 
 def run_policy_network(filename) :
@@ -377,9 +428,9 @@ if __name__ == '__main__':
     
     run_policy_network('../data/policy_list.json')
 
-    resources = add_resources('../data/policy_list.json')
-    resources = check_duplicate_resources(resources)
-    save_resources('../../data/resources.csv', resources)
+    #resources = add_resources('../data/policy_list.json')
+    #resources = check_duplicate_resources(resources)
+    #save_resources('../../data/resources.csv', resources)
 
 
     #result, resources = get_policy_resources()
