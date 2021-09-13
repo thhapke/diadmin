@@ -57,6 +57,14 @@ if 'RESOURCE_CLASSES' in params :
 else :
     resource_classes = get_default_resource_classes()
 
+if 'COLOR_MAP' in params :
+    color_map = params['COLOR_MAP']
+else :
+    rclasses = set(resource_classes.values())
+    rclasses.update(['multiple'])
+    cmap = plt.get_cmap('Set1')
+    color_map = {r:cmap.colors[i] for i,r in enumerate(rclasses)}
+
 if args.file :
     filename = join(params['OUTPUT_PATH'],'policies.json')
     logging.info(f"Read policies from: {filename}")
@@ -80,7 +88,7 @@ resources = classify_policy(G,resources)
 
 
 # DRAWING
-draw_graph(G,resource_classes,filename=join(params['OUTPUT_PATH'],'policies.png'))
+draw_graph(G,resource_classes,color_map,filename=join(params['OUTPUT_PATH'],'policies.png'))
 
 #SAVING
 

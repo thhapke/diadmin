@@ -49,13 +49,6 @@ def get_default_resource_classes() :
         "connectionCredential":"admin"
     }
 
-def get_policy_class_map(resource_classes) :
-    rclasses = set(resource_classes.values())
-    rdict =  { r: (i+1.0)/(len(rclasses)+1.) for i,r in enumerate(rclasses)}
-    rdict['multiple'] = 0
-    return rdict
-
-
 def get_policy(policy_id) :
     policies_cmd = ['vctl','policy','policy',policy_id]
     policy = check_output(policies_cmd).decode('utf-8')
@@ -237,7 +230,7 @@ def calc_pos(graph, nodes, width=1., height = 1.0, y_width_band = 0.03):
     return pos
 
 # Draws network with distance levels
-def draw_graph(graph,resource_classes,filename = 'policies.png') :
+def draw_graph(graph,resource_classes,color_map,filename = 'policies.png') :
     '''
     Draws network with horizontal levels with a additional 'root'-node
     :param graph: network graph
@@ -259,7 +252,7 @@ def draw_graph(graph,resource_classes,filename = 'policies.png') :
 
     #nodes
 
-    color_map={'multiple':'grey','admin':'black','application':'orange','data':'blue','metadata':'green'}
+    #color_map={'multiple':'grey','admin':'black','application':'orange','data':'blue','metadata':'green'}
     node_color =  [color_map[graph.nodes[n]['policyClass']] for n in policy_path_nodes]
     options = {"node_color": node_color, "node_size": 140, "alpha": 0.9}
     nx.draw_networkx_nodes(graph, pos, policy_path_nodes, **options)
@@ -269,6 +262,7 @@ def draw_graph(graph,resource_classes,filename = 'policies.png') :
     nx.draw_networkx_edges(graph,pos,root_path_edges, width=1,edge_color='dimgray')
 
     plt.savefig(filename)
+    plt.legend()
     plt.show()
 
 
