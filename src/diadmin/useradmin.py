@@ -14,7 +14,7 @@ import logging
 
 import yaml
 
-from login import di_login
+from src.diadmin.vctl_cmds.login import di_login
 from genpwds import gen_pwd
 
 # Read csv userlist

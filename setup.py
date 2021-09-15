@@ -12,10 +12,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="diadmin",
-    version="0.0.5",
+    version="0.0.12",
     author="Thorsten Hapke",
     author_email="thorsten.hapke@sap.com",
-    description="Utility scripts for SAP Data Intelligence user & policy management",
+    description="Utility scripts for SAP Data Intelligence policy management",
     long_description=long_description,
     long_description_content_type="text/markdown",
     project_urls={'vctl':"https://launchpad.support.sap.com/#/softwarecenter/template/products/%20_APP=00200682500000001943&_EVENT=DISPHIER&HEADER=Y&FUNCTIONBAR=N&EVENT=TREE&NE=NAVIGATE&ENR=73554900100800002981&V=INST&TA=ACTUAL&PAGE=SEARCH/DATA%20INTELLIGENCE-SYS%20MGMT%20CLI"},
@@ -25,11 +25,6 @@ setuptools.setup(
          "License :: OSI Approved :: Apache Software License",
          "Operating System :: OS Independent",
     ],
-    entry_points={
-        'console_scripts': [
-            "diadmin = diadmin.dipolicies:main"
-        ]
-    },
     include_package_data=True,
     install_requires=[
         'PyYaml',
@@ -38,6 +33,6 @@ setuptools.setup(
         'matplotlib'
     ],
     package_dir={"": "src"},
-    packages=setuptools.find_packages(where="src"),
+    packages=setuptools.find_packages(),
     python_requires=">=3.6",
 )
