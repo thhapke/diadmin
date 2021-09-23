@@ -12,7 +12,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="diadmin",
-    version="0.0.12",
+    version="0.0.21",
     author="Thorsten Hapke",
     author_email="thorsten.hapke@sap.com",
     description="Utility scripts for SAP Data Intelligence policy management",
@@ -32,7 +32,12 @@ setuptools.setup(
         'pandas',
         'matplotlib'
     ],
-    package_dir={"": "src"},
-    packages=setuptools.find_packages(),
+    entry_points = {
+        'console_scripts': ['dipolicy=diadmin.dipolicy:main',
+                            'dipmonitor=diadmin.dipmonitor:main'],
+    },
+    #package_dir={"": "src"},
+    #packages=setuptools.find_packages(),
+    packages=['diadmin', 'diadmin.analysis','diadmin.vctl_cmds'],
     python_requires=">=3.6",
 )

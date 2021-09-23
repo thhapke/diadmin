@@ -81,10 +81,10 @@
         ],
         "policyReferences": [
             {
-                "id": "app.datahub-app-data.metadataUser"
+                "id": "app.datahub-app-data.dependencies"
             },
             {
-                "id": "app.datahub-app-data.dependencies"
+                "id": "app.datahub-app-data.metadataUser"
             }
         ],
         "inheritedResources": [
@@ -381,10 +381,10 @@
         ],
         "policyReferences": [
             {
-                "id": "app.datahub-app-data.businessUser"
+                "id": "app.datahub-app-data.dependencies"
             },
             {
-                "id": "app.datahub-app-data.dependencies"
+                "id": "app.datahub-app-data.businessUser"
             }
         ],
         "inheritedResources": [
@@ -559,6 +559,9 @@
         "resources": [],
         "policyReferences": [
             {
+                "id": "app.datahub-app-data.metadataUser"
+            },
+            {
                 "id": "app.datahub-app-data.preparationUser"
             },
             {
@@ -575,9 +578,6 @@
             },
             {
                 "id": "app.datahub-app-data.dependencies"
-            },
-            {
-                "id": "app.datahub-app-data.metadataUser"
             }
         ],
         "inheritedResources": [
@@ -1290,10 +1290,10 @@
         "resources": [],
         "policyReferences": [
             {
-                "id": "mycompany.manage.glossary"
+                "id": "mycompany.manage.catalog"
             },
             {
-                "id": "mycompany.manage.catalog"
+                "id": "mycompany.manage.glossary"
             }
         ],
         "inheritedResources": [
@@ -1672,9 +1672,6 @@
         "resources": [],
         "policyReferences": [
             {
-                "id": "sap.dh.modelerUI.start"
-            },
-            {
                 "id": "sap.dh.connectionMgtStart"
             },
             {
@@ -1682,6 +1679,9 @@
             },
             {
                 "id": "sap.dh.modelerStart"
+            },
+            {
+                "id": "sap.dh.modelerUI.start"
             }
         ],
         "inheritedResources": [
@@ -1991,61 +1991,61 @@
         "resources": [],
         "policyReferences": [
             {
-                "id": "sap.dh.datahubAppCore.start"
-            },
-            {
-                "id": "sap.dh.datahubAppDaemon.start"
-            },
-            {
-                "id": "sap.dh.resourceplanService.start"
-            },
-            {
-                "id": "sap.dh.systemAccess"
-            },
-            {
-                "id": "sap.dh.datahubAppTask.start"
-            },
-            {
-                "id": "sap.dh.dspGitServer.start"
-            },
-            {
-                "id": "sap.dh.axinoService.start"
-            },
-            {
-                "id": "sap.dh.dataHubFlowAgent.start"
-            },
-            {
-                "id": "sap.dh.datahubAppData.start"
-            },
-            {
-                "id": "sap.dh.datahubAppLogging.start"
-            },
-            {
-                "id": "sap.dh.connectionsOwnerRead"
-            },
-            {
-                "id": "sap.dh.datahubAppDatabase.start"
-            },
-            {
                 "id": "sap.dh.datahubAppScheduler.start"
             },
             {
                 "id": "sap.dh.datahubAppSystemManagement.start"
             },
             {
-                "id": "sap.dh.shared.start"
+                "id": "sap.dh.datahubAppTask.start"
             },
             {
                 "id": "sap.dh.connectionContentOwnerManage"
             },
             {
-                "id": "sap.dh.connectionsOwnerWrite"
+                "id": "sap.dh.datahubAppData.start"
+            },
+            {
+                "id": "sap.dh.shared.start"
+            },
+            {
+                "id": "sap.dh.datahubAppCore.start"
+            },
+            {
+                "id": "sap.dh.dataHubFlowAgent.start"
             },
             {
                 "id": "sap.dh.datahubAppLaunchpad.start"
             },
             {
                 "id": "sap.dh.datahubAppPreparation.start"
+            },
+            {
+                "id": "sap.dh.dspGitServer.start"
+            },
+            {
+                "id": "sap.dh.resourceplanService.start"
+            },
+            {
+                "id": "sap.dh.connectionsOwnerRead"
+            },
+            {
+                "id": "sap.dh.connectionsOwnerWrite"
+            },
+            {
+                "id": "sap.dh.datahubAppDaemon.start"
+            },
+            {
+                "id": "sap.dh.datahubAppDatabase.start"
+            },
+            {
+                "id": "sap.dh.datahubAppLogging.start"
+            },
+            {
+                "id": "sap.dh.systemAccess"
+            },
+            {
+                "id": "sap.dh.axinoService.start"
             }
         ],
         "inheritedResources": [
@@ -3354,7 +3354,37 @@
         "resources": [],
         "policyReferences": [
             {
-                "id": "sap.dh.datahubAppLaunchpad.start"
+                "id": "sap.dh.automl.start"
+            },
+            {
+                "id": "sap.dh.connectionsOwnerRead"
+            },
+            {
+                "id": "sap.dh.mlApiImporter.start"
+            },
+            {
+                "id": "sap.dh.mlScenarioManager.start"
+            },
+            {
+                "id": "sap.dh.mlDmApi.start"
+            },
+            {
+                "id": "sap.dh.axinoService.start"
+            },
+            {
+                "id": "sap.dh.connectionMgtStart"
+            },
+            {
+                "id": "sap.dh.datahubAppData.start"
+            },
+            {
+                "id": "sap.dh.datahubAppSystemManagement.start"
+            },
+            {
+                "id": "sap.dh.datahubAppTask.start"
+            },
+            {
+                "id": "sap.dh.datahubAppCore.start"
             },
             {
                 "id": "sap.dh.datahubAppScheduler.start"
@@ -3363,25 +3393,10 @@
                 "id": "sap.dh.mlDeploymentApi.start"
             },
             {
-                "id": "sap.dh.dspGitServer.start"
-            },
-            {
-                "id": "sap.dh.resourceplanService.start"
-            },
-            {
-                "id": "sap.dh.dataHubFlowAgent.start"
-            },
-            {
                 "id": "sap.dh.mlDmApp.start"
             },
             {
                 "id": "sap.dh.connectionsOwnerWrite"
-            },
-            {
-                "id": "sap.dh.datahubAppDatabase.start"
-            },
-            {
-                "id": "sap.dh.datahubAppSystemManagement.start"
             },
             {
                 "id": "sap.dh.datahubAppDaemon.start"
@@ -3393,19 +3408,31 @@
                 "id": "sap.dh.mlTracking.start"
             },
             {
-                "id": "sap.dh.axinoService.start"
+                "id": "sap.dh.resourceplanService.start"
             },
             {
                 "id": "sap.dh.connectionContentOwnerManage"
             },
             {
-                "id": "sap.dh.connectionMgtStart"
+                "id": "sap.dh.dataHubFlowAgent.start"
             },
             {
-                "id": "sap.dh.datahubAppTask.start"
+                "id": "sap.dh.datahubAppLaunchpad.start"
             },
             {
-                "id": "sap.dh.mlScenarioManager.start"
+                "id": "sap.dh.shared.start"
+            },
+            {
+                "id": "sap.dh.voraadapter.start"
+            },
+            {
+                "id": "sap.dh.datahubAppDatabase.start"
+            },
+            {
+                "id": "sap.dh.dspGitServer.start"
+            },
+            {
+                "id": "sap.dh.metricsExplorer.start"
             },
             {
                 "id": "sap.dh.systemAccess"
@@ -3414,34 +3441,7 @@
                 "id": "sap.dh.trainingService.start"
             },
             {
-                "id": "sap.dh.datahubAppData.start"
-            },
-            {
-                "id": "sap.dh.metricsExplorer.start"
-            },
-            {
-                "id": "sap.dh.mlDmApi.start"
-            },
-            {
-                "id": "sap.dh.voraadapter.start"
-            },
-            {
-                "id": "sap.dh.automl.start"
-            },
-            {
-                "id": "sap.dh.connectionsOwnerRead"
-            },
-            {
-                "id": "sap.dh.datahubAppCore.start"
-            },
-            {
                 "id": "sap.dh.mlApi.start"
-            },
-            {
-                "id": "sap.dh.mlApiImporter.start"
-            },
-            {
-                "id": "sap.dh.shared.start"
             }
         ],
         "inheritedResources": [
