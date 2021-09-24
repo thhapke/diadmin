@@ -1,0 +1,25 @@
+{
+    "id": "mycompany.info.connections",
+    "description": "Read access to info data sources",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": true,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-22T10:41:36.775Z",
+    "changedAt": "2021-09-22T10:41:36.775Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [
+        {
+            "resourceType": "connection",
+            "contentData": {
+                "activity": "read",
+                "connectionId": "HANA_QM"
+            }
+        }
+    ],
+    "policyReferences": [],
+    "inheritedResources": [],
+    "num_id": 8
+}

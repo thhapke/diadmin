@@ -1,0 +1,72 @@
+{
+    "id": "mycompany.basic.connectionUser",
+    "description": "Basic Connection User for creating own connections ",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": true,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-21T04:24:42.727Z",
+    "changedAt": "2021-09-22T10:04:27.448Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "datahub-app-connection"
+            }
+        }
+    ],
+    "policyReferences": [
+        {
+            "id": "sap.dh.connectionContentOwnerManage"
+        },
+        {
+            "id": "sap.dh.connectionsOwnerRead"
+        },
+        {
+            "id": "sap.dh.connectionsOwnerWrite"
+        }
+    ],
+    "inheritedResources": [
+        {
+            "policyId": "sap.dh.connectionContentOwnerManage",
+            "resources": [
+                {
+                    "resourceType": "connectionContent",
+                    "contentData": {
+                        "activity": "ownerManage",
+                        "connectionId": "*"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.connectionsOwnerRead",
+            "resources": [
+                {
+                    "resourceType": "connection",
+                    "contentData": {
+                        "activity": "ownerRead",
+                        "connectionId": "*"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.connectionsOwnerWrite",
+            "resources": [
+                {
+                    "resourceType": "connection",
+                    "contentData": {
+                        "activity": "ownerWrite",
+                        "connectionId": "*"
+                    }
+                }
+            ]
+        }
+    ],
+    "num_id": 4
+}

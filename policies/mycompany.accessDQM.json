@@ -1,0 +1,32 @@
+{
+    "id": "mycompany.accessDQM",
+    "description": "Access to DQM data",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": true,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-05-05T06:53:28.21Z",
+    "changedAt": "2021-05-05T06:53:28.21Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [
+        {
+            "resourceType": "connection",
+            "contentData": {
+                "activity": "read",
+                "connectionId": "HANA_Cloud_DQM"
+            }
+        },
+        {
+            "resourceType": "connectionContent",
+            "contentData": {
+                "activity": "manage",
+                "connectionId": "HANA_Cloud_DQM"
+            }
+        }
+    ],
+    "policyReferences": [],
+    "inheritedResources": [],
+    "num_id": 1
+}

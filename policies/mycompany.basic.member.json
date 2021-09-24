@@ -1,0 +1,198 @@
+{
+    "id": "mycompany.basic.member",
+    "description": "Basic member of SAP Data Intelligence that every user needs.",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": true,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-23T14:07:53.27Z",
+    "changedAt": "2021-09-23T14:19:51.714Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [],
+    "policyReferences": [
+        {
+            "id": "sap.dh.datahubAppScheduler.start"
+        },
+        {
+            "id": "sap.dh.datahubAppTask.start"
+        },
+        {
+            "id": "sap.dh.shared.start"
+        },
+        {
+            "id": "sap.dh.systemAccess"
+        },
+        {
+            "id": "sap.dh.axinoService.start"
+        },
+        {
+            "id": "sap.dh.dataHubFlowAgent.start"
+        },
+        {
+            "id": "sap.dh.datahubAppCore.start"
+        },
+        {
+            "id": "sap.dh.datahubAppDatabase.start"
+        },
+        {
+            "id": "sap.dh.datahubAppDaemon.start"
+        },
+        {
+            "id": "sap.dh.datahubAppData.start"
+        },
+        {
+            "id": "sap.dh.datahubAppLaunchpad.start"
+        },
+        {
+            "id": "sap.dh.resourceplanService.start"
+        }
+    ],
+    "inheritedResources": [
+        {
+            "policyId": "sap.dh.axinoService.start",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "axino-service"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.dataHubFlowAgent.start",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "data-hub-flow-agent"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.datahubAppCore.start",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-core"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.datahubAppDaemon.start",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-daemon"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.datahubAppData.start",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-data"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.datahubAppDatabase.start",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-database"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.datahubAppLaunchpad.start",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-launchpad"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.datahubAppScheduler.start",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-scheduler"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.datahubAppTask.start",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-task"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.resourceplanService.start",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "resourceplan-service"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.shared.start",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "shared"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.systemAccess",
+            "resources": [
+                {
+                    "resourceType": "systemManagement",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                }
+            ]
+        }
+    ],
+    "num_id": 5
+}

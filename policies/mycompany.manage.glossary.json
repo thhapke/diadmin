@@ -1,0 +1,71 @@
+{
+    "id": "mycompany.manage.glossary",
+    "description": "Manage glossaries",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": true,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-17T12:15:09.495Z",
+    "changedAt": "2021-09-17T12:15:09.495Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [
+        {
+            "resourceType": "app.datahub-app-data.glossary",
+            "contentData": {
+                "activity": "manage"
+            }
+        },
+        {
+            "resourceType": "app.datahub-app-data.glossary",
+            "contentData": {
+                "activity": "admin"
+            }
+        }
+    ],
+    "policyReferences": [
+        {
+            "id": "mycompany.basic.metadata"
+        }
+    ],
+    "inheritedResources": [
+        {
+            "policyId": "mycompany.basic.metadata",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.catalog",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.glossary",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.profile",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.tagHierarchy",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-metadata"
+                    }
+                }
+            ]
+        }
+    ],
+    "num_id": 11
+}

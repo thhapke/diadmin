@@ -1,0 +1,49 @@
+{
+    "id": "mycompany.info_manage.connections",
+    "description": "Managing the info data sources",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": true,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-22T10:43:52.973Z",
+    "changedAt": "2021-09-22T10:43:52.973Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [
+        {
+            "resourceType": "connection",
+            "contentData": {
+                "activity": "write",
+                "connectionId": "HANA_QM"
+            }
+        },
+        {
+            "resourceType": "connectionContent",
+            "contentData": {
+                "activity": "manage",
+                "connectionId": "HANA_QM"
+            }
+        }
+    ],
+    "policyReferences": [
+        {
+            "id": "mycompany.info.connections"
+        }
+    ],
+    "inheritedResources": [
+        {
+            "policyId": "mycompany.info.connections",
+            "resources": [
+                {
+                    "resourceType": "connection",
+                    "contentData": {
+                        "activity": "read",
+                        "connectionId": "HANA_QM"
+                    }
+                }
+            ]
+        }
+    ],
+    "num_id": 9
+}

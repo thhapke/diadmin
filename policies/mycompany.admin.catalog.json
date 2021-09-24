@@ -1,0 +1,119 @@
+{
+    "id": "mycompany.admin.catalog",
+    "description": "Administrator for catalog and glossary",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": true,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-20T10:33:19.907Z",
+    "changedAt": "2021-09-20T10:33:19.907Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [],
+    "policyReferences": [
+        {
+            "id": "mycompany.manage.catalog"
+        },
+        {
+            "id": "mycompany.manage.glossary"
+        }
+    ],
+    "inheritedResources": [
+        {
+            "policyId": "mycompany.basic.metadata",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.catalog",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.glossary",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.profile",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.tagHierarchy",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-metadata"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "mycompany.manage.catalog",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.catalog",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.catalog",
+                    "contentData": {
+                        "activity": "annotate"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.publication",
+                    "contentData": {
+                        "activity": "execute"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.publication",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.tagHierarchy",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.tagHierarchy",
+                    "contentData": {
+                        "activity": "admin"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "mycompany.manage.glossary",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.glossary",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.glossary",
+                    "contentData": {
+                        "activity": "admin"
+                    }
+                }
+            ]
+        }
+    ],
+    "num_id": 2
+}

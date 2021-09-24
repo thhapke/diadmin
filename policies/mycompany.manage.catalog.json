@@ -1,0 +1,95 @@
+{
+    "id": "mycompany.manage.catalog",
+    "description": "Manage catalog, add tagging and change tagHierarchy",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": true,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-17T11:55:56.954Z",
+    "changedAt": "2021-09-20T10:19:55.36Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [
+        {
+            "resourceType": "app.datahub-app-data.catalog",
+            "contentData": {
+                "activity": "annotate"
+            }
+        },
+        {
+            "resourceType": "app.datahub-app-data.catalog",
+            "contentData": {
+                "activity": "manage"
+            }
+        },
+        {
+            "resourceType": "app.datahub-app-data.publication",
+            "contentData": {
+                "activity": "manage"
+            }
+        },
+        {
+            "resourceType": "app.datahub-app-data.publication",
+            "contentData": {
+                "activity": "execute"
+            }
+        },
+        {
+            "resourceType": "app.datahub-app-data.tagHierarchy",
+            "contentData": {
+                "activity": "manage"
+            }
+        },
+        {
+            "resourceType": "app.datahub-app-data.tagHierarchy",
+            "contentData": {
+                "activity": "admin"
+            }
+        }
+    ],
+    "policyReferences": [
+        {
+            "id": "mycompany.basic.metadata"
+        }
+    ],
+    "inheritedResources": [
+        {
+            "policyId": "mycompany.basic.metadata",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.catalog",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.glossary",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.profile",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.tagHierarchy",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-metadata"
+                    }
+                }
+            ]
+        }
+    ],
+    "num_id": 10
+}

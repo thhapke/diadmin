@@ -1,0 +1,79 @@
+{
+    "id": "mycompany.basic.connection",
+    "description": "",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": true,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-22T10:32:56Z",
+    "changedAt": "2021-09-22T10:32:56Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [],
+    "policyReferences": [
+        {
+            "id": "sap.dh.connectionsOwnerRead"
+        },
+        {
+            "id": "sap.dh.connectionsOwnerWrite"
+        },
+        {
+            "id": "sap.dh.connectionContentOwnerManage"
+        },
+        {
+            "id": "sap.dh.connectionMgtStart"
+        }
+    ],
+    "inheritedResources": [
+        {
+            "policyId": "sap.dh.connectionContentOwnerManage",
+            "resources": [
+                {
+                    "resourceType": "connectionContent",
+                    "contentData": {
+                        "activity": "ownerManage",
+                        "connectionId": "*"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.connectionMgtStart",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-connection"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.connectionsOwnerRead",
+            "resources": [
+                {
+                    "resourceType": "connection",
+                    "contentData": {
+                        "activity": "ownerRead",
+                        "connectionId": "*"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.connectionsOwnerWrite",
+            "resources": [
+                {
+                    "resourceType": "connection",
+                    "contentData": {
+                        "activity": "ownerWrite",
+                        "connectionId": "*"
+                    }
+                }
+            ]
+        }
+    ],
+    "num_id": 3
+}
