@@ -81,5 +81,6 @@ def create_policy(filename) :
     basename_copy_f = basename(copy_f)
     create_policy_cmd = ['vctl','policy','create',basename_copy_f]
     logging.info(f"cmd: {' '.join(create_policy_cmd)}")
-    run(create_policy_cmd)
+    compproc = run(create_policy_cmd)
     remove(copy_f)
+    return compproc.returncode

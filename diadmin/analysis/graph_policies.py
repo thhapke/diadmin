@@ -9,6 +9,7 @@ import logging
 import csv
 import json
 from copy import deepcopy
+import re
 
 import yaml
 import networkx as nx
@@ -65,32 +66,51 @@ def print_edges(graph,att_filter=None,node_filter=None) :
             print(f"{graph.nodes[fn]['num_id']}/{fn} -> {graph.nodes[tn]['num_id']}/{tn}: {att['type']}")
     logging.info(f"Filtered: {num_passed_edges}/{len(graph.edges)}")
 
-def print_nodes(graph, att_filter=None, node_filter=None, only_id = False) :
-    #print("=== NODES ===")
-    nodes_str =''
-    num_passed_items = 0
+
+def tag_nodes_by_name(graph,name_filter,new_attribute,successor_nodes = True,remove_untagged = False) :
+    tagged_nodes = list()
+    for node in graph.nodes :
+        if re.match(name_filter,node):
+            graph.nodes[node][new_attribute] = True
+            tagged_nodes.append(node)
+        else :
+            graph.nodes[node][new_attribute] = False
+
+    if successor_nodes :
+        for node in tagged_nodes :
+            tag_successors(graph,node,new_attribute)
+
+    if remove_untagged :
+        remove_nodes = [ n for n,att in graph.nodes(data=True) if not att[new_attribute] ]
+        for n in remove_nodes :
+            graph.remove_node(n)
+
+def tag_successors(graph,node,new_tag) :
+    pn = [n for n in graph.predecessors(node)]
+    for n in pn :
+        graph.nodes[n][new_tag] = True
+        tag_successors(graph,n,new_tag)
+
+def filter_nodes(graph, att_filter=None, node_filter=None) :
+
+    filtered_nodes = list()
     for node,att in graph.nodes(data=True) :
-        passed = True
+        # Filters
+        if node_filter and not (node in node_filter ) :
+            continue
         if att_filter :
+            passed = True
             for f,v in att_filter.items() :
                 if att[f] != v :
                     passed = False
                     break
-        if node_filter :
-            if not (node in node_filter ) :
-                passed = False
-        if passed :
-            num_passed_items += 1
-            node_str = ''
-            if not only_id :
-                node_str = f"{graph.nodes[node]['num_id']:>3},{node}: {att}"
-            else :
-                node_str = f"{graph.nodes[node]['num_id']:>3},{node}"
-            print(node_str)
-            nodes_str += node_str + '\n'
+            if not passed :
+                continue
+        # Passed
+        filtered_nodes.append(node)
 
-    logging.info(f"Filtered: {num_passed_items}/{len(graph.nodes)}")
-    return nodes_str
+    logging.info(f"Filtered: {len(filtered_nodes)}/{len(graph.nodes)}")
+    return filtered_nodes
 
 def print_node_connection(graph,filter,nodes=None):
     print("=== NODE CONNECTIONS ===")
@@ -163,8 +183,7 @@ def calc_pos(graph, nodes, width=1., height = 1.0, y_width_band = 0.03):
     pos = {'root':(width*0.5,1.)}
     for level in range(1,graph.nodes['root']['max_level']) :
         nodes_level = [n for n,att in graph.nodes(data=True) if att['level']==level]
-        #print(f'LEVEL: {level}')
-        #print_nodes(graph,node_filter=nodes_level)
+
         if len(nodes_level) == 0 :
             logging.info(f"No nodes in level: {level}")
             continue
@@ -356,23 +375,14 @@ def add_node_att(graph,resources) :
     return df.to_dict('records')
 
 def run_policy_network(filename) :
-    #policy_details = get_all_policies()
-    #with open(filename, 'w') as json_file:
-    #    json.dump(policy_details,json_file,indent=4)
 
     with open(filename, 'r') as json_file:
         policies = json.load(json_file)
 
     G = build_network(policies)
 
-    #print_node_connection(G,filter={'path_node':True})
-    #print_edges(G,filter={'type':'root_policy'})
-    #print_edges(G,att_filter={},node_filter=['root'])
-
-
     draw_graph(G)
 
-    #print_nodes(G,att_filter={'path_node':True},only_id=True)
 
 
 ############### MAIN #######################
@@ -384,18 +394,15 @@ if __name__ == '__main__':
     with open('../../config.yaml') as yamls:
         params = yaml.safe_load(yamls)
 
-    #### LOGIN
-    #di_login(params)
-    
-    run_policy_network('../data/policy_list.json')
+    with open('../../policies/policies.json', 'r') as json_file:
+        policies = json.load(json_file)
 
-    #resources = add_resources('../data/policy_list.json')
-    #resources = check_duplicate_resources(resources)
-    #save_resources('../../data/resources.csv', resources)
+    G = build_network(policies,params['RESOURCE_CLASSES'])
 
-
-    #result, resources = get_policy_resources()
-    #pprint(resources)
+    tag_nodes_by_name(G,'mycompany','mycompany',successor_nodes=True,remove_untagged=True)
+    fn = filter_nodes(G,att_filter={'mycompany':True})
+    for n in G.nodes:
+        print(n)
 
 
 
