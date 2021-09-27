@@ -1,0 +1,403 @@
+{
+    "id": "mycompany.role.omnipotuser",
+    "description": "Start all non-admin applications",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": true,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-27T06:52:40.505Z",
+    "changedAt": "2021-09-27T06:52:40.505Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [],
+    "policyReferences": [
+        {
+            "id": "mycompany.manage.preparation"
+        },
+        {
+            "id": "mycompany.manage.rulebook"
+        },
+        {
+            "id": "mycompany.basic.developer"
+        },
+        {
+            "id": "mycompany.basic.member"
+        },
+        {
+            "id": "mycompany.basic.metadata"
+        },
+        {
+            "id": "mycompany.basic.mldeveloper"
+        },
+        {
+            "id": "mycompany.manage.catalog"
+        },
+        {
+            "id": "mycompany.manage.glossary"
+        }
+    ],
+    "inheritedResources": [
+        {
+            "policyId": "mycompany.basic.developer",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-connection"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "modeler-ui"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "pipeline-modeler"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "mycompany.basic.member",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-launchpad"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-database"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "shared"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-task"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "data-hub-flow-agent"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-daemon"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-core"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "axino-service"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "resourceplan-service"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-scheduler"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-data"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "mycompany.basic.metadata",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.catalog",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.glossary",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.preparation",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.profile",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.qualityDashboard",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.qualityRule",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.qualityRulebook",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.tagHierarchy",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-metadata"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "mycompany.basic.mldeveloper",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "automl"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "training-service"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "dsp-git-server"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "ml-dm-api"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "ml-scenario-manager"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "ml-deployment-api"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "ml-api"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "metrics-explorer"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "ml-dm-app"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "ml-api-importer"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "jupyter"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "mycompany.manage.catalog",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.catalog",
+                    "contentData": {
+                        "activity": "annotate"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.catalog",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.profile",
+                    "contentData": {
+                        "activity": "execute"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.profile",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.publication",
+                    "contentData": {
+                        "activity": "execute"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.publication",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.tagHierarchy",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.tagHierarchy",
+                    "contentData": {
+                        "activity": "admin"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "mycompany.manage.glossary",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.glossary",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.glossary",
+                    "contentData": {
+                        "activity": "admin"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "mycompany.manage.preparation",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.preparation",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.preparation",
+                    "contentData": {
+                        "activity": "execute"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "mycompany.manage.rulebook",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.qualityRule",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.qualityRulebook",
+                    "contentData": {
+                        "activity": "execute"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.qualityRulebook",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                }
+            ]
+        }
+    ],
+    "num_id": 13
+}

@@ -1,0 +1,39 @@
+{
+    "id": "mycompany.basic.developer",
+    "description": "Basic application for a developer",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": false,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-27T06:40:57.414Z",
+    "changedAt": "2021-09-27T06:40:57.414Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "pipeline-modeler"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "modeler-ui"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "datahub-app-connection"
+            }
+        }
+    ],
+    "policyReferences": [],
+    "inheritedResources": [],
+    "num_id": 1
+}

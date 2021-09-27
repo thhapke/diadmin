@@ -1,0 +1,39 @@
+{
+    "id": "mycompany.data.own",
+    "description": "Read, write and manage own connections",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": true,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-27T06:40:56.913Z",
+    "changedAt": "2021-09-27T06:40:56.913Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [
+        {
+            "resourceType": "connection",
+            "contentData": {
+                "activity": "ownerRead",
+                "connectionId": "*"
+            }
+        },
+        {
+            "resourceType": "connection",
+            "contentData": {
+                "activity": "ownerWrite",
+                "connectionId": "*"
+            }
+        },
+        {
+            "resourceType": "connectionContent",
+            "contentData": {
+                "activity": "ownerManage",
+                "connectionId": "*"
+            }
+        }
+    ],
+    "policyReferences": [],
+    "inheritedResources": [],
+    "num_id": 6
+}

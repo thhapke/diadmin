@@ -1,0 +1,60 @@
+{
+    "id": "mycompany.data.shared",
+    "description": "Shared Connections for read, write and manage",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": true,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-27T06:40:58.312Z",
+    "changedAt": "2021-09-27T06:40:58.312Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [
+        {
+            "resourceType": "connection",
+            "contentData": {
+                "activity": "read",
+                "connectionId": "DI_DATA_LAKE"
+            }
+        },
+        {
+            "resourceType": "connection",
+            "contentData": {
+                "activity": "write",
+                "connectionId": "DI_DATA_LAKE"
+            }
+        },
+        {
+            "resourceType": "connection",
+            "contentData": {
+                "activity": "write",
+                "connectionId": "HANA_DEMO"
+            }
+        },
+        {
+            "resourceType": "connection",
+            "contentData": {
+                "activity": "read",
+                "connectionId": "HANA_DEMO"
+            }
+        },
+        {
+            "resourceType": "connectionContent",
+            "contentData": {
+                "activity": "manage",
+                "connectionId": "HANA_DEMO"
+            }
+        },
+        {
+            "resourceType": "connectionContent",
+            "contentData": {
+                "activity": "manage",
+                "connectionId": "DI_DATA_LAKE"
+            }
+        }
+    ],
+    "policyReferences": [],
+    "inheritedResources": [],
+    "num_id": 7
+}

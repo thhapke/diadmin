@@ -111,19 +111,20 @@ def main() :
                             pstr += f" - {r['contentData']['connectionId']}"
                         print(pstr)
 
-            # Saving policy
-            policy_files = list()
-            for p in pr :
-                filename = join(params['POLICIES_PATH'],p['id'] + '.json')
-                policy_files.append(filename)
-                with open(filename, 'w') as json_file:
-                    json.dump(p,json_file,indent=4)
+        # Saving policy
+        policy_files = list()
+        for p in pr :
+            filename = join(params['POLICIES_PATH'],p['id'] + '.json')
+            policy_files.append(filename)
+            with open(filename, 'w') as json_file:
+                json.dump(p,json_file,indent=4)
 
-            if args.zip :
-                zipfilename = join(params['POLICIES_PATH'],'policies.zip')
-                with ZipFile(zipfilename, 'w') as zipfile :
-                    for pf in policy_files :
-                        zipfile.write(pf)
+        if args.zip :
+            zipfilename = join(params['POLICIES_PATH'],'policies.zip')
+            logging.info(f"Write zip-file: {zipfilename}")
+            with ZipFile(zipfilename, 'w') as zipfile :
+                for pf in policy_files :
+                    zipfile.write(pf)
 
 
     if args.upload :

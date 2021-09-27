@@ -1,0 +1,95 @@
+{
+    "id": "mycompany.manage.preparation",
+    "description": "Manage preparations",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": false,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-27T06:41:00.668Z",
+    "changedAt": "2021-09-27T06:41:00.668Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [
+        {
+            "resourceType": "app.datahub-app-data.preparation",
+            "contentData": {
+                "activity": "manage"
+            }
+        },
+        {
+            "resourceType": "app.datahub-app-data.preparation",
+            "contentData": {
+                "activity": "execute"
+            }
+        }
+    ],
+    "policyReferences": [
+        {
+            "id": "mycompany.basic.metadata"
+        }
+    ],
+    "inheritedResources": [
+        {
+            "policyId": "mycompany.basic.metadata",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.catalog",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.glossary",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.preparation",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.profile",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.qualityDashboard",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.qualityRule",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.qualityRulebook",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.tagHierarchy",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-metadata"
+                    }
+                }
+            ]
+        }
+    ],
+    "num_id": 10
+}

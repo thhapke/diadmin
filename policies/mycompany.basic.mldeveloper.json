@@ -1,0 +1,95 @@
+{
+    "id": "mycompany.basic.mldeveloper",
+    "description": "ML applications for developers",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": false,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-27T06:40:58.768Z",
+    "changedAt": "2021-09-27T06:40:58.768Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "automl"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "dsp-git-server"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "ml-dm-api"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "ml-scenario-manager"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "ml-deployment-api"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "ml-api"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "metrics-explorer"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "ml-dm-app"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "ml-api-importer"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "jupyter"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "training-service"
+            }
+        }
+    ],
+    "policyReferences": [],
+    "inheritedResources": [],
+    "num_id": 4
+}

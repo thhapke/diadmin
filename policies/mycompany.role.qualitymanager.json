@@ -1,0 +1,125 @@
+{
+    "id": "mycompany.role.qualitymanager",
+    "description": "Manages rules and preparation",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": true,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-27T06:41:02.895Z",
+    "changedAt": "2021-09-27T06:41:02.895Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [],
+    "policyReferences": [
+        {
+            "id": "mycompany.manage.rulebook"
+        },
+        {
+            "id": "mycompany.manage.preparation"
+        }
+    ],
+    "inheritedResources": [
+        {
+            "policyId": "mycompany.basic.metadata",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.catalog",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.glossary",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.preparation",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.profile",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.qualityDashboard",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.qualityRule",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.qualityRulebook",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.tagHierarchy",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-metadata"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "mycompany.manage.preparation",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.preparation",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.preparation",
+                    "contentData": {
+                        "activity": "execute"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "mycompany.manage.rulebook",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.qualityRule",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.qualityRulebook",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.qualityRulebook",
+                    "contentData": {
+                        "activity": "execute"
+                    }
+                }
+            ]
+        }
+    ],
+    "num_id": 14
+}

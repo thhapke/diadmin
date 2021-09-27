@@ -1,0 +1,95 @@
+{
+    "id": "mycompany.basic.member",
+    "description": "Basic member of SAP Data Intelligence that every user needs.",
+    "tenant": "default",
+    "enabled": true,
+    "exposed": false,
+    "createdBy": "demo",
+    "changedBy": "demo",
+    "createdAt": "2021-09-27T06:40:57.861Z",
+    "changedAt": "2021-09-27T06:40:57.861Z",
+    "predelivered": false,
+    "ownerApplication": "",
+    "resources": [
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "datahub-app-data"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "datahub-app-database"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "shared"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "datahub-app-task"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "data-hub-flow-agent"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "datahub-app-daemon"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "datahub-app-core"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "axino-service"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "resourceplan-service"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "datahub-app-scheduler"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "datahub-app-launchpad"
+            }
+        }
+    ],
+    "policyReferences": [],
+    "inheritedResources": [],
+    "num_id": 2
+}
