@@ -230,9 +230,10 @@ def main() :
         G = build_network(policies_dict, resource_classes)
         tag_nodes_by_name(G,params['POLICY_FILTER'],params['POLICY_FILTER'],successor_nodes=True,remove_untagged=True)
 
+        compute_levels(graph=G)
         resources = add_inherited_resources(G)
         resources = check_duplicate_resources(resources)
-        resources = classify_policy(G, resources)
+        resources = classify_policy(G, resources,params['CLASS_THRESHOLD'])
         resources = add_path_node_info(G,resources)
         resources = add_node_att(G,resources)
 

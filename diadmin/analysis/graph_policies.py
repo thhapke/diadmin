@@ -80,10 +80,15 @@ def tag_nodes_by_name(graph,name_filter,new_attribute,successor_nodes = True,rem
         for node in tagged_nodes :
             tag_successors(graph,node,new_attribute)
 
+    orig_len = len(graph.nodes)
+
     if remove_untagged :
         remove_nodes = [ n for n,att in graph.nodes(data=True) if not att[new_attribute] ]
         for n in remove_nodes :
             graph.remove_node(n)
+
+    logging.info(f'Tagging of nodes: {orig_len} -> {len(graph.nodes)}')
+
 
 def tag_successors(graph,node,new_tag) :
     pn = [n for n in graph.predecessors(node)]
@@ -162,12 +167,15 @@ def compute_levels(graph):
             continue
         maxs = max_length(graph,n,1)
         graph.nodes[n]['level'] = maxs-1
+        logging.debug(f"{graph.nodes[n]['level']} Level of node {n}")
         if maxs > max_graph_distance :
             max_graph_distance = maxs
+
+    logging.info(f'Network levels/depth: {max_graph_distance}')
     graph.nodes['root']['max_level'] = max_graph_distance
 
 # Calculates the position of the nodes
-def calc_pos(graph, nodes, width=1., height = 1.0, y_width_band = 0.03):
+def calc_pos(graph, nodes, width=1., height = 1.0, y_width_band = 0.01):
     '''
     Calculates the position of the nodes in a box (1.,1)
     :param G: networkx graph
@@ -177,6 +185,11 @@ def calc_pos(graph, nodes, width=1., height = 1.0, y_width_band = 0.03):
     :param y_width_band: scatters nodes within this band
     :return: node positions
     '''
+
+    # set all exposed nodes to max_level
+    for n,att in graph.nodes(data=True) :
+        if att['exposed'] :
+            graph.nodes[n]['level'] = graph.nodes['root']['max_level']-1
 
     dy = height/graph.nodes['root']['max_level']
     ddy = y_width_band * height
@@ -207,27 +220,39 @@ def draw_graph(graph,resource_classes,color_map,filename = 'analysis.png') :
 
     # filter nodes and edges
 
-    policy_path_edges = [(f,t) for f,t,att in graph.edges(data=True) if att['type'] =='policy_policy']
-    root_path_edges = [(f,t) for f,t,att in graph.edges(data=True) if (att['type'] =='root_policy' and graph.nodes[t]['path_node'] == True)]
+    #policy_path_edges = [(f,t) for f,t,att in graph.edges(data=True) if att['type'] =='policy_policy']
+    #root_path_edges = [(f,t) for f,t,att in graph.edges(data=True) if (att['type'] =='root_policy' and graph.nodes[t]['path_node'] == True)]
 
-    policy_path_nodes = [n for n,att in graph.nodes(data=True) if att['path_node']==True]
+    #policy_path_nodes = [n for n,att in graph.nodes(data=True) if att['path_node']==True]
 
-    pos = calc_pos(graph,policy_path_nodes)
+
+    display_nodes = [n for n,att in graph.nodes(data=True) if not n == 'root' ]
+    display_edges = [(f,t) for f,t,att in graph.edges(data=True) if  f in display_nodes and t in display_nodes]
+
+    pos = calc_pos(graph,display_nodes)
 
     #labels
-    labels = { p: graph.nodes[p]['num_id'] for p in policy_path_nodes}
+    labels = { p: graph.nodes[p]['num_id'] for p in display_nodes}
     nx.draw_networkx_labels(graph,pos,labels,font_size=8,font_color='w')
 
     #nodes
-
-    #color_map={'multiple':'grey','admin':'black','application':'orange','data':'blue','metadata':'green'}
-    node_color =  [color_map[graph.nodes[n]['policyClass']] for n in policy_path_nodes]
+    shape_map ={True:'D',False:'o'}
+    node_color =  [color_map[graph.nodes[n]['policyClass']] for n in display_nodes]
     options = {"node_color": node_color, "node_size": 120, "alpha": 0.9}
-    nx.draw_networkx_nodes(graph, pos, policy_path_nodes, **options)
+
+    exposed_nodes = [n for n in display_nodes if graph.nodes[n]['exposed'] and not n == "root"]
+    non_exposed_nodes =  [n for n in display_nodes if not graph.nodes[n]['exposed'] and not n == "root"]
+
+    node_color =  [color_map[graph.nodes[n]['policyClass']] for n in non_exposed_nodes]
+    options["node_color"] = node_color
+    nx.draw_networkx_nodes(graph, pos, non_exposed_nodes, node_shape = 'o',**options)
+    node_color =  [color_map[graph.nodes[n]['policyClass']] for n in exposed_nodes]
+    options["node_color"] = node_color
+    nx.draw_networkx_nodes(graph, pos, exposed_nodes, node_shape = 'D',**options)
 
     #edges
-    nx.draw_networkx_edges(graph,pos,policy_path_edges, width=0.5,edge_color='cornflowerblue')
-    nx.draw_networkx_edges(graph,pos,root_path_edges, width=1,edge_color='dimgray')
+    nx.draw_networkx_edges(graph,pos,display_edges, width=0.5,edge_color='cornflowerblue')
+    #nx.draw_networkx_edges(graph,pos,root_path_edges, width=1,edge_color='dimgray')
 
     plt.savefig(filename)
     plt.legend()
@@ -257,8 +282,9 @@ def build_network(policies,resource_classes) :
         graph.add_node(p['id'],path_node = False, num_id = p['num_id'],exposed=p['exposed'],
                    resources = resources,inherited = list())
 
-        if p['exposed'] :   # if exposed == False then it cannot be assigned directly to user
-            graph.add_edge('root',p['id'],type='root_policy')
+        #if p['exposed'] :   # if exposed == False then it cannot be assigned directly to user
+        # connect all nodes to "root"
+        graph.add_edge('root',p['id'],type='root_policy')
 
     # Add edges from inherited analysis
     for p in policies :
@@ -266,8 +292,6 @@ def build_network(policies,resource_classes) :
             graph.nodes[p['id']]['path_node'] = True
             graph.nodes[pih['policyId']]['path_node'] = True
             graph.add_edge(pih['policyId'],p['id'],type ='policy_policy')
-
-    compute_levels(graph)
 
     return graph
 
@@ -343,19 +367,24 @@ def check_duplicate_resources(resources) :
     logging.info(f"Number of duplicate resources: {df.loc[df['duplicatesYN']== 'Y'].shape[0]}")
     return df.to_dict('records')
 
-def classify_policy(graph,resources) :
+def classify_policy(graph,resources,threshold_diff = 1,threshold_ratio = 0.9) :
     logging.info("Classify analysis")
     df = pd.DataFrame(resources).fillna('')
-    rc_df = df.groupby(['policyId','resourceClass'])['resourceType'].count().reset_index()
-    rc_df = rc_df.groupby('policyId')['resourceClass'].agg(['count','first'])
-    rc_df.loc[rc_df['count'] >1,'first'] = 'multiple'
+    rc_df = df.groupby(['policyId','resourceClass'])['name'].count().reset_index()
+    rc_df = rc_df.rename(columns={'name':'count'})
+    rc_df['sum'] = rc_df['count'].groupby(rc_df['policyId']).transform('sum')
+    rc_df['ratio'] =rc_df['count']/rc_df['sum']
+    rc_df = rc_df.groupby('policyId').max()
+    rc_df['diff'] =rc_df['sum']- rc_df['count']
+    rc_df['policyClass'] = 'multiple'
+    rc_df.loc[(rc_df['diff']<=threshold_diff) | (rc_df['ratio']>threshold_ratio),'policyClass'] = rc_df.loc[(rc_df['diff']<=1) | (rc_df['ratio']>0.9),'resourceClass']
     for n in graph.nodes :
         if n == 'root':
             continue
-        graph.nodes[n]['policyClass'] = rc_df.loc[n]['first']
+        graph.nodes[n]['policyClass'] = rc_df.loc[n]['policyClass']
     rc_df.reset_index(inplace=True)
-    df = pd.merge(df,rc_df,how='left',on='policyId').drop(columns=['count'])
-    df.rename(columns = {'first':'policyClass'},inplace = True)
+    rc_df.drop(columns=['count','ratio','diff','sum','resourceClass'],inplace=True)
+    df = pd.merge(df,rc_df,how='left',on='policyId')
     return df.to_dict('records')
 
 def add_path_node_info(graph,resources) :

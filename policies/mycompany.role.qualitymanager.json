@@ -7,19 +7,107 @@
     "createdBy": "demo",
     "changedBy": "demo",
     "createdAt": "2021-09-27T06:41:02.895Z",
-    "changedAt": "2021-09-27T06:41:02.895Z",
+    "changedAt": "2021-09-29T12:56:14.531Z",
     "predelivered": false,
     "ownerApplication": "",
     "resources": [],
     "policyReferences": [
         {
-            "id": "mycompany.manage.rulebook"
+            "id": "mycompany.basic.member"
+        },
+        {
+            "id": "mycompany.basic.metadata"
         },
         {
             "id": "mycompany.manage.preparation"
+        },
+        {
+            "id": "mycompany.manage.rulebook"
         }
     ],
     "inheritedResources": [
+        {
+            "policyId": "mycompany.basic.member",
+            "resources": [
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-launchpad"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-database"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "shared"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-task"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "data-hub-flow-agent"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-daemon"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-core"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "axino-service"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "resourceplan-service"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-scheduler"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "datahub-app-data"
+                    }
+                }
+            ]
+        },
         {
             "policyId": "mycompany.basic.metadata",
             "resources": [
@@ -121,5 +209,5 @@
             ]
         }
     ],
-    "num_id": 14
+    "num_id": 16
 }

@@ -13,15 +13,6 @@
     "resources": [],
     "policyReferences": [
         {
-            "id": "mycompany.manage.preparation"
-        },
-        {
-            "id": "mycompany.manage.rulebook"
-        },
-        {
-            "id": "mycompany.basic.developer"
-        },
-        {
             "id": "mycompany.basic.member"
         },
         {
@@ -35,6 +26,15 @@
         },
         {
             "id": "mycompany.manage.glossary"
+        },
+        {
+            "id": "mycompany.manage.preparation"
+        },
+        {
+            "id": "mycompany.manage.rulebook"
+        },
+        {
+            "id": "mycompany.basic.developer"
         }
     ],
     "inheritedResources": [
@@ -364,13 +364,13 @@
                 {
                     "resourceType": "app.datahub-app-data.preparation",
                     "contentData": {
-                        "activity": "manage"
+                        "activity": "execute"
                     }
                 },
                 {
                     "resourceType": "app.datahub-app-data.preparation",
                     "contentData": {
-                        "activity": "execute"
+                        "activity": "manage"
                     }
                 }
             ]
@@ -387,17 +387,17 @@
                 {
                     "resourceType": "app.datahub-app-data.qualityRulebook",
                     "contentData": {
-                        "activity": "execute"
+                        "activity": "manage"
                     }
                 },
                 {
                     "resourceType": "app.datahub-app-data.qualityRulebook",
                     "contentData": {
-                        "activity": "manage"
+                        "activity": "execute"
                     }
                 }
             ]
         }
     ],
-    "num_id": 13
+    "num_id": 15
 }
