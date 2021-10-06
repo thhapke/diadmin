@@ -1,0 +1,8 @@
+{
+	"name": "generated.decimal_6_4",
+	"description": "Decimal(6,4)",
+	"vflow.type": "scalar",
+	"template": "decimal",
+	"value.precision": 6,
+	"value.scale": 4
+}

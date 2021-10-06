@@ -1,0 +1,252 @@
+{
+    "properties": {},
+    "description": "",
+    "processes": {
+        "structuredfileconsumer1": {
+            "component": "com.sap.storage.consumer.v2",
+            "metadata": {
+                "label": "Structured File Consumer",
+                "x": 262,
+                "y": 131,
+                "height": 80,
+                "width": 120,
+                "extensible": false,
+                "generation": 1,
+                "config": {
+                    "service": "SDL",
+                    "serviceConnection": {
+                        "configurationType": "Configuration Manager",
+                        "connectionID": "DI_DATA_LAKE"
+                    },
+                    "source": {
+                        "remoteObjectReference": {
+                            "connection": {
+                                "id": "DI_DATA_LAKE",
+                                "type": "SDL"
+                            },
+                            "name": "dwdstations.csv",
+                            "remoteObjectType": "FILE.CSV",
+                            "qualifiedName": "/shared/teched21/dwdstations.csv",
+                            "nativeQualifiedName": "/shared/teched21/dwdstations.csv",
+                            "owner": "teched21",
+                            "size": 45017,
+                            "version": {
+                                "dataLastModified": 1633095343000,
+                                "metadataLastModified": 1633095343000,
+                                "metadataVersionNumber": 1633095343000
+                            }
+                        },
+                        "dataAccessConfiguration": {
+                            "rowDelimiter": "\n",
+                            "charset": "UTF-8",
+                            "textDelimiter": "\"",
+                            "header": true,
+                            "attributes": [
+                                {
+                                    "name": "from_date",
+                                    "format": "yyyy-MM-dd"
+                                },
+                                {
+                                    "name": "to_date",
+                                    "format": "yyyy-MM-dd"
+                                },
+                                {
+                                    "name": "lat",
+                                    "format": "."
+                                },
+                                {
+                                    "name": "long",
+                                    "format": "."
+                                }
+                            ],
+                            "escapeCharacter": "\"",
+                            "colDelimiter": ","
+                        },
+                        "schema": {
+                            "genericType": "TABLE",
+                            "tableBasedRepresentation": {
+                                "attributes": []
+                            }
+                        },
+                        "capabilityProperties": [
+                            {
+                                "name": "isProfileable",
+                                "value": "true"
+                            }
+                        ]
+                    },
+                    "failOnStringTruncation": true
+                },
+                "outports": [
+                    {
+                        "name": "outTable",
+                        "type": "table",
+                        "vtype-ID": "$GRAPH.generated.structuredfileconsumer1_outTable"
+                    }
+                ]
+            }
+        },
+        "tableproducer1": {
+            "component": "com.sap.database.table.producer.v2",
+            "metadata": {
+                "label": "Table Producer",
+                "x": 544,
+                "y": 110,
+                "height": 80,
+                "width": 120,
+                "extensible": false,
+                "generation": 1,
+                "config": {
+                    "service": "HANA_DB",
+                    "serviceConnection": {
+                        "configurationType": "Configuration Manager",
+                        "connectionID": "HC_DWC_TechEd2021"
+                    },
+                    "source": {
+                        "remoteObjectReference": {
+                            "connection": {
+                                "id": "HC_DWC_TechEd2021",
+                                "type": "HANA_DB"
+                            },
+                            "name": "TECHED2021_DWD_STATIONS",
+                            "remoteObjectType": "TABLE",
+                            "qualifiedName": "/TEST_TECHED%23TECHED_TEST/TECHED2021_DWD_STATIONS",
+                            "nativeQualifiedName": "\"TEST_TECHED#TECHED_TEST\".\"TECHED2021_DWD_STATIONS\"",
+                            "owner": "TEST_TECHED#TECHED_TEST"
+                        },
+                        "schema": {
+                            "genericType": "TABLE",
+                            "tableBasedRepresentation": {
+                                "attributes": [
+                                    {
+                                        "name": "ID",
+                                        "templateType": "string",
+                                        "datatype": "STRING",
+                                        "length": 5,
+                                        "nativeDatatype": "NVARCHAR"
+                                    },
+                                    {
+                                        "name": "FROM_DATE",
+                                        "templateType": "date",
+                                        "datatype": "DATE",
+                                        "nativeDatatype": "DATE"
+                                    },
+                                    {
+                                        "name": "TO_DATE",
+                                        "templateType": "date",
+                                        "datatype": "DATE",
+                                        "nativeDatatype": "DATE"
+                                    },
+                                    {
+                                        "name": "HEIGHT",
+                                        "templateType": "int32",
+                                        "datatype": "INTEGER",
+                                        "length": 4,
+                                        "nativeDatatype": "INTEGER"
+                                    },
+                                    {
+                                        "name": "LAT",
+                                        "templateType": "decimal",
+                                        "datatype": "DECIMAL",
+                                        "precision": 6,
+                                        "scale": 4,
+                                        "nativeDatatype": "DECIMAL"
+                                    },
+                                    {
+                                        "name": "LONG",
+                                        "templateType": "decimal",
+                                        "datatype": "DECIMAL",
+                                        "precision": 6,
+                                        "scale": 4,
+                                        "nativeDatatype": "DECIMAL"
+                                    },
+                                    {
+                                        "name": "NAME",
+                                        "templateType": "string",
+                                        "datatype": "STRING",
+                                        "length": 36,
+                                        "nativeDatatype": "NVARCHAR"
+                                    },
+                                    {
+                                        "name": "STATE",
+                                        "templateType": "string",
+                                        "datatype": "STRING",
+                                        "length": 22,
+                                        "nativeDatatype": "NVARCHAR"
+                                    }
+                                ]
+                            }
+                        },
+                        "capabilityProperties": [
+                            {
+                                "name": "isProfileable",
+                                "value": "true"
+                            }
+                        ]
+                    },
+                    "mode": "truncate",
+                    "attributeMappings": [
+                        {
+                            "expression": "\"stations_id\"",
+                            "target": "ID"
+                        },
+                        {
+                            "expression": "\"from_date\"",
+                            "target": "FROM_DATE"
+                        },
+                        {
+                            "expression": "\"to_date\"",
+                            "target": "TO_DATE"
+                        },
+                        {
+                            "expression": "\"height\"",
+                            "target": "HEIGHT"
+                        },
+                        {
+                            "expression": "\"lat\"",
+                            "target": "LAT"
+                        },
+                        {
+                            "expression": "\"long\"",
+                            "target": "LONG"
+                        },
+                        {
+                            "expression": "\"name\"",
+                            "target": "NAME"
+                        },
+                        {
+                            "expression": "\"state\"",
+                            "target": "STATE"
+                        }
+                    ]
+                },
+                "inports": [
+                    {
+                        "name": "inTable",
+                        "type": "table",
+                        "vtype-ID": "$GRAPH.generated.structuredfileconsumer1_outTable"
+                    }
+                ]
+            }
+        }
+    },
+    "groups": [],
+    "connections": [
+        {
+            "metadata": {
+                "points": "386,171 462.5,171 462.5,150 539,150"
+            },
+            "src": {
+                "port": "outTable",
+                "process": "structuredfileconsumer1"
+            },
+            "tgt": {
+                "port": "inTable",
+                "process": "tableproducer1"
+            }
+        }
+    ],
+    "inports": {},
+    "outports": {},
+    "metadata": {}
+}

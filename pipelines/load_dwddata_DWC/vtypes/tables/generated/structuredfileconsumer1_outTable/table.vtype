@@ -1,0 +1,57 @@
+{
+	"name": "generated.structuredfileconsumer1_outTable",
+	"description": "auto-generated generated.structuredfileconsumer1_outTable",
+	"vflow.type": "table",
+	"rows": {
+		"components": [
+			{
+				"stations_id": {
+					"vflow.type": "scalar",
+					"vtype-ID": "com.sap.core.int32"
+				}
+			},
+			{
+				"from_date": {
+					"vflow.type": "scalar",
+					"vtype-ID": "com.sap.core.date"
+				}
+			},
+			{
+				"to_date": {
+					"vflow.type": "scalar",
+					"vtype-ID": "com.sap.core.date"
+				}
+			},
+			{
+				"height": {
+					"vflow.type": "scalar",
+					"vtype-ID": "com.sap.core.int32"
+				}
+			},
+			{
+				"lat": {
+					"vflow.type": "scalar",
+					"vtype-ID": "$GRAPH.generated.decimal_6_4"
+				}
+			},
+			{
+				"long": {
+					"vflow.type": "scalar",
+					"vtype-ID": "$GRAPH.generated.decimal_6_4"
+				}
+			},
+			{
+				"name": {
+					"vflow.type": "scalar",
+					"vtype-ID": "$GRAPH.generated.string_36"
+				}
+			},
+			{
+				"state": {
+					"vflow.type": "scalar",
+					"vtype-ID": "$GRAPH.generated.string_22"
+				}
+			}
+		]
+	}
+}
