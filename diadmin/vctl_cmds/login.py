@@ -14,14 +14,15 @@ import yaml
 
 # Login to di
 def di_login(connection) :
-    logging.info(f"Login into \'{connection['URL']}\' as user \'{connection['USER']}\'")
+    #logging.info(f"Login into \'{connection['URL']}\' as user \'{connection['USER']}\'")
+    logging.info(f"Cmd: vctl login {connection['URL']} {connection['TENANT']} {connection['USER']} -p {connection['PWD']}")
     login_cmd = ['vctl','login',connection['URL'],connection['TENANT'],connection['USER'],'-p',connection['PWD']]
     ret = run(login_cmd)
     return ret.returncode
 
 if __name__ == '__main__':
 
-    with open('../../config.yaml') as yamls:
+    with open('../../config_demo.yaml') as yamls:
         params = yaml.safe_load(yamls)
 
     #### LOGIN

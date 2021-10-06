@@ -152,7 +152,7 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.INFO)
 
-    with open('../config.yaml') as yamls:
+    with open('../config_demo.yaml') as yamls:
         params = yaml.safe_load(yamls)
 
 

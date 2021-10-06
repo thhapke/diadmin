@@ -39,8 +39,8 @@ def main() :
     #
     description =  "Policy utility script for SAP Data Intelligence.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config.yaml')
-    parser.add_argument('-g', '--generate', help='Generates config.yaml file',action='store_true')
+    parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config_demo.yaml')
+    parser.add_argument('-g', '--generate', help='Generates config_demo.yaml file',action='store_true')
     parser.add_argument('-d', '--download', help='Download specified policy. If wildcard \'*\' is used then policies are filtered or all downloaded.')
     parser.add_argument('-u', '--upload', help='Upload new policy (path). If path is directory all json-files uploaded. If path is a pattern like \'policies/mycompany.\' all matching json-files are uploaded.')
     parser.add_argument('-m', '--mycompany', help='Replaces mycompany in policy name.')
@@ -187,7 +187,7 @@ def main() :
             logging.warning(f"WARNING not all policies could be uploaded:\n{fstr}")
 
     if args.generate :
-        logging.info(f'Generates config.yaml and stores to {config_file} ')
+        logging.info(f'Generates config_demo.yaml and stores to {config_file} ')
         params = {
             'URL' : 'https://demo.k8s-hana.ondemand.com',
             'TENANT': 'default',
