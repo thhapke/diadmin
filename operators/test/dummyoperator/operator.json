@@ -1,0 +1,10 @@
+{
+    "description": "Dummy Operator",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "icon": "puzzle-piece",
+    "config": {
+        "$type": "http://sap.com/vflow/test.dummyoperator.configSchema.json",
+        "script": "file://script.py"
+    }
+}
