@@ -123,8 +123,21 @@ to an SAP Data Intelligence instance. The usage is similar to ```didownload``` t
 The ```--help``` option describes the additional options
 
 ```
+diupload --help
+usage: diupload [-h] [-c CONFIG] [-o OPERATOR] [-p PIPELINE] [-d DOCKERFILE]
 
+Uploads operators, pipelines to SAP Data Intelligence. Pre-requiste: vctl.
 
+optional arguments:
+  -h, --help            show this help message and exit
+  -c CONFIG, --config CONFIG
+                        Specifies yaml-config file
+  -o OPERATOR, --operator OPERATOR
+                        Uploads operators from operators-folder
+  -p PIPELINE, --pipeline PIPELINE
+                        Uploads pipelines from graphs-folder
+  -d DOCKERFILE, --dockerfile DOCKERFILE
+                        Uploads dockerfiles from dockerfiles-folder
 ```
 
 
