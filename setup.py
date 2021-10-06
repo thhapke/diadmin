@@ -12,10 +12,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="diadmin",
-    version="0.0.24",
+    version="0.0.26",
     author="Thorsten Hapke",
     author_email="thorsten.hapke@sap.com",
-    description="Utility scripts for SAP Data Intelligence policy management",
+    description="Utility scripts for SAP Data Intelligence.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     project_urls={'vctl':"https://launchpad.support.sap.com/#/softwarecenter/template/products/%20_APP=00200682500000001943&_EVENT=DISPHIER&HEADER=Y&FUNCTIONBAR=N&EVENT=TREE&NE=NAVIGATE&ENR=73554900100800002981&V=INST&TA=ACTUAL&PAGE=SEARCH/DATA%20INTELLIGENCE-SYS%20MGMT%20CLI"},
@@ -34,7 +34,8 @@ setuptools.setup(
     ],
     entry_points = {
         'console_scripts': ['dipolicy=diadmin.dipolicy:main',
-                            'dipmonitor=diadmin.dipmonitor:main'],
+                            'dipmonitor=diadmin.dipmonitor:main',
+                            'didownload=diadmin.didownload:main'],
     },
     #package_dir={"": "src"},
     #packages=setuptools.find_packages(),
