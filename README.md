@@ -53,6 +53,82 @@ PWD : 'pwd123'
 ```
 
 
+### didownload - part of diadmin
+
+Downloads SAP Data Intelligence artifacts 
+
+* operators
+* pipelines
+* Dockerfiles
+
+to local files systems in order to be offline modified or tested (operators) or using a local git implementation for a version control. The script as to started from the root folder of the project that has the following structure: 
+
+project/ 
+* operators/
+  * package/
+    * (optional) subpackage/
+      * operator/
+        * operator-files
+        * ...
+* pipelines
+  * package/
+    * pipeline/
+      * pipeline-file with sub-folders
+* dockerfiles
+  * name of dockerfile
+    * Dockerfile
+    * Tags.json
+
+In the root folder a config.yaml file is needed. With the option ```--config``` you can specify which config-file should be used in case e.g. you work with different user or SAP Data Intelligence instances. The basic parameters of config.yaml are
+
+```
+URL : 'https://vsystem.ingress.myinstance.ondemand.com'
+TENANT: 'default'
+USER : 'user'
+PWD : 'pwd123'
+
+```
+
+The ```--help``` option describes the additional options
+```
+didownload --help 
+usage: didownload [-h] [-c CONFIG] [-o OPERATOR] [-p PIPELINE] [-d DOCKERFILE] [-g]
+
+Downloads operators, pipelines to local from SAP Data Intelligence to local file system. Pre-requiste: vctl.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -c CONFIG, --config CONFIG
+                        Specifies yaml-config file
+  -o OPERATOR, --operator OPERATOR
+                        Downloads operators from operators-folder
+  -p PIPELINE, --pipeline PIPELINE
+                        Downloads pipelines from graphs-folder
+  -d DOCKERFILE, --dockerfile DOCKERFILE
+                        Downloads dockerfiles from dockerfiles-folder
+  -g, --gitcommit       Git commit for the downloaded files
+
+```
+
+### diupload - part of diadmin
+
+Uploads locally stored SAP Data Intelligence artifacts
+
+* operators
+* pipelines
+* Dockerfiles
+
+to an SAP Data Intelligence instance. The usage is similar to ```didownload``` that uses the same project structure and ```config.yaml``` file.
+
+The ```--help``` option describes the additional options
+
+```
+
+
+```
+
+
+
 ### Additional Modules in diadmin Package
 
 ### genpwds 

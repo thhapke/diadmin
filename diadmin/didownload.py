@@ -14,7 +14,7 @@ from subprocess import run
 import yaml
 
 from diadmin.vctl_cmds.login import di_login
-from diadmin.vctl_cmds.vrep import list_files, read_file
+from diadmin.vctl_cmds.vrep import get_all_files, read_file
 
 VFLOW_PATHS = {'operators':'/files/vflow/subengines/com/sap/python36/operators/',
                'pipelines':'/files/vflow/graphs/',
@@ -38,7 +38,7 @@ def download(artifact,artifact_type='operator') :
     else :
         artifact_path = path.join(apath,artifact.replace('.','/'))
     logging.info(f'Download {artifact_type}: {artifact_path}')
-    files = list_files(artifact_path)
+    files = get_all_files(artifact_path)
 
     for f in files :
         content = read_file(f)
@@ -58,7 +58,7 @@ def main() :
     #
     # command line args
     #
-    description =  "Downloads operators, pipelines to local file system.\nPre-requiste: vctl."
+    description =  "Downloads operators, pipelines to local from SAP Data Intelligence to local file system.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config_demo.yaml')
     parser.add_argument('-o', '--operator', help='Downloads operators from operators-folder')

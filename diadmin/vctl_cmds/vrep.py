@@ -2,7 +2,8 @@ import logging
 from os import path
 from subprocess import check_output, run, CalledProcessError
 
-def list_files(dir) :
+
+def get_dir_files(dir) :
     logging.info(f'List file in folder: {dir}')
     logging.debug(f"vctl vrep user ls {dir}")
     cmd = ['vctl','vrep','user','ls',dir]
@@ -11,7 +12,7 @@ def list_files(dir) :
     except CalledProcessError as cp :
         cmd = ' '.join(cp.cmd)
         logging.error(f'Cmd: {cmd} ')
-        return None
+        return None, None
     dirs = list()
     files = list()
     for f in files_list :
@@ -23,9 +24,22 @@ def list_files(dir) :
         files.append(path.join(dir,f))
     logging.debug(f"Files: {files}")
     logging.debug(f"Directories: {dirs}")
+    return files, dirs
 
+def mkdir_p(root,dir) :
+    files, dirs = get_dir_files(root)
+    for d in dirs:
+        if dir == path.basename(d) :
+            return True
+    else :
+        newdir = path.join(root,dir)
+        run(['vctl','vrep','user','mkdir',newdir])
+
+def get_all_files(dir) :
+
+    files, dirs = get_dir_files(dir)
     for d in dirs :
-        files.extend(list_files(d))
+        files.extend(get_all_files(d))
 
     return files
 
@@ -39,3 +53,7 @@ def read_file(file) :
         logging.error(f'Cmd: {cmd} ')
         return None
     return content
+
+def upload_file(source,target) :
+    logging.info(f"Upload file: {source} -> {target}")
+    run(['vctl','vrep','user','put',source,target])
