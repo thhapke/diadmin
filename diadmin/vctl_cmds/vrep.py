@@ -2,6 +2,10 @@ import logging
 from os import path
 from subprocess import check_output, run, CalledProcessError
 
+VFLOW_PATHS = {'bundle':'/',
+               'operators':'/files/vflow/subengines/com/sap/python36/operators/',
+               'pipelines':'/files/vflow/graphs/',
+               'dockerfiles':'/files/vflow/dockerfiles/'}
 
 def get_dir_files(dir) :
     logging.info(f'List file in folder: {dir}')
@@ -57,3 +61,13 @@ def read_file(file) :
 def upload_file(source,target) :
     logging.info(f"Upload file: {source} -> {target}")
     run(['vctl','vrep','user','put',source,target])
+
+def import_artifact(artifact_type,file,user,flags=None) :
+    if flags :
+        cmd = ['vctl','vrep','user','import',file,VFLOW_PATHS[artifact_type],'-u',user,'-r',flags]
+        logging.info(f'Import {artifact_type[:-1]}: {file} to user: {user} ({" ".join(cmd)})')
+        run(cmd)
+    else :
+        cmd = ['vctl','vrep','user','import',file,VFLOW_PATHS[artifact_type],'-u',user]
+        logging.info(f'Import {artifact_type[:-1]}: {file} to user: {user} ({" ".join(cmd)})')
+        run(cmd)
