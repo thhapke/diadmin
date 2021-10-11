@@ -92,20 +92,20 @@ PWD : 'pwd123'
 The ```--help``` option describes the additional options
 ```
 didownload --help 
-usage: didownload [-h] [-c CONFIG] [-o OPERATOR] [-p PIPELINE] [-d DOCKERFILE] [-g]
+usage: didownload [-h] [-c CONFIG] [-u USER] [-g] {operators,pipelines,dockerfiles} artifact
 
 Downloads operators, pipelines to local from SAP Data Intelligence to local file system. Pre-requiste: vctl.
+
+positional arguments:
+  {operators,pipelines,dockerfiles}
+                        Type of artifacts.
+  artifact              Artifact name (package, graph or dockerfile)
 
 optional arguments:
   -h, --help            show this help message and exit
   -c CONFIG, --config CONFIG
                         Specifies yaml-config file
-  -o OPERATOR, --operator OPERATOR
-                        Downloads operators from operators-folder
-  -p PIPELINE, --pipeline PIPELINE
-                        Downloads pipelines from graphs-folder
-  -d DOCKERFILE, --dockerfile DOCKERFILE
-                        Downloads dockerfiles from dockerfiles-folder
+  -u USER, --user USER  SAP Data Intelligence user if different from login-user. Not applicable for solutions-download
   -g, --gitcommit       Git commit for the downloaded files
 
 ```
@@ -124,20 +124,29 @@ The ```--help``` option describes the additional options
 
 ```
 diupload --help
-usage: diupload [-h] [-c CONFIG] [-o OPERATOR] [-p PIPELINE] [-d DOCKERFILE]
+usage: diupload [-h] [-c CONFIG] [-r CONFLICT] [-n SOLUTION] [-s DESCRIPTION] [-v VERSION] [-u USER] {operators,pipelines,dockerfiles,bundle} artifact
 
-Uploads operators, pipelines to SAP Data Intelligence. Pre-requiste: vctl.
+Uploads operators, pipelines, dockerfiles and bundle to SAP Data Intelligence. Pre-requiste: vctl.
+
+positional arguments:
+  {operators,pipelines,dockerfiles,bundle}
+                        Type of artifacts. 'bundle'- only supports .tgz-files with differnt artifact types.
+  artifact              Artifact file(tgz) or directory
 
 optional arguments:
   -h, --help            show this help message and exit
   -c CONFIG, --config CONFIG
                         Specifies yaml-config file
-  -o OPERATOR, --operator OPERATOR
-                        Uploads operators from operators-folder
-  -p PIPELINE, --pipeline PIPELINE
-                        Uploads pipelines from graphs-folder
-  -d DOCKERFILE, --dockerfile DOCKERFILE
-                        Uploads dockerfiles from dockerfiles-folder
+  -r CONFLICT, --conflict CONFLICT
+                        Conflict handling flag of 'vctl vrep import'
+  -n SOLUTION, --solution SOLUTION
+                        Solution name if uploaded artificats should be exported to solution repository as well.
+  -s DESCRIPTION, --description DESCRIPTION
+                        Description string for solution.
+  -v VERSION, --version VERSION
+                        Version of solution. Necessary if exported to solution repository.
+  -u USER, --user USER  SAP Data Intelligence user if different from login-user. Not applicable for solutions-upload
+
 ```
 
 

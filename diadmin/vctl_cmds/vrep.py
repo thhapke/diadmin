@@ -71,3 +71,9 @@ def import_artifact(artifact_type,file,user,flags=None) :
         cmd = ['vctl','vrep','user','import',file,VFLOW_PATHS[artifact_type],'-u',user]
         logging.info(f'Import {artifact_type[:-1]}: {file} to user: {user} ({" ".join(cmd)})')
         run(cmd)
+
+def export_artifact(artifact_type,artifact,file,user) :
+    source = path.join(VFLOW_PATHS[artifact_type],artifact)
+    cmd = ['vctl','vrep','user','export',file,source,'-u',user]
+    logging.info(f'Export \'{source}\' of user \'{user}\' to file: {file} ({" ".join(cmd)})')
+    run(cmd)

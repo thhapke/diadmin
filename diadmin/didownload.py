@@ -4,21 +4,22 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-from os import path,makedirs,getcwd
+from os import path,makedirs,getcwd,mkdir
 import errno
 import logging
 import argparse
 import re
 from subprocess import run
+import tarfile
 
 import yaml
 
 from diadmin.vctl_cmds.login import di_login
-from diadmin.vctl_cmds.vrep import get_all_files, read_file
+from diadmin.vctl_cmds.vrep import get_all_files, read_file, export_artifact
 
-VFLOW_PATHS = {'operators':'/files/vflow/subengines/com/sap/python36/operators/',
-               'pipelines':'/files/vflow/graphs/',
-               'dockerfiles':'/files/vflow/dockerfiles/'}
+VFLOW_PATHS = {'operators':'files/vflow/subengines/com/sap/python36/operators/',
+               'pipelines':'files/vflow/graphs/',
+               'dockerfiles':'files/vflow/dockerfiles/'}
 
 def save_open(file):
     parentpath = path.dirname(file)
@@ -50,7 +51,11 @@ def download(artifact,artifact_type='operator') :
             logging.info(f'Save file: {rpath}')
             fp.write(content)
 
-
+def change_target_dir(artifact_type,members) :
+    for tarinfo in members:
+        tarinfo.name = re.sub(VFLOW_PATHS[artifact_type],'',tarinfo.name)
+        #print(tarinfo.name)
+        yield tarinfo
 
 def main() :
     logging.basicConfig(level=logging.INFO)
@@ -58,12 +63,13 @@ def main() :
     #
     # command line args
     #
+    achoices = ['operators','pipelines','dockerfiles']
     description =  "Downloads operators, pipelines to local from SAP Data Intelligence to local file system.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config_demo.yaml')
-    parser.add_argument('-o', '--operator', help='Downloads operators from operators-folder')
-    parser.add_argument('-p', '--pipeline', help='Downloads pipelines from graphs-folder ')
-    parser.add_argument('-d', '--dockerfile', help='Downloads dockerfiles from dockerfiles-folder')
+    parser.add_argument('artifact_type', help='Type of artifacts.',choices=achoices)
+    parser.add_argument('artifact', help='Artifact name (package, graph or dockerfile)')
+    parser.add_argument('-u', '--user', help='SAP Data Intelligence user if different from login-user. Not applicable for solutions-download')
     parser.add_argument('-g', '--gitcommit', help='Git commit for the downloaded files',action='store_true')
     args = parser.parse_args()
 
@@ -77,27 +83,19 @@ def main() :
     if not ret == 0 :
         return ret
 
-    if args.operator :
-        download(args.operator,'operators')
-        if args.gitcommit :
-            folder = path.join('operators',args.operator.replace('.','/'))
-            ret = run(['git','add','-f',folder])
-            ret = run(['git','commit','-m','di changes',folder])
-    elif args.pipeline :
-        download(args.pipeline,'pipelines')
-        if args.gitcommit :
-            folder = path.join('pipelines',args.pipeline.replace('.','/'))
-            ret = run(['git','add','-f',folder])
-            ret = run(['git','commit','-m','di changes',folder])
-    elif args.dockerfile :
-        download(args.dockerfile,'dockerfiles')
-        if args.gitcommit :
-            folder = path.join('dockerfiles',args.dockerfile.replace('.','/'))
-            ret = run(['git','add','-f',folder])
-            ret = run(['git','commit','-m','di changes',folder])
-    else:
-        print('Error: Missing artifact type [-o,-p,-d]')
-        return -1
+    user = params['USER']
+    if  args.user :
+        user = args.user
+
+    if not path.isdir(args.artifact_type) :
+        mkdir(args.artifact_type)
+
+    target = path.join(args.artifact_type,args.artifact + '.tgz')
+    export_artifact(args.artifact_type,args.artifact,target,user)
+    target = path.join('.',target)
+    with tarfile.open(target) as tar:
+        logging.info(f'Extract \'{target}\' to: {args.artifact_type}')
+        tar.extractall(path=args.artifact_type,members=change_target_dir(args.artifact_type,tar))
 
 
 if __name__ == '__main__':
