@@ -77,3 +77,14 @@ def export_artifact(artifact_type,artifact,file,user) :
     cmd = ['vctl','vrep','user','export',file,source,'-u',user]
     logging.info(f'Export \'{source}\' of user \'{user}\' to file: {file} ({" ".join(cmd)})')
     run(cmd)
+
+def solution_from_repo(solution_name, version) :
+    run(['vctl','vrep','user','import-solution',solution_name,version])
+
+def solution_to_repo(source, solution_name, version, description) :
+    if description :
+        cmd = ['vctl','vrep','user','export-solution',solution_name,version,source,'-s',description]
+    else :
+        cmd = ['vctl','vrep','user','export-solution',solution_name,version,source]
+    logging.info(f'Export vrep  \'{source}\'  to solution: {solution_name}-{version} ( ({" ".join(cmd)}))')
+    run(cmd)
