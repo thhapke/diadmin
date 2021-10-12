@@ -19,16 +19,17 @@ from diadmin.vctl_cmds.vrep import get_all_files, read_file, export_artifact, so
 from diadmin.vctl_cmds.solution import download_solution
 
 VFLOW_PATHS = {'operators':'files/vflow/subengines/com/sap/python36/operators/',
-               'pipelines':'files/vflow/graphs/',
+               'graphs':'files/vflow/graphs/',
                'dockerfiles':'files/vflow/dockerfiles/'}
 
 
 
 def change_target_dir(artifact_type,members) :
     for tarinfo in members:
-        tarinfo.name = re.sub(VFLOW_PATHS[artifact_type],'',tarinfo.name)
-        #print(tarinfo.name)
-        yield tarinfo
+        tarinfo.name = path.relpath(tarinfo.name,VFLOW_PATHS[artifact_type])
+        #tarinfo.name = re.sub(VFLOW_PATHS[artifact_type],'',tarinfo.name)
+        if not tarinfo.name  == '.':
+            yield tarinfo
 
 def main() :
     logging.basicConfig(level=logging.INFO)
@@ -36,12 +37,12 @@ def main() :
     #
     # command line args
     #
-    achoices = ['operators','pipelines','dockerfiles','solution']
+    achoices = ['operators','graphs','dockerfiles','all','*','solution']
     description =  "Downloads operators, pipelines or solution to local from SAP Data Intelligence to local file system.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config_demo.yaml')
     parser.add_argument('artifact_type', help='Type of artifacts.',choices=achoices)
-    parser.add_argument('artifact', help='Artifact name (package, graph or dockerfile)')
+    parser.add_argument('artifact', help='Artifact name of package, graph or dockerfile or wildcard \'*\'. For \'all\' wildcard is required.',default='*')
     parser.add_argument('-n', '--solution', help='Solution imported to vrep before artifacts downloaded.')
     parser.add_argument('-v', '--version', help='Version of solution. Required for option --solution')
     parser.add_argument('-u', '--user', help='SAP Data Intelligence user if different from login-user. Not applicable for solutions-download')
@@ -72,12 +73,21 @@ def main() :
         file = path.join('solutions',args.artifact + '.zip')
         download_solution(args.artifact,args.version)
     else :
-        target = path.join(args.artifact_type,args.artifact + '.tgz')
-        export_artifact(args.artifact_type,args.artifact,target,user)
-        target = path.join('.',target)
-        with tarfile.open(target) as tar:
-            logging.info(f'Extract \'{target}\' to: {args.artifact_type}')
-            tar.extractall(path=args.artifact_type,members=change_target_dir(args.artifact_type,tar))
+        target = [args.artifact_type]
+        if args.artifact_type == 'all' :
+            target = [('operators','operators/opertator.tgz'),
+                      ('graphs','graphs/graphs.tgz'),
+                      ('dockerfiles','dockerfiles/dockerfiles.tgz')]
+        elif args.artifact == '.' or args.artifact == '*':
+            target = [(args.artifact_type,path.join(args.artifact_type,args.artifact_type + '.tgz'))]
+        else :
+            target = [(args.artifact_typ,path.join(args.artifact_type,args.artifact + '.tgz'))]
+
+        for t in target :
+            export_artifact(t[0],t[0],t[1],user)
+            with tarfile.open(t[1]) as tar:
+                logging.info(f'Extract \'{t[1]}\' to: {t[0]}')
+                tar.extractall(path=t[0],members=change_target_dir(t[0],tar))
 
     if args.gitcommit :
 

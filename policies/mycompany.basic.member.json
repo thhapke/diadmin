@@ -7,7 +7,7 @@
     "createdBy": "demo",
     "changedBy": "demo",
     "createdAt": "2021-09-27T06:40:57.861Z",
-    "changedAt": "2021-09-27T06:40:57.861Z",
+    "changedAt": "2021-09-29T13:23:45.515Z",
     "predelivered": false,
     "ownerApplication": "",
     "resources": [
@@ -15,7 +15,7 @@
             "resourceType": "application",
             "contentData": {
                 "activity": "start",
-                "name": "datahub-app-data"
+                "name": "datahub-app-core"
             }
         },
         {
@@ -57,13 +57,6 @@
             "resourceType": "application",
             "contentData": {
                 "activity": "start",
-                "name": "datahub-app-core"
-            }
-        },
-        {
-            "resourceType": "application",
-            "contentData": {
-                "activity": "start",
                 "name": "axino-service"
             }
         },
@@ -87,9 +80,32 @@
                 "activity": "start",
                 "name": "datahub-app-launchpad"
             }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "datahub-app-data"
+            }
         }
     ],
-    "policyReferences": [],
-    "inheritedResources": [],
+    "policyReferences": [
+        {
+            "id": "sap.dh.systemAccess"
+        }
+    ],
+    "inheritedResources": [
+        {
+            "policyId": "sap.dh.systemAccess",
+            "resources": [
+                {
+                    "resourceType": "systemManagement",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                }
+            ]
+        }
+    ],
     "num_id": 2
 }

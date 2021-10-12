@@ -7,7 +7,7 @@
     "createdBy": "demo",
     "changedBy": "demo",
     "createdAt": "2021-09-27T06:40:59.715Z",
-    "changedAt": "2021-09-27T06:40:59.715Z",
+    "changedAt": "2021-10-11T08:41:16.003Z",
     "predelivered": false,
     "ownerApplication": "",
     "resources": [
@@ -26,6 +26,20 @@
             }
         },
         {
+            "resourceType": "connectionConfiguration",
+            "contentData": {
+                "activity": "write",
+                "technicalName": "*"
+            }
+        },
+        {
+            "resourceType": "connectionConfiguration",
+            "contentData": {
+                "activity": "read",
+                "technicalName": "*"
+            }
+        },
+        {
             "resourceType": "connectionContent",
             "contentData": {
                 "activity": "manage",
@@ -35,5 +49,5 @@
     ],
     "policyReferences": [],
     "inheritedResources": [],
-    "num_id": 5
+    "num_id": 6
 }

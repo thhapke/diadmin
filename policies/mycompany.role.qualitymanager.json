@@ -7,10 +7,17 @@
     "createdBy": "demo",
     "changedBy": "demo",
     "createdAt": "2021-09-27T06:41:02.895Z",
-    "changedAt": "2021-09-29T12:56:14.531Z",
+    "changedAt": "2021-10-11T09:37:46.737Z",
     "predelivered": false,
     "ownerApplication": "",
-    "resources": [],
+    "resources": [
+        {
+            "resourceType": "app.datahub-app-data.qualityDashboard",
+            "contentData": {
+                "activity": "manage"
+            }
+        }
+    ],
     "policyReferences": [
         {
             "id": "mycompany.basic.member"
@@ -33,7 +40,7 @@
                     "resourceType": "application",
                     "contentData": {
                         "activity": "start",
-                        "name": "datahub-app-launchpad"
+                        "name": "datahub-app-data"
                     }
                 },
                 {
@@ -103,7 +110,7 @@
                     "resourceType": "application",
                     "contentData": {
                         "activity": "start",
-                        "name": "datahub-app-data"
+                        "name": "datahub-app-launchpad"
                     }
                 }
             ]
@@ -131,6 +138,12 @@
                 },
                 {
                     "resourceType": "app.datahub-app-data.profile",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.publication",
                     "contentData": {
                         "activity": "read"
                     }
@@ -174,13 +187,20 @@
                 {
                     "resourceType": "app.datahub-app-data.preparation",
                     "contentData": {
-                        "activity": "manage"
+                        "activity": "execute"
                     }
                 },
                 {
                     "resourceType": "app.datahub-app-data.preparation",
                     "contentData": {
-                        "activity": "execute"
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "pipeline-modeler"
                     }
                 }
             ]
@@ -197,17 +217,35 @@
                 {
                     "resourceType": "app.datahub-app-data.qualityRulebook",
                     "contentData": {
-                        "activity": "manage"
+                        "activity": "execute"
                     }
                 },
                 {
                     "resourceType": "app.datahub-app-data.qualityRulebook",
                     "contentData": {
-                        "activity": "execute"
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "pipeline-modeler"
+                    }
+                }
+            ]
+        },
+        {
+            "policyId": "sap.dh.systemAccess",
+            "resources": [
+                {
+                    "resourceType": "systemManagement",
+                    "contentData": {
+                        "activity": "read"
                     }
                 }
             ]
         }
     ],
-    "num_id": 16
+    "num_id": 17
 }

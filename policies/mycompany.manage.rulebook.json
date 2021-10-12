@@ -7,7 +7,7 @@
     "createdBy": "demo",
     "changedBy": "demo",
     "createdAt": "2021-09-27T06:41:02.026Z",
-    "changedAt": "2021-09-27T14:58:30.178Z",
+    "changedAt": "2021-10-11T09:45:29.955Z",
     "predelivered": false,
     "ownerApplication": "",
     "resources": [
@@ -20,17 +20,24 @@
         {
             "resourceType": "app.datahub-app-data.qualityRulebook",
             "contentData": {
-                "activity": "execute"
+                "activity": "manage"
             }
         },
         {
             "resourceType": "app.datahub-app-data.qualityRulebook",
             "contentData": {
-                "activity": "manage"
+                "activity": "execute"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "pipeline-modeler"
             }
         }
     ],
     "policyReferences": [],
     "inheritedResources": [],
-    "num_id": 11
+    "num_id": 12
 }

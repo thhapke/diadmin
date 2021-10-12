@@ -4,8 +4,8 @@ from subprocess import check_output, run, CalledProcessError
 
 VFLOW_PATHS = {'bundle':'/',
                'operators':'/files/vflow/subengines/com/sap/python36/',
-               'pipelines':'/files/vflow/graphs/',
-               'dockerfiles':'/files/vflow/dockerfiles/'}
+               'graphs':'/files/vflow/',
+               'dockerfiles':'/files/vflow/'}
 
 def get_dir_files(dir) :
     logging.info(f'List file in folder: {dir}')

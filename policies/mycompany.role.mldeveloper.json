@@ -13,6 +13,9 @@
     "resources": [],
     "policyReferences": [
         {
+            "id": "mycompany.basic.developer"
+        },
+        {
             "id": "mycompany.basic.member"
         },
         {
@@ -23,9 +26,6 @@
         },
         {
             "id": "sap.dh.connectionMgtStart"
-        },
-        {
-            "id": "mycompany.basic.developer"
         }
     ],
     "inheritedResources": [
@@ -62,7 +62,7 @@
                     "resourceType": "application",
                     "contentData": {
                         "activity": "start",
-                        "name": "datahub-app-launchpad"
+                        "name": "datahub-app-data"
                     }
                 },
                 {
@@ -132,7 +132,7 @@
                     "resourceType": "application",
                     "contentData": {
                         "activity": "start",
-                        "name": "datahub-app-data"
+                        "name": "datahub-app-launchpad"
                     }
                 }
             ]
@@ -160,6 +160,12 @@
                 },
                 {
                     "resourceType": "app.datahub-app-data.profile",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.publication",
                     "contentData": {
                         "activity": "read"
                     }
@@ -204,14 +210,7 @@
                     "resourceType": "application",
                     "contentData": {
                         "activity": "start",
-                        "name": "ml-scenario-manager"
-                    }
-                },
-                {
-                    "resourceType": "application",
-                    "contentData": {
-                        "activity": "start",
-                        "name": "automl"
+                        "name": "ml-deployment-api"
                     }
                 },
                 {
@@ -239,7 +238,7 @@
                     "resourceType": "application",
                     "contentData": {
                         "activity": "start",
-                        "name": "ml-deployment-api"
+                        "name": "ml-scenario-manager"
                     }
                 },
                 {
@@ -276,6 +275,13 @@
                         "activity": "start",
                         "name": "jupyter"
                     }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "automl"
+                    }
                 }
             ]
         },
@@ -290,7 +296,18 @@
                     }
                 }
             ]
+        },
+        {
+            "policyId": "sap.dh.systemAccess",
+            "resources": [
+                {
+                    "resourceType": "systemManagement",
+                    "contentData": {
+                        "activity": "read"
+                    }
+                }
+            ]
         }
     ],
-    "num_id": 14
+    "num_id": 15
 }
