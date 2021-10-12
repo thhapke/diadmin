@@ -3,7 +3,7 @@ from os import path
 from subprocess import check_output, run, CalledProcessError
 
 VFLOW_PATHS = {'bundle':'/',
-               'operators':'/files/vflow/subengines/com/sap/python36/operators/',
+               'operators':'/files/vflow/subengines/com/sap/python36/',
                'pipelines':'/files/vflow/graphs/',
                'dockerfiles':'/files/vflow/dockerfiles/'}
 
@@ -86,5 +86,5 @@ def solution_to_repo(source, solution_name, version, description) :
         cmd = ['vctl','vrep','user','export-solution',solution_name,version,source,'-s',description]
     else :
         cmd = ['vctl','vrep','user','export-solution',solution_name,version,source]
-    logging.info(f'Export vrep  \'{source}\'  to solution: {solution_name}-{version} ( ({" ".join(cmd)}))')
+    logging.info(f'Export vrep  \'{source}\'  to solution: {solution_name}-{version} ({" ".join(cmd)})')
     run(cmd)
