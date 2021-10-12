@@ -92,12 +92,12 @@ PWD : 'pwd123'
 The ```--help``` option describes the additional options
 ```
 didownload --help 
-usage: didownload [-h] [-c CONFIG] [-u USER] [-g] {operators,pipelines,dockerfiles} artifact
+usage: didownload [-h] [-c CONFIG] [-n SOLUTION] [-v VERSION] [-u USER] [-g] {operators,pipelines,dockerfiles,solution} artifact
 
-Downloads operators, pipelines to local from SAP Data Intelligence to local file system. Pre-requiste: vctl.
+Downloads operators, pipelines or solution to local from SAP Data Intelligence to local file system. Pre-requiste: vctl.
 
 positional arguments:
-  {operators,pipelines,dockerfiles}
+  {operators,pipelines,dockerfiles,solution}
                         Type of artifacts.
   artifact              Artifact name (package, graph or dockerfile)
 
@@ -105,6 +105,10 @@ optional arguments:
   -h, --help            show this help message and exit
   -c CONFIG, --config CONFIG
                         Specifies yaml-config file
+  -n SOLUTION, --solution SOLUTION
+                        Solution imported to vrep before artifacts downloaded.
+  -v VERSION, --version VERSION
+                        If artifact is of solution type then version is needed
   -u USER, --user USER  SAP Data Intelligence user if different from login-user. Not applicable for solutions-download
   -g, --gitcommit       Git commit for the downloaded files
 
