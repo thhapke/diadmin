@@ -41,6 +41,8 @@ def main() :
     description =  "Downloads operators, pipelines or solution to local from SAP Data Intelligence to local file system.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config_demo.yaml')
+    parser.add_argument('-i','--init', help = 'Creates a config.yaml and the necessary folders. Additionally you need '
+                                              'to add \'* *\' as dummy positional arguments',action='store_true')
     parser.add_argument('artifact_type', help='Type of artifacts.',choices=achoices)
     parser.add_argument('artifact', help='Artifact name of package, graph or dockerfile or wildcard \'*\'. For \'all\' wildcard is required.',default='*')
     parser.add_argument('-n', '--solution', help='Solution imported to vrep before artifacts downloaded.')
@@ -48,6 +50,19 @@ def main() :
     parser.add_argument('-u', '--user', help='SAP Data Intelligence user if different from login-user. Not applicable for solutions-download')
     parser.add_argument('-g', '--gitcommit', help='Git commit for the downloaded files',action='store_true')
     args = parser.parse_args()
+
+    if args.init :
+        logging.info('Creating config-file: config.yaml')
+        for f in  VFLOW_PATHS.keys() :
+            if not path.isdir(f) :
+                mkdir(f)
+        with open("config.yaml",'w') as file :
+            params = {'URL': 'https://vsystem.ingress.xxx.shoot.live.k8s-hana.ondemand.com',
+                      'TENANT' : 'default',
+                      'USER':'user',
+                      'PWD':'pwd123'}
+            yaml.dump(params,file)
+    return 0
 
     config_file = 'config.yaml'
     if args.config:

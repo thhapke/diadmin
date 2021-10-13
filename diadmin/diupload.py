@@ -4,7 +4,7 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-from os import path,makedirs,getcwd, walk, listdir
+from os import path,makedirs,getcwd, walk, listdir,mkdir
 import logging
 import argparse
 import tarfile
@@ -22,7 +22,7 @@ VFLOW_PATHS = {'operators':'/files/vflow/subengines/com/sap/python36/',
 
 
 def make_tarfile(artifact_type,source) :
-    if artifact_type == 'all' :
+    if artifact_type == 'all' or artifact_type == '*' :
         sources =  [('operators','operators'),('graphs','graphs'),('dockerfiles','dockerfiles')]
     elif source == '.' or source == '*' :
         sources = [(artifact_type,artifact_type)]
@@ -43,9 +43,11 @@ def main() :
     #
     # command line args
     #
-    achoices = ['operators','graphs','dockerfiles','all']
+    achoices = ['operators','graphs','dockerfiles','all','*']
     description =  "Uploads operators, graphs, dockerfiles and bundle to SAP Data Intelligence.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
+    parser.add_argument('-i','--init', help = 'Creates a config.yaml and the necessary folders. Additionally you need '
+                                              'to add \'* *\' as dummy positional arguments',action='store_true')
     parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config_demo.yaml')
     parser.add_argument('-r','--conflict', help = 'Conflict handling flag of \'vctl vrep import\'')
     parser.add_argument('artifact_type', help='Type of artifacts. \'bundle\'- only supports .tgz-files with differnt artifact types.',choices=achoices)
@@ -56,6 +58,20 @@ def main() :
     parser.add_argument('-u', '--user', help='SAP Data Intelligence user if different from login-user. Not applicable for solutions-upload')
     parser.add_argument('-g', '--gitcommit', help='Git commit for the uploaded files',action='store_true')
     args = parser.parse_args()
+
+    if args.init :
+        logging.info('Creating config-file: config.yaml')
+        for f in  VFLOW_PATHS.keys() :
+            if not path.isdir(f) :
+                mkdir(f)
+        with open("config.yaml",'w') as file :
+            params = {'URL': 'https://vsystem.ingress.xxx.shoot.live.k8s-hana.ondemand.com',
+                      'TENANT' : 'default',
+                      'USER':'user',
+                      'PWD':'pwd123'}
+            yaml.dump(params,file)
+        return 0
+
 
     config_file = 'config.yaml'
     if args.config:
