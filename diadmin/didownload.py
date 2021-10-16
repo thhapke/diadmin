@@ -62,7 +62,7 @@ def main() :
                       'USER':'user',
                       'PWD':'pwd123'}
             yaml.dump(params,file)
-    return 0
+        return 0
 
     config_file = 'config.yaml'
     if args.config:
@@ -96,7 +96,7 @@ def main() :
         elif args.artifact == '.' or args.artifact == '*':
             target = [(args.artifact_type,path.join(args.artifact_type,args.artifact_type + '.tgz'))]
         else :
-            target = [(args.artifact_typ,path.join(args.artifact_type,args.artifact + '.tgz'))]
+            target = [(args.artifact_type,path.join(args.artifact_type,args.artifact + '.tgz'))]
 
         for t in target :
             export_artifact(t[0],t[0],t[1],user)

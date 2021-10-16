@@ -9,6 +9,7 @@ import logging
 import argparse
 import tarfile
 import re
+import json
 from subprocess import run
 
 import yaml
@@ -19,6 +20,48 @@ from diadmin.vctl_cmds.vrep import import_artifact, solution_to_repo
 VFLOW_PATHS = {'operators':'/files/vflow/subengines/com/sap/python36/',
                'graphs':'/files/vflow/',
                'dockerfiles':'/files/vflow/'}
+
+def get_script_name(dir) :
+    with open(path.join(dir,'operator.json')) as jf :
+        opjson = json.load(jf)
+    script_name = opjson['config']['script'][7:]
+    logging.info(f"Script: {script_name}")
+    return script_name
+
+
+def toggle_mockapi_file(file,comment=False) :
+    if not comment :
+        logging.info(f"Uncomment 'mockapi' from script: {file}")
+    else :
+        logging.info(f"Comment 'mockapi' from script: {file}")
+    script = ''
+    with open(file,'r') as fp:
+        line = fp.readline()
+        while(line) :
+            if comment :
+                if re.match('from\s+utils.mock_di_api\s+import\s+mock_api',line) :
+                    line = re.sub('from\s+utils.mock_di_api\s+import\s+mock_api','#from utils.mock_di_api import mock_api',line)
+                if re.match('api\s*=\s*mock_api\(__file__\)',line) : #api = mock_api(__file__)
+                    line = re.sub('api\s*=\s*mock_api\(__file__\)','#api = mock_api(__file__)',line)
+            else:
+                if re.match('#from\s+utils.mock_di_api\s+import\s+mock_api',line) :
+                    line = re.sub('#from\s+utils.mock_di_api\s+import\s+mock_api','from utils.mock_di_api import mock_api',line)
+                if re.match('#api\s*=\s*mock_api\(__file__\)',line) : #api = mock_api(__file__)
+                    line = re.sub('#api\s*=\s*mock_api\(__file__\)','api = mock_api(__file__)',line)
+            script += line
+            line = fp.readline()
+    with open(file,'w') as fp :
+        fp.write(script)
+
+def toggle_mockapi(dir,comment) :
+    logging.info(f'Folder: {dir}')
+    if path.isfile(path.join(dir,'operator.json')) :
+        script_name = get_script_name(dir)
+        toggle_mockapi_file(path.join(dir,script_name),comment)
+        return None
+    for sd in listdir(dir) :
+        if path.isdir(path.join(dir,sd)) :
+            toggle_mockapi(path.join(dir,sd),comment)
 
 
 def make_tarfile(artifact_type,source) :
@@ -31,14 +74,18 @@ def make_tarfile(artifact_type,source) :
     tar_filename = path.join(artifact_type,source + '.tgz')
     with tarfile.open(tar_filename, "w:gz") as tar:
         for s in sources :
+            if s[0] == 'operators' :
+                toggle_mockapi(s[1],comment = True)
             for d in listdir(s[1]) :
                 sd = path.join(s[1],d)
                 if path.isdir(sd) :
                     tar.add(sd)
+            if s[0] == 'operators' :
+                toggle_mockapi(s[1],comment = False)
     return tar_filename
 
 def main() :
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.INFO,format='%(levelname)s:%(message)s')
 
     #
     # command line args
