@@ -13,9 +13,6 @@
     "resources": [],
     "policyReferences": [
         {
-            "id": "mycompany.basic.developer"
-        },
-        {
             "id": "mycompany.basic.member"
         },
         {
@@ -26,6 +23,9 @@
         },
         {
             "id": "sap.dh.connectionMgtStart"
+        },
+        {
+            "id": "mycompany.basic.developer"
         }
     ],
     "inheritedResources": [
@@ -309,5 +309,5 @@
             ]
         }
     ],
-    "num_id": 15
+    "num_id": 16
 }

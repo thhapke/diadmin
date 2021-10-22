@@ -11,6 +11,8 @@ sql.txt
 .yo-rc.json
 .vscode/*
 localtest/*
+users/*
+connections/*
 
 *.egg-info
 

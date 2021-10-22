@@ -34,7 +34,7 @@ def get_policy_list_assignments(user=None,format='json') :
         assignements_cmd = ['vctl','policy','list-assignments','-a','--format',format]
     else :
         assignements_cmd = ['vctl','policy','list-assignments',user,'--format',format]
-    assignements = check_output(assignements_cmd).decode('utf-8')
+    assignements = policy = json.loads(check_output(assignements_cmd).decode('utf-8'))
     return assignements
 
 
@@ -84,3 +84,4 @@ def create_policy(filename) :
     compproc = run(create_policy_cmd)
     remove(copy_f)
     return compproc.returncode
+

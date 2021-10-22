@@ -39,7 +39,7 @@ def main() :
     #
     description =  "Policy utility script for SAP Data Intelligence.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config_demo.yaml')
+    parser.add_argument('config', help = 'Specifies yaml-config file')
     parser.add_argument('-g', '--generate', help='Generates config_demo.yaml file',action='store_true')
     parser.add_argument('-d', '--download', help='Download specified policy. If wildcard \'*\' is used then policies are filtered or all downloaded.')
     parser.add_argument('-u', '--upload', help='Upload new policy (path). If path is directory all json-files uploaded. If path is a pattern like \'policies/mycompany.\' all matching json-files are uploaded.')
@@ -49,9 +49,10 @@ def main() :
     parser.add_argument('-a', '--analyse', help='Analyses the policy structure. Resource list is saved as \'resources.csv\'.',action='store_true')
     args = parser.parse_args()
 
-    config_file = 'config.yaml'
     if args.config:
         config_file = args.config
+        if not re.match('.+\.yaml',config_file) :
+            config_file += '.yaml'
     with open(config_file) as yamls:
         params = yaml.safe_load(yamls)
 
@@ -132,16 +133,19 @@ def main() :
         # all file in directory
         if isdir(args.upload) :
             logging.info(f"Upload directory: {args.upload}")
-            upload_files = [join(args.upload,f) for f in listdir(args.upload) if isfile(join(args.upload,f)) and re.match('.+\.json$',f)]
+            upload_files = [join(args.upload,f) for f in listdir(args.upload) if isfile(join(args.upload,f))
+                            and re.match('.+\.json$',f) and not f == 'policies.json']
         elif args.upload == 'all' or args.upload == '*' :
             logging.info(f"Upload directory: {params['POLICIES_PATH']}")
             upload_files = [join(params['POLICIES_PATH'],f) for f in listdir(params['POLICIES_PATH']) \
-                            if isfile(join(params['POLICIES_PATH'],f)) and re.match('.+\.json$',f)]
+                            if isfile(join(params['POLICIES_PATH'],f))
+                            and re.match('.+\.json$',f) and not f == 'policies.json']
         else :
             parent_dir = dirname(args.upload)
             bname = basename(args.upload)
             upload_files = [join(parent_dir,f) for f in listdir(parent_dir) \
-                            if isfile(join(parent_dir,f)) and re.match('.+\.json$',f) and re.match(bname,f) ]
+                            if isfile(join(parent_dir,f)) and re.match('.+\.json$',f)
+                            and re.match(bname,f) and not f == 'policies.json' ]
 
         if mycompany :
             new_uploadfiles = list()

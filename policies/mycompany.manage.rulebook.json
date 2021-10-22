@@ -5,9 +5,9 @@
     "enabled": true,
     "exposed": false,
     "createdBy": "demo",
-    "changedBy": "demo",
+    "changedBy": "teched21",
     "createdAt": "2021-09-27T06:41:02.026Z",
-    "changedAt": "2021-10-11T09:45:29.955Z",
+    "changedAt": "2021-10-17T13:16:56.503Z",
     "predelivered": false,
     "ownerApplication": "",
     "resources": [
@@ -20,13 +20,20 @@
         {
             "resourceType": "app.datahub-app-data.qualityRulebook",
             "contentData": {
-                "activity": "manage"
+                "activity": "execute"
             }
         },
         {
             "resourceType": "app.datahub-app-data.qualityRulebook",
             "contentData": {
-                "activity": "execute"
+                "activity": "manage"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "data-hub-flow-agent"
             }
         },
         {
@@ -39,5 +46,5 @@
     ],
     "policyReferences": [],
     "inheritedResources": [],
-    "num_id": 12
+    "num_id": 13
 }

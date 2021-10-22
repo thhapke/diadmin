@@ -5,13 +5,34 @@
     "enabled": true,
     "exposed": true,
     "createdBy": "demo",
-    "changedBy": "demo",
+    "changedBy": "teched21",
     "createdAt": "2021-09-27T06:52:40.505Z",
-    "changedAt": "2021-09-27T06:52:40.505Z",
+    "changedAt": "2021-10-20T06:44:34.541Z",
     "predelivered": false,
     "ownerApplication": "",
-    "resources": [],
+    "resources": [
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "datahub-app-logging"
+            }
+        },
+        {
+            "resourceType": "application",
+            "contentData": {
+                "activity": "start",
+                "name": "datahub-app-dex"
+            }
+        }
+    ],
     "policyReferences": [
+        {
+            "id": "mycompany.manage.preparation"
+        },
+        {
+            "id": "mycompany.manage.rulebook"
+        },
         {
             "id": "mycompany.basic.developer"
         },
@@ -29,12 +50,6 @@
         },
         {
             "id": "mycompany.manage.glossary"
-        },
-        {
-            "id": "mycompany.manage.preparation"
-        },
-        {
-            "id": "mycompany.manage.rulebook"
         }
     ],
     "inheritedResources": [
@@ -219,6 +234,20 @@
                     "resourceType": "application",
                     "contentData": {
                         "activity": "start",
+                        "name": "ml-scenario-manager"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "automl"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
                         "name": "dsp-git-server"
                     }
                 },
@@ -226,21 +255,7 @@
                     "resourceType": "application",
                     "contentData": {
                         "activity": "start",
-                        "name": "training-service"
-                    }
-                },
-                {
-                    "resourceType": "application",
-                    "contentData": {
-                        "activity": "start",
                         "name": "ml-dm-api"
-                    }
-                },
-                {
-                    "resourceType": "application",
-                    "contentData": {
-                        "activity": "start",
-                        "name": "ml-scenario-manager"
                     }
                 },
                 {
@@ -289,7 +304,7 @@
                     "resourceType": "application",
                     "contentData": {
                         "activity": "start",
-                        "name": "automl"
+                        "name": "training-service"
                     }
                 }
             ]
@@ -400,13 +415,13 @@
                 {
                     "resourceType": "app.datahub-app-data.qualityRulebook",
                     "contentData": {
-                        "activity": "execute"
+                        "activity": "manage"
                     }
                 },
                 {
                     "resourceType": "app.datahub-app-data.qualityRulebook",
                     "contentData": {
-                        "activity": "manage"
+                        "activity": "execute"
                     }
                 },
                 {
@@ -414,6 +429,13 @@
                     "contentData": {
                         "activity": "start",
                         "name": "pipeline-modeler"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "data-hub-flow-agent"
                     }
                 }
             ]
@@ -430,5 +452,5 @@
             ]
         }
     ],
-    "num_id": 16
+    "num_id": 17
 }

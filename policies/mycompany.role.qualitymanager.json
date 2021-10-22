@@ -5,9 +5,9 @@
     "enabled": true,
     "exposed": true,
     "createdBy": "demo",
-    "changedBy": "demo",
+    "changedBy": "teched21",
     "createdAt": "2021-09-27T06:41:02.895Z",
-    "changedAt": "2021-10-11T09:37:46.737Z",
+    "changedAt": "2021-10-18T15:15:54.638Z",
     "predelivered": false,
     "ownerApplication": "",
     "resources": [
@@ -20,16 +20,19 @@
     ],
     "policyReferences": [
         {
+            "id": "mycompany.manage.preparation"
+        },
+        {
+            "id": "mycompany.manage.rulebook"
+        },
+        {
             "id": "mycompany.basic.member"
         },
         {
             "id": "mycompany.basic.metadata"
         },
         {
-            "id": "mycompany.manage.preparation"
-        },
-        {
-            "id": "mycompany.manage.rulebook"
+            "id": "mycompany.basic.profiling"
         }
     ],
     "inheritedResources": [
@@ -182,6 +185,23 @@
             ]
         },
         {
+            "policyId": "mycompany.basic.profiling",
+            "resources": [
+                {
+                    "resourceType": "app.datahub-app-data.profile",
+                    "contentData": {
+                        "activity": "manage"
+                    }
+                },
+                {
+                    "resourceType": "app.datahub-app-data.profile",
+                    "contentData": {
+                        "activity": "execute"
+                    }
+                }
+            ]
+        },
+        {
             "policyId": "mycompany.manage.preparation",
             "resources": [
                 {
@@ -217,13 +237,13 @@
                 {
                     "resourceType": "app.datahub-app-data.qualityRulebook",
                     "contentData": {
-                        "activity": "execute"
+                        "activity": "manage"
                     }
                 },
                 {
                     "resourceType": "app.datahub-app-data.qualityRulebook",
                     "contentData": {
-                        "activity": "manage"
+                        "activity": "execute"
                     }
                 },
                 {
@@ -231,6 +251,13 @@
                     "contentData": {
                         "activity": "start",
                         "name": "pipeline-modeler"
+                    }
+                },
+                {
+                    "resourceType": "application",
+                    "contentData": {
+                        "activity": "start",
+                        "name": "data-hub-flow-agent"
                     }
                 }
             ]
@@ -247,5 +274,5 @@
             ]
         }
     ],
-    "num_id": 17
+    "num_id": 18
 }

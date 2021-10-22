@@ -67,6 +67,9 @@ def main() :
     config_file = 'config.yaml'
     if args.config:
         config_file = args.config
+        if not re.match('.+\.yaml',config_file) :
+            config_file += '.yaml'
+
     with open(config_file) as yamls:
         params = yaml.safe_load(yamls)
 

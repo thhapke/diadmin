@@ -17,6 +17,8 @@ import yaml
 from diadmin.vctl_cmds.login import di_login
 from diadmin.vctl_cmds.vrep import import_artifact, solution_to_repo
 
+LOCAL_TEST = False
+
 VFLOW_PATHS = {'operators':'/files/vflow/subengines/com/sap/python36/',
                'graphs':'/files/vflow/',
                'dockerfiles':'/files/vflow/'}
@@ -41,13 +43,13 @@ def toggle_mockapi_file(file,comment=False) :
             if comment :
                 if re.match('from\s+utils.mock_di_api\s+import\s+mock_api',line) :
                     line = re.sub('from\s+utils.mock_di_api\s+import\s+mock_api','#from utils.mock_di_api import mock_api',line)
-                if re.match('api\s*=\s*mock_api\(__file__\)',line) : #api = mock_api(__file__)
-                    line = re.sub('api\s*=\s*mock_api\(__file__\)','#api = mock_api(__file__)',line)
+                if re.match('api\s*=\s*mock_api',line) : #api = mock_api(__file__)
+                    line = re.sub('api\s*=\s*mock_api','#api = mock_api',line)
             else:
                 if re.match('#from\s+utils.mock_di_api\s+import\s+mock_api',line) :
                     line = re.sub('#from\s+utils.mock_di_api\s+import\s+mock_api','from utils.mock_di_api import mock_api',line)
-                if re.match('#api\s*=\s*mock_api\(__file__\)',line) : #api = mock_api(__file__)
-                    line = re.sub('#api\s*=\s*mock_api\(__file__\)','api = mock_api(__file__)',line)
+                if re.match('#api\s*=\s*mock_api',line) : #api = mock_api(__file__)
+                    line = re.sub('#api\s*=\s*mock_api','api = mock_api',line)
             script += line
             line = fp.readline()
     with open(file,'w') as fp :
@@ -63,6 +65,12 @@ def toggle_mockapi(dir,comment) :
         if path.isdir(path.join(dir,sd)) :
             toggle_mockapi(path.join(dir,sd),comment)
 
+def exclude_files(tarinfo) :
+    basename = path.basename(tarinfo.name)
+    if re.match('\..+',basename) or re.match('.+\.tgz',basename) or basename == '__pycache__' :
+        return None
+    else:
+        return tarinfo
 
 def make_tarfile(artifact_type,source) :
     if artifact_type == 'all' or artifact_type == '*' :
@@ -78,8 +86,7 @@ def make_tarfile(artifact_type,source) :
                 toggle_mockapi(s[1],comment = True)
             for d in listdir(s[1]) :
                 sd = path.join(s[1],d)
-                if path.isdir(sd) :
-                    tar.add(sd)
+                tar.add(sd,filter=exclude_files)
             if s[0] == 'operators' :
                 toggle_mockapi(s[1],comment = False)
     return tar_filename
@@ -123,11 +130,14 @@ def main() :
     config_file = 'config.yaml'
     if args.config:
         config_file = args.config
+        if not re.match('.+\.yaml',config_file) :
+            config_file += '.yaml'
     with open(config_file) as yamls:
         params = yaml.safe_load(yamls)
 
     ret = 0
-    ret = di_login(params)
+    if not LOCAL_TEST :
+        ret = di_login(params)
     if not ret == 0 :
         return ret
 
@@ -140,10 +150,12 @@ def main() :
         conflict = args.conflict
 
     if (re.match('.+\.tgz$',args.artifact) or re.match('.+\.tar.gz$',args.artifact)):
-        import_artifact(args.artifact_type,args.artifact,user,conflict)
+        if not LOCAL_TEST :
+            import_artifact(args.artifact_type,args.artifact,user,conflict)
     else :
         tf = make_tarfile(args.artifact_type,args.artifact)
-        import_artifact(args.artifact_type,tf,user,conflict)
+        if not LOCAL_TEST :
+            import_artifact(args.artifact_type,tf,user,conflict)
 
     if args.solution:
         if re.match('.+\.tgz$',args.artifact):
