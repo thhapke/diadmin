@@ -99,6 +99,7 @@ def main() :
         elif args.artifact == '.' or args.artifact == '*':
             target = [(args.artifact_type,path.join(args.artifact_type,args.artifact_type + '.tgz'))]
         else :
+            args.artifact = args.artifact.replace('.',path.sep)
             target = [(args.artifact_type,path.join(args.artifact_type,args.artifact + '.tgz'))]
 
         for t in target :
