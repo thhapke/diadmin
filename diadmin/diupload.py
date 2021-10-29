@@ -41,15 +41,24 @@ def toggle_mockapi_file(file,comment=False) :
         line = fp.readline()
         while(line) :
             if comment :
+                # from utils.mock_di_api import mock_api
                 if re.match('from\s+utils.mock_di_api\s+import\s+mock_api',line) :
                     line = re.sub('from\s+utils.mock_di_api\s+import\s+mock_api','#from utils.mock_di_api import mock_api',line)
+                # api = mock_api
                 if re.match('api\s*=\s*mock_api',line) : #api = mock_api(__file__)
                     line = re.sub('api\s*=\s*mock_api','#api = mock_api',line)
+                # from diadmin.dimockapi.mock_api import mock_api
+                if re.match('from\s+diadmin.dimockapi.mock_api\s+import\s+mock_api',line) :
+                    line = re.sub('from\s+diadmin.dimockapi.mock_api\s+import\s+mock_api','#from diadmin.dimockapi.mock_api import mock_api',line)
             else:
                 if re.match('#from\s+utils.mock_di_api\s+import\s+mock_api',line) :
                     line = re.sub('#from\s+utils.mock_di_api\s+import\s+mock_api','from utils.mock_di_api import mock_api',line)
                 if re.match('#api\s*=\s*mock_api',line) : #api = mock_api(__file__)
                     line = re.sub('#api\s*=\s*mock_api','api = mock_api',line)
+                # from diadmin.dimockapi.mock_api import mock_api
+                if re.match('#from\s+diadmin.dimockapi.mock_api\s+import\s+mock_api',line) :
+                    line = re.sub('#from\s+diadmin.dimockapi.mock_api\s+import\s+mock_api','from diadmin.dimockapi.mock_api import mock_api',line)
+
             script += line
             line = fp.readline()
     with open(file,'w') as fp :

@@ -6,9 +6,17 @@ SPDX-License-Identifier: Apache-2.0
 
 # SAP Data Intelligence Admin  Tools
 
-This tools help me to manage the user and the security of my DEMO Data Intelligence systems. The pre-requiste is to first install vctl (System Management Command-line) that can be dowloaded from the [SAP Download Center](https://launchpad.support.sap.com/#/softwarecenter/template/products/%20_APP=00200682500000001943&_EVENT=DISPHIER&HEADER=Y&FUNCTIONBAR=N&EVENT=TREE&NE=NAVIGATE&ENR=73554900100800002981&V=INST&TA=ACTUAL&PAGE=SEARCH/DATA%20INTELLIGENCE-SYS%20MGMT%20CLI). 
+These tools help me to manage the user and the security of my DEMO Data Intelligence systems. The pre-requiste is to first install vctl (System Management Command-line) that can be dowloaded from the [SAP Download Center](https://launchpad.support.sap.com/#/softwarecenter/template/products/%20_APP=00200682500000001943&_EVENT=DISPHIER&HEADER=Y&FUNCTIONBAR=N&EVENT=TREE&NE=NAVIGATE&ENR=73554900100800002981&V=INST&TA=ACTUAL&PAGE=SEARCH/DATA%20INTELLIGENCE-SYS%20MGMT%20CLI). 
+
+
 
 ## Command-line scripts
+
+### Installation
+
+```
+pip diadmin
+```
 
 ### dipolicy 
 
@@ -91,7 +99,7 @@ PWD : 'pwd123'
 
 The ```--help``` option describes the additional options
 ```
-didownload --help 
+ddidownload --help
 usage: didownload [-h] [-c CONFIG] [-i] [-n SOLUTION] [-v VERSION] [-u USER] [-g] {operators,graphs,dockerfiles,all,*,solution} artifact
 
 Downloads operators, pipelines or solution to local from SAP Data Intelligence to local file system. Pre-requiste: vctl.
@@ -128,18 +136,19 @@ to an SAP Data Intelligence instance. The usage is similar to ```didownload``` t
 The ```--help``` option describes the additional options
 
 ```
-diupload --help
-usage: diupload [-h] [-c CONFIG] [-r CONFLICT] [-n SOLUTION] [-s DESCRIPTION] [-v VERSION] [-u USER] {operators,pipelines,dockerfiles,bundle} artifact
+diupload --help 
+usage: diupload [-h] [-i] [-c CONFIG] [-r CONFLICT] [-n SOLUTION] [-s DESCRIPTION] [-v VERSION] [-u USER] [-g] {operators,graphs,dockerfiles,all,*} artifact
 
-Uploads operators, pipelines, dockerfiles and bundle to SAP Data Intelligence. Pre-requiste: vctl.
+Uploads operators, graphs, dockerfiles and bundle to SAP Data Intelligence. Pre-requiste: vctl.
 
 positional arguments:
-  {operators,pipelines,dockerfiles,bundle}
+  {operators,graphs,dockerfiles,all,*}
                         Type of artifacts. 'bundle'- only supports .tgz-files with differnt artifact types.
   artifact              Artifact file(tgz) or directory
 
 optional arguments:
   -h, --help            show this help message and exit
+  -i, --init            Creates a config.yaml and the necessary folders. Additionally you need to add '* *' as dummy positional arguments
   -c CONFIG, --config CONFIG
                         Specifies yaml-config file
   -r CONFLICT, --conflict CONFLICT
@@ -151,8 +160,26 @@ optional arguments:
   -v VERSION, --version VERSION
                         Version of solution. Necessary if exported to solution repository.
   -u USER, --user USER  SAP Data Intelligence user if different from login-user. Not applicable for solutions-upload
+  -g, --gitcommit       Git commit for the uploaded files
+
 
 ```
+
+### dimock - part of diadmin
+
+Builds a framework of a new python script for a custom operator. 
+
+dimock --help
+usage: dimock [-h] [-w] operator
+
+Prepare script for offline development
+
+positional arguments:
+operator         Operator folder
+
+optional arguments:
+-h, --help       show this help message and exit
+-w, --overwrite  Forcefully overwrite existing script
 
 
 
