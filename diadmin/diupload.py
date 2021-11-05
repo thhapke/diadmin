@@ -3,7 +3,7 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 #
-
+import os
 from os import path,makedirs,getcwd, walk, listdir,mkdir
 import logging
 import argparse
@@ -14,8 +14,10 @@ from subprocess import run
 
 import yaml
 
+from diadmin.utils.utils import add_defaultsuffix, toggle_mockapi
 from diadmin.vctl_cmds.login import di_login
 from diadmin.vctl_cmds.vrep import import_artifact, solution_to_repo
+
 
 LOCAL_TEST = False
 
@@ -23,56 +25,6 @@ VFLOW_PATHS = {'operators':'/files/vflow/subengines/com/sap/python36/',
                'graphs':'/files/vflow/',
                'dockerfiles':'/files/vflow/'}
 
-def get_script_name(dir) :
-    with open(path.join(dir,'operator.json')) as jf :
-        opjson = json.load(jf)
-    script_name = opjson['config']['script'][7:]
-    logging.info(f"Script: {script_name}")
-    return script_name
-
-
-def toggle_mockapi_file(file,comment=False) :
-    if not comment :
-        logging.info(f"Uncomment 'mockapi' from script: {file}")
-    else :
-        logging.info(f"Comment 'mockapi' from script: {file}")
-    script = ''
-    with open(file,'r') as fp:
-        line = fp.readline()
-        while(line) :
-            if comment :
-                # from utils.mock_di_api import mock_api
-                if re.match('from\s+utils.mock_di_api\s+import\s+mock_api',line) :
-                    line = re.sub('from\s+utils.mock_di_api\s+import\s+mock_api','#from utils.mock_di_api import mock_api',line)
-                # api = mock_api
-                if re.match('api\s*=\s*mock_api',line) : #api = mock_api(__file__)
-                    line = re.sub('api\s*=\s*mock_api','#api = mock_api',line)
-                # from diadmin.dimockapi.mock_api import mock_api
-                if re.match('from\s+diadmin.dimockapi.mock_api\s+import\s+mock_api',line) :
-                    line = re.sub('from\s+diadmin.dimockapi.mock_api\s+import\s+mock_api','#from diadmin.dimockapi.mock_api import mock_api',line)
-            else:
-                if re.match('#from\s+utils.mock_di_api\s+import\s+mock_api',line) :
-                    line = re.sub('#from\s+utils.mock_di_api\s+import\s+mock_api','from utils.mock_di_api import mock_api',line)
-                if re.match('#api\s*=\s*mock_api',line) : #api = mock_api(__file__)
-                    line = re.sub('#api\s*=\s*mock_api','api = mock_api',line)
-                # from diadmin.dimockapi.mock_api import mock_api
-                if re.match('#from\s+diadmin.dimockapi.mock_api\s+import\s+mock_api',line) :
-                    line = re.sub('#from\s+diadmin.dimockapi.mock_api\s+import\s+mock_api','from diadmin.dimockapi.mock_api import mock_api',line)
-
-            script += line
-            line = fp.readline()
-    with open(file,'w') as fp :
-        fp.write(script)
-
-def toggle_mockapi(dir,comment) :
-    logging.info(f'Folder: {dir}')
-    if path.isfile(path.join(dir,'operator.json')) :
-        script_name = get_script_name(dir)
-        toggle_mockapi_file(path.join(dir,script_name),comment)
-        return None
-    for sd in listdir(dir) :
-        if path.isdir(path.join(dir,sd)) :
-            toggle_mockapi(path.join(dir,sd),comment)
 
 def exclude_files(tarinfo) :
     basename = path.basename(tarinfo.name)
@@ -87,6 +39,7 @@ def make_tarfile(artifact_type,source) :
     elif source == '.' or source == '*' :
         sources = [(artifact_type,artifact_type)]
     else :
+        source = source.replace('.',os.sep)
         sources =[(artifact_type,path.join(artifact_type,source))]
     tar_filename = path.join(artifact_type,source + '.tgz')
     with tarfile.open(tar_filename, "w:gz") as tar:
@@ -107,13 +60,13 @@ def main() :
     # command line args
     #
     achoices = ['operators','graphs','dockerfiles','all','*']
-    description =  "Uploads operators, graphs, dockerfiles and bundle to SAP Data Intelligence.\nPre-requiste: vctl."
+    description =  "Uploads operators, graphs and  dockerfiles to SAP Data Intelligence.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-i','--init', help = 'Creates a config.yaml and the necessary folders. Additionally you need '
                                               'to add \'* *\' as dummy positional arguments',action='store_true')
     parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config_demo.yaml')
     parser.add_argument('-r','--conflict', help = 'Conflict handling flag of \'vctl vrep import\'')
-    parser.add_argument('artifact_type', help='Type of artifacts. \'bundle\'- only supports .tgz-files with differnt artifact types.',choices=achoices)
+    parser.add_argument('artifact_type', help='Type of artifacts.',choices=achoices)
     parser.add_argument('artifact', help='Artifact file(tgz) or directory')
     parser.add_argument('-n', '--solution', help='Solution name if uploaded artificats should be exported to solution repository as well.')
     parser.add_argument('-s', '--description', help='Description string for solution.')
@@ -138,9 +91,7 @@ def main() :
 
     config_file = 'config.yaml'
     if args.config:
-        config_file = args.config
-        if not re.match('.+\.yaml',config_file) :
-            config_file += '.yaml'
+        config_file = add_defaultsuffix(args.config,'yaml')
     with open(config_file) as yamls:
         params = yaml.safe_load(yamls)
 

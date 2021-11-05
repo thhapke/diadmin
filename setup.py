@@ -12,7 +12,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="diadmin",
-    version="0.0.41",
+    version="0.0.42",
     author="Thorsten Hapke",
     author_email="thorsten.hapke@sap.com",
     description="Utility scripts for SAP Data Intelligence.",
@@ -44,6 +44,6 @@ setuptools.setup(
     },
     #package_dir={"": "src"},
     #packages=setuptools.find_packages(),
-    packages=['diadmin', 'diadmin.analysis','diadmin.vctl_cmds','diadmin.dimockapi'],
+    packages=['diadmin', 'diadmin.analysis','diadmin.vctl_cmds','diadmin.dimockapi','diadmin.utils'],
     python_requires=">=3.6",
 )

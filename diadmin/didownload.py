@@ -14,6 +14,7 @@ import tarfile
 
 import yaml
 
+from diadmin.utils.utils import add_defaultsuffix, toggle_mockapi
 from diadmin.vctl_cmds.login import di_login
 from diadmin.vctl_cmds.vrep import get_all_files, read_file, export_artifact, solution_from_repo
 from diadmin.vctl_cmds.solution import download_solution
@@ -66,9 +67,7 @@ def main() :
 
     config_file = 'config.yaml'
     if args.config:
-        config_file = args.config
-        if not re.match('.+\.yaml',config_file) :
-            config_file += '.yaml'
+        config_file = add_defaultsuffix(args.config,'yaml')
 
     with open(config_file) as yamls:
         params = yaml.safe_load(yamls)
@@ -100,6 +99,11 @@ def main() :
             target = [(args.artifact_type,path.join(args.artifact_type,args.artifact_type + '.tgz'))]
         else :
             args.artifact = args.artifact.replace('.',path.sep)
+            if path.sep in args.artifact :
+                parentdir = args.artifact.split(path.sep)[0]
+                if not path.isdir(path.join(args.artifact_type,parentdir)):
+                    mkdir(path.join(args.artifact_type,parentdir))
+
             target = [(args.artifact_type,path.join(args.artifact_type,args.artifact + '.tgz'))]
 
         for t in target :
@@ -107,6 +111,8 @@ def main() :
             with tarfile.open(t[1]) as tar:
                 logging.info(f'Extract \'{t[1]}\' to: {t[0]}')
                 tar.extractall(path=t[0],members=change_target_dir(t[0],tar))
+
+                #toggle_mockapi(comment=False)
 
     if args.gitcommit :
 
