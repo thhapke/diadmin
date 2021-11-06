@@ -28,15 +28,6 @@
     ],
     "policyReferences": [
         {
-            "id": "mycompany.manage.preparation"
-        },
-        {
-            "id": "mycompany.manage.rulebook"
-        },
-        {
-            "id": "mycompany.basic.developer"
-        },
-        {
             "id": "mycompany.basic.member"
         },
         {
@@ -50,6 +41,15 @@
         },
         {
             "id": "mycompany.manage.glossary"
+        },
+        {
+            "id": "mycompany.manage.preparation"
+        },
+        {
+            "id": "mycompany.manage.rulebook"
+        },
+        {
+            "id": "mycompany.basic.developer"
         }
     ],
     "inheritedResources": [
@@ -452,5 +452,5 @@
             ]
         }
     ],
-    "num_id": 17
+    "num_id": 20
 }
