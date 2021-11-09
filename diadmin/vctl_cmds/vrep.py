@@ -5,7 +5,8 @@ from subprocess import check_output, run, CalledProcessError
 VFLOW_PATHS = {'bundle':'/',
                'operators':'/files/vflow/subengines/com/sap/python36/',
                'graphs':'/files/vflow/',
-               'dockerfiles':'/files/vflow/'}
+               'dockerfiles':'/files/vflow/',
+               'general':'files/vflow/'}
 
 def get_dir_files(dir) :
     logging.info(f'List file in folder: {dir}')
@@ -76,6 +77,18 @@ def export_artifact(artifact_type,artifact,file,user) :
     source = path.join(VFLOW_PATHS[artifact_type],artifact)
     cmd = ['vctl','vrep','user','export',file,source,'-u',user]
     logging.info(f'Export \'{source}\' of user \'{user}\' to file: {file} ({" ".join(cmd)})')
+    run(cmd)
+
+def export_menue_panel(file,user) :
+    source =''
+    cmd = ['vctl','vrep','user','export',file,source,'-u',user]
+    logging.info(f'Export \'{source}\' of user \'{user}\' to file: {file} ({" ".join(cmd)})')
+    run(cmd)
+
+def import_menue_panel(file,user) :
+
+    cmd = ['vctl','vrep','user','import',file,VFLOW_PATHS['menue_panel'],'-u',user]
+    logging.info(f'Import \menue_panel\': {file} to user: {user} ({" ".join(cmd)})')
     run(cmd)
 
 def solution_from_repo(solution_name, version) :

@@ -38,7 +38,7 @@ def main() :
     #
     # command line args
     #
-    achoices = ['operators','graphs','dockerfiles','all','*','solution']
+    achoices = ['operators','graphs','dockerfiles','menu','all','*','solution']
     description =  "Downloads operators, pipelines or solution to local from SAP Data Intelligence to local file system.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config_demo.yaml')
@@ -89,6 +89,8 @@ def main() :
     if args.artifact_type == 'solution' :
         file = path.join('solutions',args.artifact + '.zip')
         download_solution(args.artifact,args.version)
+    elif args.artifact_type == 'menu_panel' :
+        pass
     else :
         target = [args.artifact_type]
         if args.artifact_type == 'all' :

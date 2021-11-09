@@ -16,14 +16,16 @@ import yaml
 
 from diadmin.utils.utils import add_defaultsuffix, toggle_mockapi
 from diadmin.vctl_cmds.login import di_login
-from diadmin.vctl_cmds.vrep import import_artifact, solution_to_repo
+from diadmin.vctl_cmds.vrep import import_artifact, solution_to_repo, import_menue_panel
+from diadmin.utils.utils import read_userlist
 
 
 LOCAL_TEST = False
 
 VFLOW_PATHS = {'operators':'/files/vflow/subengines/com/sap/python36/',
                'graphs':'/files/vflow/',
-               'dockerfiles':'/files/vflow/'}
+               'dockerfiles':'/files/vflow/',
+               'general':'files/vflow/'}
 
 
 def exclude_files(tarinfo) :
@@ -38,10 +40,13 @@ def make_tarfile(artifact_type,source) :
         sources =  [('operators','operators'),('graphs','graphs'),('dockerfiles','dockerfiles')]
     elif source == '.' or source == '*' :
         sources = [(artifact_type,artifact_type)]
+        source = artifact_type
     else :
-        source = source.replace('.',os.sep)
+        if not artifact_type == 'ui':
+            source = source.replace('.',os.sep)
         sources =[(artifact_type,path.join(artifact_type,source))]
     tar_filename = path.join(artifact_type,source + '.tgz')
+
     with tarfile.open(tar_filename, "w:gz") as tar:
         for s in sources :
             if s[0] == 'operators' :
@@ -59,7 +64,7 @@ def main() :
     #
     # command line args
     #
-    achoices = ['operators','graphs','dockerfiles','all','*']
+    achoices = ['operators','graphs','dockerfiles','general','all','*']
     description =  "Uploads operators, graphs and  dockerfiles to SAP Data Intelligence.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-i','--init', help = 'Creates a config.yaml and the necessary folders. Additionally you need '
@@ -71,7 +76,9 @@ def main() :
     parser.add_argument('-n', '--solution', help='Solution name if uploaded artificats should be exported to solution repository as well.')
     parser.add_argument('-s', '--description', help='Description string for solution.')
     parser.add_argument('-v', '--version', help='Version of solution. Necessary if exported to solution repository.',default='0.0.1')
-    parser.add_argument('-u', '--user', help='SAP Data Intelligence user if different from login-user. Not applicable for solutions-upload')
+    parser.add_argument('-u', '--user', help='SAP Data Intelligence user if different from login-user. '
+                                             'For value "userlist" artifact uploaded to all user in userlist.'
+                                             ' Not applicable for solutions-upload')
     parser.add_argument('-g', '--gitcommit', help='Git commit for the uploaded files',action='store_true')
     args = parser.parse_args()
 
@@ -109,13 +116,27 @@ def main() :
     if args.conflict :
         conflict = args.conflict
 
+
+    #if args.artifact_type == 'ui' :
+        #args.artifact ='vsolution_vflow_pa_settings.json'
+
     if (re.match('.+\.tgz$',args.artifact) or re.match('.+\.tar.gz$',args.artifact)):
         if not LOCAL_TEST :
-            import_artifact(args.artifact_type,args.artifact,user,conflict)
+            if user == 'userlist' :
+                userlist = read_userlist(params['USERLIST']['LIST'])
+                for u in userlist :
+                    import_artifact(args.artifact_type,args.artifact,u['user'],conflict)
+            else :
+                import_artifact(args.artifact_type,args.artifact,user,conflict)
     else :
         tf = make_tarfile(args.artifact_type,args.artifact)
         if not LOCAL_TEST :
-            import_artifact(args.artifact_type,tf,user,conflict)
+            if user == 'userlist' :
+                userlist = read_userlist(params['USERLIST']['LIST'])
+                for u in userlist :
+                    import_artifact(args.artifact_type,tf,u['user'],conflict)
+            else :
+                import_artifact(args.artifact_type,tf,user,conflict)
 
     if args.solution:
         if re.match('.+\.tgz$',args.artifact):
