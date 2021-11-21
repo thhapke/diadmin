@@ -12,7 +12,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="diadmin",
-    version="0.0.44",
+    version="0.0.48",
     author="Thorsten Hapke",
     author_email="thorsten.hapke@sap.com",
     description="Utility scripts for SAP Data Intelligence.",
@@ -30,7 +30,8 @@ setuptools.setup(
         'PyYaml',
         'networkx',
         'pandas',
-        'matplotlib'
+        'matplotlib',
+        'rdflib'
     ],
     entry_points = {
         'console_scripts': ['dipolicy=diadmin.dipolicy:main',
@@ -42,10 +43,17 @@ setuptools.setup(
                             's3upload=diadmin.s3upload:main',
                             'dimock=diadmin.dimock:main',
                             'diwsuser=diadmin.diwsuser:main',
-                            'diprepreuse=diadmin.prepreuse:main']
+                            'diprepreuse=diadmin.prepreuse:main',
+                            'dicatalog=diadmin.dicatalog:main',
+                            'dibackup=diadmin.dibackup:main']
     },
     #package_dir={"": "src"},
     #packages=setuptools.find_packages(),
-    packages=['diadmin', 'diadmin.analysis','diadmin.vctl_cmds','diadmin.dimockapi','diadmin.utils'],
+    packages=['diadmin',
+              'diadmin.analysis',
+              'diadmin.vctl_cmds',
+              'diadmin.dimockapi',
+              'diadmin.utils',
+              'diadmin.metadata_api'],
     python_requires=">=3.6",
 )

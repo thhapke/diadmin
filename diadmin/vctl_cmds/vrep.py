@@ -1,4 +1,5 @@
 import logging
+import subprocess
 from os import path
 from subprocess import check_output, run, CalledProcessError
 
@@ -77,7 +78,11 @@ def export_artifact(artifact_type,artifact,file,user) :
     source = path.join(VFLOW_PATHS[artifact_type],artifact)
     cmd = ['vctl','vrep','user','export',file,source,'-u',user]
     logging.info(f'Export \'{source}\' of user \'{user}\' to file: {file} ({" ".join(cmd)})')
-    run(cmd)
+    try :
+        check_output(cmd)
+        return 1
+    except subprocess.CalledProcessError as e :
+        return 0
 
 def export_menue_panel(file,user) :
     source =''

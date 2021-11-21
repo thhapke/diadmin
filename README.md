@@ -22,11 +22,16 @@ pip diadmin
 
 Command line script that supports admin tasks regarding policy managment, like 
 
-* downloading and 
-* uploading policies including their resources
+- **diupload**: uploading development artifacts (operators, graphs, dockerfiles, menus, solutions)
+- **didownload**: downloading development artifacts (operators, graphs, dockerfiles, menus, solutions)
 * analyses policy dependency and producing a 
   * csv-file of policy resources
   * visualizes  policy network
+* export and import policies
+* build docker images in user workspaces
+* creating user in Data Intelligence system with defined roles/policies
+* monitors pipelines
+* creates a custom operator script framework using config.json and operatorSchema.json
 
 Reads policy data from SAP Data Intelligence and provides a policy network, chart and a resources.csv file for further analysis.
 
