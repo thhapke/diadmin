@@ -89,16 +89,14 @@ def main() :
     if args.artifact_type == 'solution' :
         file = path.join('solutions',args.artifact + '.zip')
         download_solution(args.artifact,args.version)
-    elif args.artifact_type == 'menu_panel' :
-        pass
     else :
         target = [args.artifact_type]
         if args.artifact_type == 'all' :
-            target = [('operators','operators/opertator.tgz'),
-                      ('graphs','graphs/graphs.tgz'),
-                      ('dockerfiles','dockerfiles/dockerfiles.tgz')]
+            target = [('operators','operators','operators/operator.tgz'),
+                      ('graphs','graphs','graphs/graphs.tgz'),
+                      ('dockerfiles','dockerfiles','dockerfiles/dockerfiles.tgz')]
         elif args.artifact == '.' or args.artifact == '*':
-            target = [(args.artifact_type,path.join(args.artifact_type,args.artifact_type + '.tgz'))]
+            target = [(args.artifact_type,args.artifact_type,path.join(args.artifact_type,args.artifact_type + '.tgz'))]
         else :
             args.artifact = args.artifact.replace('.',path.sep)
             if path.sep in args.artifact :
@@ -106,12 +104,14 @@ def main() :
                 if not path.isdir(path.join(args.artifact_type,parentdir)):
                     mkdir(path.join(args.artifact_type,parentdir))
 
-            target = [(args.artifact_type,path.join(args.artifact_type,args.artifact + '.tgz'))]
+            target = [(args.artifact_type,
+                       path.join(args.artifact_type,args.artifact),
+                       path.join(args.artifact_type,args.artifact + '.tgz'))]
 
         for t in target :
-            export_artifact(t[0],t[0],t[1],user)
-            with tarfile.open(t[1]) as tar:
-                logging.info(f'Extract \'{t[1]}\' to: {t[0]}')
+            export_artifact(t[0],t[1],t[2],user)
+            with tarfile.open(t[2]) as tar:
+                logging.info(f'Extract \'{t[1]}\' to: {t[2]}')
                 tar.extractall(path=t[0],members=change_target_dir(t[0],tar))
 
                 #toggle_mockapi(comment=False)
