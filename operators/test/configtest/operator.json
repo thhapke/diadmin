@@ -1,0 +1,10 @@
+{
+    "description": "ConfigTest",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "icon": "puzzle-piece",
+    "config": {
+        "$type": "http://sap.com/vflow/test.configtest.configSchema.json",
+        "script": "file://script.py"
+    }
+}

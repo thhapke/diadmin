@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <circle style="fill: rgb(140, 140, 140);" cx="42.838" cy="174.194" r="8.34" transform="matrix(4.621571, 0, 0, 4.969501, -145.218903, -422.781372)"/>
+  <circle style="fill: rgb(140, 140, 140);" cx="50.891" cy="102.167" r="8.34" transform="matrix(4.325607, 0, 0, 4.526728, -169.84285, -216.313477)"/>
+  <circle style="fill: rgb(140, 140, 140);" cx="81.898" cy="67.352" r="8.34" transform="matrix(4.624498, 0, 0, 4.830064, -212.006912, -144.384125)"/>
+  <circle style="fill: rgb(145, 145, 145);" cx="108.34" cy="118.847" r="8.34" transform="matrix(5.156192, 0, 0, 4.466228, -310.320557, -209.627899)"/>
+  <circle style="fill: rgb(143, 143, 143);" cx="139.84" cy="36.568" r="8.34" transform="matrix(4.470967, 0, 0, 4.709562, -310.67334, -95.898392)"/>
+  <circle style="fill: rgb(145, 145, 145);" cx="150.401" cy="150.646" r="8.34" transform="matrix(5.319345, 0, 0, 5.575837, -427.672516, -421.079346)"/>
+  <circle style="fill: rgb(143, 143, 143);" cx="180.816" cy="102.167" r="8.34" transform="matrix(4.881547, 0, 0, 4.526726, -457.98941, -216.313263)"/>
+  <circle style="fill: rgb(145, 145, 145);" cx="150.401" cy="75.029" r="8.34" transform="matrix(4.764239, 0, 0, 4.526726, -285.508698, -236.740997)"/>
+  <circle style="fill: rgb(238, 171, 48);" cx="108.34" cy="150.646" r="8.34" transform="matrix(5.156194, 0, 0, 4.662235, -310.320862, -291.068329)"/>
+  <circle style="fill: rgb(238, 171, 48);" cx="108.34" cy="150.646" r="8.34" transform="matrix(4.588804, 0, 0, 4.284023, -224.638031, -494.043518)"/>
+  <ellipse style="stroke: rgb(238, 171, 48); fill: none; stroke-width: 9px;" cx="249.103" cy="363.609" rx="65.681" ry="101.792"/>
+  <ellipse style="stroke: rgb(238, 171, 48); fill: none; stroke-width: 8px;" cx="296.616" cy="13.405" rx="61" ry="93.273" transform="matrix(0.810417, 0.585853, -0.585853, 0.810417, 62.853891, -73.309981)"/>
+  <circle style="fill: rgb(140, 140, 140);" cx="150.401" cy="75.029" r="8.34" transform="matrix(4.764239, 0, 0, 4.526726, -590.445374, -293.066925)"/>
+</svg>

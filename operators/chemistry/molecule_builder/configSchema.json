@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "http://sap.com/vflow/chemistry.molecule_builder.configSchema.json",
+    "type": "object",
+    "properties": {
+        "codelanguage": {
+            "type": "string"
+        },
+        "script": {
+            "type": "string"
+        },
+        "name": {
+            "title": "Name",
+            "description": "Name",
+            "type": "string"
+        },
+        "num": {
+            "title": "Number",
+            "description": "Number",
+            "type": "number"
+        }
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "description": "Generate Device Data",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "input",
+            "type": "message.file"
+        }
+    ],
+    "outports": [
+        {
+            "name": "output",
+            "type": "message.table"
+        }
+    ],
+    "iconsrc": "generator.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/teched21.generate_device_data.configSchema.json",
+        "num_device_types": 7,
+        "num_devices": 1000,
+        "prefix_device": "GRO-",
+        "script": "file://script.py",
+        "start_date": "2014-03-02"
+    }
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <rect x="24.286" y="61.746" width="341.663" height="211.982" style="stroke-width: 7px; fill: none; stroke: rgb(142, 141, 141);" transform="matrix(0.928648, 0.370963, -0.370963, 0.928648, 133.726395, -43.36628)"/>
+  <circle style="fill: none; stroke: rgb(238, 171, 48); stroke-width: 20px;" cx="175.383" cy="149.68" r="50.32"/>
+  <line style="stroke: rgb(238, 171, 48); stroke-width: 23px;" x1="225.70299530029297" y1="177.08786744786337" x2="366.178009537817" y2="237.4394360434115"/>
+  <circle style="fill: rgb(238, 171, 48);" cx="365.797" cy="237.452" r="11.5"/>
+  <g transform="matrix(0.077781, 0.245963, -0.502693, 0.158966, 375.486023, 161.433914)" style="">
+    <line style="stroke: rgb(238, 171, 48); stroke-width: 23px;" x1="125.213" y1="121.128" x2="265.688" y2="181.48"/>
+    <circle style="fill: rgb(238, 171, 48);" cx="265.307" cy="181.493" r="11.5"/>
+  </g>
+  <g transform="matrix(0.067223, 0.212575, -0.456571, 0.144381, 390.992737, 173.490738)" style="">
+    <line style="stroke: rgb(238, 171, 48); stroke-width: 23px;" x1="125.213" y1="121.128" x2="265.688" y2="181.48"/>
+    <circle style="fill: rgb(238, 171, 48);" cx="265.307" cy="181.493" r="11.5"/>
+  </g>
+  <g transform="matrix(0.077781, 0.245963, -0.502693, 0.158966, 405.537872, 187.386429)" style="">
+    <line style="stroke: rgb(238, 171, 48); stroke-width: 23px;" x1="125.213" y1="121.128" x2="265.688" y2="181.48"/>
+    <circle style="fill: rgb(238, 171, 48);" cx="265.307" cy="181.493" r="11.5"/>
+  </g>
+</svg>

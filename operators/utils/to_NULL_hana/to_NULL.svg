@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <rect x="91.83" y="78.077" width="310.482" height="236.081" style="stroke-width: 5px; stroke: rgb(95, 97, 86); fill: none;"/>
+  <ellipse style="stroke-width: 5px; stroke: rgb(95, 97, 86); fill: rgb(255, 255, 255);" cx="247.072" cy="316.974" rx="155.242" ry="49.867"/>
+  <ellipse style="stroke-width: 5px; stroke: rgb(95, 97, 86); fill: rgb(255, 255, 255);" cx="247.072" cy="81.981" rx="155.242" ry="49.867"/>
+  <text style="fill: rgb(238, 171, 48); font-family: Arial, sans-serif; font-size: 150px; stroke: rgb(238, 171, 48); white-space: pre;" x="60.558" y="484.982">NULL</text>
+</svg>

@@ -1,0 +1,23 @@
+{
+    "description": "Generate Device Services",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "input",
+            "type": "message.table"
+        }
+    ],
+    "outports": [
+        {
+            "name": "output",
+            "type": "message.table"
+        }
+    ],
+    "iconsrc": "generator.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/teched21.generate_device_services.configSchema.json",
+        "script": "file://script.py",
+        "service_prob": 0.1
+    }
+}

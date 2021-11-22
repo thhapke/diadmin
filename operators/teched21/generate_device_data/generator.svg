@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <path d="M 116.028 207.516 H 279.284 L 279.284 149.766 L 333.265 239.408 L 279.284 329.05 L 279.284 271.3 H 116.028 V 207.516 Z" style="fill: rgb(145, 145, 145);" transform="matrix(0.999989, 0.004738, -0.004738, 0.999989, -88.361031, 19.382919)" bx:shape="arrow 116.028 149.766 217.237 179.284 63.784 53.981 0 1@412d8124"/>
+  <rect x="261.23" y="128.606" width="217.36" height="25.865" style="fill: rgb(238, 171, 48);"/>
+  <rect x="261.23" y="166.937" width="217.36" height="25.865" style="fill: rgb(238, 171, 48);"/>
+  <rect x="261.23" y="202.173" width="217.36" height="25.865" style="fill: rgb(238, 171, 48);"/>
+  <rect x="261.23" y="246.063" width="217.36" height="25.865" style="fill: rgb(238, 171, 48);"/>
+  <rect x="261.23" y="283.153" width="217.36" height="25.865" style="fill: rgb(238, 171, 48);"/>
+  <rect x="261.23" y="328.169" width="217.36" height="25.865" style="fill: rgb(238, 171, 48);"/>
+  <rect x="261.23" y="369.63" width="217.36" height="25.865" style="fill: rgb(238, 171, 48);"/>
+</svg>

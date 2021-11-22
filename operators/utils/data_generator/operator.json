@@ -1,0 +1,17 @@
+{
+    "description": "Data Generator",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "outports": [
+        {
+            "name": "output",
+            "type": "message"
+        }
+    ],
+    "icon": "puzzle-piece",
+    "config": {
+        "$type": "http://sap.com/vflow/utils.data_generator.configSchema.json",
+        "period": null,
+        "script": "file://script.py"
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "description": "Parquet df",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "input",
+            "type": "message.file"
+        }
+    ],
+    "outports": [
+        {
+            "name": "output",
+            "type": "message"
+        }
+    ],
+    "icon": "puzzle-piece",
+    "config": {
+        "$type": "http://sap.com/vflow/utils.parquet2df.configSchema.json",
+        "script": "file://script.py"
+    },
+    "tags": {
+        "pyarrow": ""
+    }
+}

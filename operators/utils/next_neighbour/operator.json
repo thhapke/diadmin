@@ -1,0 +1,40 @@
+{
+    "description": "Next Neighbour",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "net",
+            "type": "message.file"
+        },
+        {
+            "name": "data",
+            "type": "message.table"
+        }
+    ],
+    "outports": [
+        {
+            "name": "output",
+            "type": "message.table"
+        }
+    ],
+    "iconsrc": "nextneighbour.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/utils.next_neighbour.configSchema.json",
+        "dim_data": [
+            "LONGITUDE",
+            "LATITUDE"
+        ],
+        "dim_net": [
+            "LONGITUDE",
+            "LATITUDE"
+        ],
+        "script": "file://script.py",
+        "suffix_data": "_DATA",
+        "suffix_net": "_NET"
+    },
+    "tags": {
+        "geopy": "",
+        "scipy": ""
+    }
+}

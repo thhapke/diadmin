@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <path d="M 298.086 135.02 H 434.037 L 434.037 119.038 L 469.037 149.038 L 434.037 179.038 L 434.037 163.057 H 298.086 V 135.02 Z" style="fill: rgb(117, 117, 117);" transform="matrix(1, -0.000192, 0.000192, 1, -250.235901, 121.299232)" bx:shape="arrow 298.086 119.038 170.951 60 28.037 35 0 1@37d5779b"/>
+  <line style="stroke-width: 5px; stroke: rgb(126, 126, 126);" x1="293.403" y1="30.052" x2="293.239" y2="459.989"/>
+  <line style="stroke-width: 3px; stroke: rgb(121, 121, 121);" x1="293.239" y1="125.678" x2="372.262" y2="125.678"/>
+  <line style="stroke: rgb(125, 125, 125); stroke-width: 3px;" x1="293.403" y1="206.81" x2="372.262" y2="206.81"/>
+  <rect x="263.188" width="73.813" height="57.925" style="fill: rgb(120, 120, 120);"/>
+  <rect x="334.374" y="93.712" width="73.813" height="57.925" style="fill: rgb(238, 171, 48);" bx:origin="0.641 1.457"/>
+  <line style="stroke-width: 3px; stroke: rgb(126, 126, 126);" x1="372.262" y1="227.579" x2="372.262" y2="372.21"/>
+  <rect x="337.001" y="176.11" width="73.813" height="57.925" style="fill: rgb(120, 120, 120);" bx:origin="0.641 1.457"/>
+  <line style="stroke: rgb(114, 114, 114); stroke-width: 3px;" x1="372.262" y1="300.28" x2="420.86" y2="298.901"/>
+  <rect x="408.187" y="267.975" width="73.813" height="57.925" style="fill: rgb(238, 171, 48);" bx:origin="0.641 1.457"/>
+  <line style="stroke-width: 3px; stroke: rgb(118, 118, 118);" x1="372.262" y1="372.21" x2="432.627" y2="372.21"/>
+  <rect x="408.187" y="339.285" width="73.813" height="57.925" style="fill: rgb(238, 171, 48);" bx:origin="0.641 1.457"/>
+  <line style="stroke: rgb(0, 0, 0);" x1="85.21633911132811" y1="300" x2="85.21633911132811" y2="300"/>
+  <line style="stroke-width: 3px; stroke: rgb(113, 113, 113);" x1="293.403" y1="459.989" x2="347.336" y2="459.989"/>
+  <rect x="337.001" y="424.586" width="73.813" height="57.925" style="fill: rgb(120, 120, 120);" bx:origin="0.641 1.457"/>
+</svg>

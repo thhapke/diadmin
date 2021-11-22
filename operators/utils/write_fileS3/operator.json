@@ -1,0 +1,24 @@
+{
+    "description":"Write File S3",
+    "component":"com.sap.system.python3Operator",
+    "outports":[
+       {
+          "name":"output",
+          "type":"message"
+       }
+    ],
+    "inports":[
+        {
+            "name":"input",
+            "type":"message"
+        }
+    ],
+    "iconsrc":"AWS_logo.png",
+    "config":{
+       "$type":"http://sap.com/vflow/utils.write_fileS3.configSchema.json",
+       "script":"file://script.py"
+    },
+    "tags":{
+       "AWS":""
+    }
+ }

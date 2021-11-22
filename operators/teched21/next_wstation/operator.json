@@ -1,0 +1,30 @@
+{
+    "description": "Next Weather Station",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "stations",
+            "type": "message.file"
+        },
+        {
+            "name": "devices",
+            "type": "message.table"
+        }
+    ],
+    "outports": [
+        {
+            "name": "output",
+            "type": "message.table"
+        }
+    ],
+    "iconsrc": "nextneighbour.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/teched21.next_wstation.configSchema.json",
+        "script": "file://script.py"
+    },
+    "tags": {
+        "geopy": "",
+        "scipy": ""
+    }
+}

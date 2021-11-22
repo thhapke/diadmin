@@ -1,0 +1,23 @@
+{
+    "description": "To Null HANA",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "outports": [
+        {
+            "name": "output",
+            "type": "message"
+        }
+    ],
+    "iconsrc": "to_NULL.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/utils.to_NULL_hana.configSchema.json",
+        "columns": [
+            "col1",
+            "col2"
+        ],
+        "num_value": null,
+        "script": "file://script.py",
+        "str_value": "",
+        "table_name": ""
+    }
+}

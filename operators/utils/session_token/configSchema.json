@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "http://sap.com/vflow/utils.session_token.configSchema.json",
+    "type": "object",
+    "properties": {
+        "codelanguage": {
+            "type": "string"
+        },
+        "script": {
+            "type": "string"
+        },
+        "password": {
+            "title": "Password",
+            "description": "Password",
+            "type": "string"
+        },
+        "metadataAPI": {
+            "title": "HTTP Connection",
+            "description": "HTTP Connection",
+            "type": "string"
+        }
+    }
+}

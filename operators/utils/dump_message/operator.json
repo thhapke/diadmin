@@ -1,0 +1,22 @@
+{
+    "description": "Dump Message",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "input",
+            "type": "message"
+        }
+    ],
+    "outports": [
+        {
+            "name": "output",
+            "type": "message.file"
+        }
+    ],
+    "icon": "download",
+    "config": {
+        "$type": "http://sap.com/vflow/utils.dump_message.configSchema.json",
+        "script": "file://script.py"
+    }
+}

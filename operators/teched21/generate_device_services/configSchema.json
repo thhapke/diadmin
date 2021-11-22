@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "http://sap.com/vflow/teched21.generate_device_services.configSchema.json",
+    "type": "object",
+    "properties": {
+        "codelanguage": {
+            "type": "string"
+        },
+        "script": {
+            "type": "string"
+        },
+        "service_prob": {
+            "title": "Service Probability",
+            "description": "Service Probability",
+            "type": "number"
+        }
+    }
+}

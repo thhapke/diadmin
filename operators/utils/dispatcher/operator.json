@@ -1,0 +1,16 @@
+{
+    "description": "Dispatcher",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "outports": [
+        {
+            "name": "data",
+            "type": "message"
+        }
+    ],
+    "icon": "send",
+    "config": {
+        "$type": "http://sap.com/vflow/utils.dispatcher.configSchema.json",
+        "script": "file://script.py"
+    }
+}

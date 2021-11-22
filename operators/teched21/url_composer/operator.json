@@ -1,0 +1,22 @@
+{
+    "description": "URL composer",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "input",
+            "type": "message.table"
+        }
+    ],
+    "outports": [
+        {
+            "name": "output",
+            "type": "message"
+        }
+    ],
+    "iconsrc": "url_compose.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/teched21.url_composer.configSchema.json",
+        "script": "file://script.py"
+    }
+}

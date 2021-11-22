@@ -1,0 +1,22 @@
+{
+    "description": "Test Ports",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "input",
+            "type": "message.file"
+        }
+    ],
+    "outports": [
+        {
+            "name": "output",
+            "type": "message"
+        }
+    ],
+    "icon": "puzzle-piece",
+    "config": {
+        "$type": "http://sap.com/vflow/test.ports.configSchema.json",
+        "script": "def on_input(msg) :\n\n    api.send('output',msg)    # datatype: message\n\napi.set_port_callback('input',on_input)   # datatype: message\n\n"
+    }
+}

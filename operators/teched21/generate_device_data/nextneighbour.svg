@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <circle style="fill: rgb(216, 216, 216);" cx="42.838" cy="174.194" r="8.34" transform="matrix(2.917201, 0, 0, 2.78229, -77.725418, -107.862526)"/>
+  <circle style="fill: rgb(216, 216, 216);" cx="50.891" cy="102.167" r="8.34" transform="matrix(2.917201, 0, 0, 2.78229, -77.725418, -107.862526)"/>
+  <circle style="fill: rgb(216, 216, 216);" cx="81.898" cy="67.352" r="8.34" transform="matrix(2.917201, 0, 0, 2.78229, -77.725418, -107.862526)"/>
+  <circle style="fill: rgb(216, 216, 216);" cx="108.34" cy="118.847" r="8.34" transform="matrix(2.917201, 0, 0, 2.78229, -77.725418, -107.862526)"/>
+  <circle style="fill: rgb(216, 216, 216);" cx="139.84" cy="36.568" r="8.34" transform="matrix(2.917201, 0, 0, 2.78229, -77.725418, -107.862526)"/>
+  <circle style="fill: rgb(216, 216, 216);" cx="150.401" cy="150.646" r="8.34" transform="matrix(2.917201, 0, 0, 2.78229, -77.725418, -107.862526)"/>
+  <circle style="fill: rgb(216, 216, 216);" cx="180.816" cy="102.167" r="8.34" transform="matrix(2.917201, 0, 0, 2.78229, -77.725418, -107.862526)"/>
+  <circle style="fill: rgb(216, 216, 216);" cx="150.401" cy="75.029" r="8.34" transform="matrix(2.917201, 0, 0, 2.78229, -77.725418, -107.862526)"/>
+  <circle style="fill: rgb(238, 171, 48);" cx="108.34" cy="150.646" r="8.34" transform="matrix(2.917201, 0, 0, 2.78229, -77.725418, -107.862526)"/>
+  <circle style="fill: rgb(216, 216, 216);" cx="108.34" cy="150.646" r="8.34" transform="matrix(2.917201, 0, 0, 2.78229, 33.871712, 16.621527)"/>
+  <circle style="fill: rgb(238, 171, 48);" cx="108.34" cy="150.646" r="8.34" transform="matrix(2.917201, 0, 0, 2.78229, -20.899252, -364.659546)"/>
+  <ellipse style="stroke-width: 2px; stroke: rgb(238, 171, 48); fill: none;" cx="238.079" cy="266.45" rx="40.079" ry="76.827"/>
+  <ellipse style="stroke-width: 2px; stroke: rgb(238, 171, 48); fill: none;" cx="296.616" cy="13.405" rx="40.079" ry="72.336" transform="matrix(0.810417, 0.585853, -0.585853, 0.810417, 85.268204, -164.005219)"/>
+</svg>

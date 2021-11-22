@@ -1,0 +1,22 @@
+{
+    "description": "Unzip",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "input",
+            "type": "message"
+        }
+    ],
+    "outports": [
+        {
+            "name": "output",
+            "type": "message.table"
+        }
+    ],
+    "iconsrc": "unzip.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/teched21.unzip.configSchema.json",
+        "script": "file://script.py"
+    }
+}
