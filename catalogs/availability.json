@@ -1,0 +1,22 @@
+{
+  "name": "Availability",
+  "description": "Availability of dataset (https://www.dcat-ap.de/def/plannedAvailability/1_0.html)",
+  "nodes": [
+    {
+      "name": "temporary",
+      "description": "Dataset can be removed at anytime (http://dcat-ap.de/def/plannedAvailability/temporary)"
+    },
+    {
+      "name": "experimental",
+      "description": "Available for testing at least for 1 year (http://dcat-ap.de/def/plannedAvailability/experimental)"
+    },
+    {
+      "name": "available",
+      "description": "Mid-term available for at least a couple of years (http://dcat-ap.de/def/plannedAvailability/available)"
+    },
+    {
+      "name": "stable",
+      "description": "Long-term available (http://dcat-ap.de/def/plannedAvailability/stable)"
+    }
+  ]
+}

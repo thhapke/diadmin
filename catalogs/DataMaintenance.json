@@ -1,0 +1,123 @@
+{
+    "hierarchy": {
+        "hierarchyDescriptor": {
+            "name": "DataMaintenance",
+            "description": ""
+        },
+        "id": "91C41AC0E6278C9F1700734202FD18DA",
+        "lastModificationDate": "2021-07-08T09:09:07.486Z",
+        "allowedActivities": {
+            "canUseForTagging": true,
+            "canModify": true,
+            "canDoTaggingApproval": true
+        },
+        "taggedDatasets": 2,
+        "taggedAttributes": 0,
+        "createdBy": "dataqm",
+        "lastModifiedBy": "dataqm"
+    },
+    "content": [
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "91C41AC0E6278C9F1700734202FD18DA",
+                    "id": "F2C41AC0E6278C9F1700734202FD18DA",
+                    "normalizedName": "it-external",
+                    "name": "IT-External",
+                    "path": "IT-External",
+                    "description": "",
+                    "lastModifiedBy": "dataqm",
+                    "lastModificationDate": "2021-07-08T09:07:12.445Z"
+                },
+                "taggedDatasets": 1,
+                "taggedAttributes": 0
+            },
+            "children": []
+        },
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "91C41AC0E6278C9F1700734202FD18DA",
+                    "id": "E7C41AC0E6278C9F1700734202FD18DA",
+                    "normalizedName": "it-internal",
+                    "name": "IT-Internal",
+                    "path": "IT-Internal",
+                    "description": "",
+                    "lastModifiedBy": "dataqm",
+                    "lastModificationDate": "2021-07-08T09:06:58.826Z"
+                },
+                "taggedDatasets": 1,
+                "taggedAttributes": 0
+            },
+            "children": []
+        },
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "91C41AC0E6278C9F1700734202FD18DA",
+                    "id": "AEC41AC0E6278C9F1700734202FD18DA",
+                    "normalizedName": "mycompany",
+                    "name": "MyCompany",
+                    "path": "MyCompany",
+                    "description": "",
+                    "lastModifiedBy": "dataqm",
+                    "lastModificationDate": "2021-07-08T09:05:47.631Z"
+                },
+                "taggedDatasets": 1,
+                "taggedAttributes": 0
+            },
+            "children": []
+        },
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "91C41AC0E6278C9F1700734202FD18DA",
+                    "id": "A3C41AC0E6278C9F1700734202FD18DA",
+                    "normalizedName": "sap",
+                    "name": "SAP",
+                    "path": "SAP",
+                    "description": "",
+                    "lastModifiedBy": "dataqm",
+                    "lastModificationDate": "2021-07-08T09:05:30.621Z"
+                },
+                "taggedDatasets": 0,
+                "taggedAttributes": 0
+            },
+            "children": []
+        },
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "91C41AC0E6278C9F1700734202FD18DA",
+                    "id": "CFC41AC0E6278C9F1700734202FD18DA",
+                    "normalizedName": "serviceogt",
+                    "name": "ServiceOGT",
+                    "path": "ServiceOGT",
+                    "description": "",
+                    "lastModifiedBy": "dataqm",
+                    "lastModificationDate": "2021-07-08T09:06:28.824Z"
+                },
+                "taggedDatasets": 0,
+                "taggedAttributes": 0
+            },
+            "children": []
+        },
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "91C41AC0E6278C9F1700734202FD18DA",
+                    "id": "48C51AC0E6278C9F1700734202FD18DA",
+                    "normalizedName": "translation",
+                    "name": "Translation",
+                    "path": "Translation",
+                    "description": "",
+                    "lastModifiedBy": "dataqm",
+                    "lastModificationDate": "2021-07-08T09:09:07.486Z"
+                },
+                "taggedDatasets": 1,
+                "taggedAttributes": 0
+            },
+            "children": []
+        }
+    ]
+}

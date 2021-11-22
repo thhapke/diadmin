@@ -1,0 +1,106 @@
+{
+    "hierarchy": {
+        "hierarchyDescriptor": {
+            "name": "Quality",
+            "description": ""
+        },
+        "id": "461C0AA07CEC68AB170037F63AA2D26C",
+        "lastModificationDate": "2021-11-22T06:02:13.034Z",
+        "allowedActivities": {
+            "canUseForTagging": true,
+            "canModify": true,
+            "canDoTaggingApproval": true
+        },
+        "taggedDatasets": 1,
+        "taggedAttributes": 0,
+        "createdBy": "catalog",
+        "lastModifiedBy": "teched21"
+    },
+    "content": [
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "461C0AA07CEC68AB170037F63AA2D26C",
+                    "id": "6E1C0AA07CEC68AB170037F63AA2D26C",
+                    "normalizedName": "any",
+                    "name": "any",
+                    "path": "any",
+                    "description": "",
+                    "lastModifiedBy": "catalog",
+                    "lastModificationDate": "2021-07-28T05:59:39.246Z"
+                },
+                "taggedDatasets": 0,
+                "taggedAttributes": 0
+            },
+            "children": []
+        },
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "461C0AA07CEC68AB170037F63AA2D26C",
+                    "id": "531C0AA07CEC68AB170037F63AA2D26C",
+                    "normalizedName": "excellent",
+                    "name": "excellent",
+                    "path": "excellent",
+                    "description": "",
+                    "lastModifiedBy": "catalog",
+                    "lastModificationDate": "2021-07-28T05:59:11.345Z"
+                },
+                "taggedDatasets": 1,
+                "taggedAttributes": 0
+            },
+            "children": []
+        },
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "461C0AA07CEC68AB170037F63AA2D26C",
+                    "id": "5C1C0AA07CEC68AB170037F63AA2D26C",
+                    "normalizedName": "good",
+                    "name": "good",
+                    "path": "good",
+                    "description": "",
+                    "lastModifiedBy": "catalog",
+                    "lastModificationDate": "2021-07-28T05:59:21.464Z"
+                },
+                "taggedDatasets": 0,
+                "taggedAttributes": 0
+            },
+            "children": []
+        },
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "461C0AA07CEC68AB170037F63AA2D26C",
+                    "id": "DD160FA087542FB21700D9CAD5572FAA",
+                    "normalizedName": "stable",
+                    "name": "stable",
+                    "path": "stable",
+                    "description": "",
+                    "lastModifiedBy": "catalog",
+                    "lastModificationDate": "2021-08-23T09:15:36.068Z"
+                },
+                "taggedDatasets": 0,
+                "taggedAttributes": 0
+            },
+            "children": []
+        },
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "461C0AA07CEC68AB170037F63AA2D26C",
+                    "id": "671C0AA07CEC68AB170037F63AA2D26C",
+                    "normalizedName": "sufficient",
+                    "name": "sufficient",
+                    "path": "sufficient",
+                    "description": "",
+                    "lastModifiedBy": "catalog",
+                    "lastModificationDate": "2021-07-28T05:59:32.716Z"
+                },
+                "taggedDatasets": 0,
+                "taggedAttributes": 0
+            },
+            "children": []
+        }
+    ]
+}

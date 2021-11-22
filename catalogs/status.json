@@ -1,0 +1,18 @@
+{
+  "name": "Status",
+  "description": "Status of dataset (http://purl.org/adms/status/Completed)",
+  "nodes": [
+    {
+      "name": "in process",
+      "description": "In process"
+    },
+    {
+      "name": "deprecated",
+      "description": "Deprecated"
+    },
+    {
+      "name": "completed",
+      "description": "Completed"
+    }
+  ]
+}

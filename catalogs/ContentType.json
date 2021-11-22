@@ -1,0 +1,546 @@
+{
+    "hierarchy": {
+        "hierarchyDescriptor": {
+            "name": "ContentType",
+            "description": "System generated content types"
+        },
+        "id": "580200A0864FB681170034165F3A2B9E",
+        "lastModificationDate": "2021-03-10T09:23:30.956Z",
+        "allowedActivities": {
+            "canUseForTagging": true,
+            "canModify": false,
+            "canDoTaggingApproval": true
+        },
+        "taggedDatasets": 17,
+        "taggedAttributes": 54
+    },
+    "content": [
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                    "id": "590200A0864FB681170034165F3A2B9E",
+                    "normalizedName": "data types",
+                    "name": "DATA TYPES",
+                    "path": "DATA TYPES",
+                    "description": "",
+                    "lastModificationDate": "2021-03-10T09:23:30.643Z"
+                },
+                "taggedDatasets": 16,
+                "taggedAttributes": 44
+            },
+            "children": [
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "5A0200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "boolean",
+                            "name": "BOOLEAN",
+                            "path": "DATA TYPES.BOOLEAN",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "590200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "5B0200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "date",
+                            "name": "DATE",
+                            "path": "DATA TYPES.DATE",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "590200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 9,
+                        "taggedAttributes": 9
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "5C0200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "numeric",
+                            "name": "NUMERIC",
+                            "path": "DATA TYPES.NUMERIC",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "590200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 15,
+                        "taggedAttributes": 27
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "5D0200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "numeric-delimited",
+                            "name": "NUMERIC_DELIMITED",
+                            "path": "DATA TYPES.NUMERIC_DELIMITED",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "590200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 6,
+                        "taggedAttributes": 13
+                    },
+                    "children": []
+                }
+            ]
+        },
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                    "id": "730200A0864FB681170034165F3A2B9E",
+                    "normalizedName": "general",
+                    "name": "GENERAL",
+                    "path": "GENERAL",
+                    "description": "",
+                    "lastModificationDate": "2021-03-10T09:23:30.643Z"
+                },
+                "taggedDatasets": 0,
+                "taggedAttributes": 0
+            },
+            "children": [
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "740200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "currency",
+                            "name": "CURRENCY",
+                            "path": "GENERAL.CURRENCY",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "730200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "750200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "currency-code",
+                            "name": "CURRENCY_CODE",
+                            "path": "GENERAL.CURRENCY_CODE",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "730200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "760200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "measure",
+                            "name": "MEASURE",
+                            "path": "GENERAL.MEASURE",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "730200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "770200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "time-zone",
+                            "name": "TIME_ZONE",
+                            "path": "GENERAL.TIME_ZONE",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "730200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                }
+            ]
+        },
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                    "id": "6B0200A0864FB681170034165F3A2B9E",
+                    "normalizedName": "location",
+                    "name": "LOCATION",
+                    "path": "LOCATION",
+                    "description": "",
+                    "lastModificationDate": "2021-03-10T09:23:30.643Z"
+                },
+                "taggedDatasets": 1,
+                "taggedAttributes": 0
+            },
+            "children": [
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "610200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "country",
+                            "name": "COUNTRY",
+                            "path": "LOCATION.COUNTRY",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "6B0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "6C0200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "geo-location",
+                            "name": "GEO_LOCATION",
+                            "path": "LOCATION.GEO_LOCATION",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "6B0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "6D0200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "latitude",
+                            "name": "LATITUDE",
+                            "path": "LOCATION.LATITUDE",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "6B0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "6E0200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "longitude",
+                            "name": "LONGITUDE",
+                            "path": "LOCATION.LONGITUDE",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "6B0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                }
+            ]
+        },
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                    "id": "6F0200A0864FB681170034165F3A2B9E",
+                    "normalizedName": "logging",
+                    "name": "LOGGING",
+                    "path": "LOGGING",
+                    "description": "",
+                    "lastModificationDate": "2021-03-10T09:23:30.643Z"
+                },
+                "taggedDatasets": 1,
+                "taggedAttributes": 2
+            },
+            "children": [
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "710200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "ip-address",
+                            "name": "IP_ADDRESS",
+                            "path": "LOGGING.IP_ADDRESS",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "6F0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "720200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "timestamp",
+                            "name": "TIMESTAMP",
+                            "path": "LOGGING.TIMESTAMP",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "6F0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "700200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "url",
+                            "name": "URL",
+                            "path": "LOGGING.URL",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "6F0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 1,
+                        "taggedAttributes": 2
+                    },
+                    "children": []
+                }
+            ]
+        },
+        {
+            "tagInfo": {
+                "tag": {
+                    "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                    "id": "5E0200A0864FB681170034165F3A2B9E",
+                    "normalizedName": "personal information",
+                    "name": "PERSONAL INFORMATION",
+                    "path": "PERSONAL INFORMATION",
+                    "description": "",
+                    "lastModificationDate": "2021-03-10T09:23:30.643Z"
+                },
+                "taggedDatasets": 4,
+                "taggedAttributes": 11
+            },
+            "children": [
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "5F0200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "address",
+                            "name": "ADDRESS",
+                            "path": "PERSONAL INFORMATION.ADDRESS",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "5E0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 1,
+                        "taggedAttributes": 1
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "6A0200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "credit-card",
+                            "name": "CREDIT_CARD",
+                            "path": "PERSONAL INFORMATION.CREDIT_CARD",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "5E0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "680200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "email",
+                            "name": "EMAIL",
+                            "path": "PERSONAL INFORMATION.EMAIL",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "5E0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 1,
+                        "taggedAttributes": 2
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "660200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "family-name",
+                            "name": "FAMILY_NAME",
+                            "path": "PERSONAL INFORMATION.FAMILY_NAME",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "5E0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "650200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "given-name",
+                            "name": "GIVEN_NAME",
+                            "path": "PERSONAL INFORMATION.GIVEN_NAME",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "5E0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 1,
+                        "taggedAttributes": 1
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "600200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "locality",
+                            "name": "LOCALITY",
+                            "path": "PERSONAL INFORMATION.LOCALITY",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "5E0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 1,
+                        "taggedAttributes": 2
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "640200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "name",
+                            "name": "NAME",
+                            "path": "PERSONAL INFORMATION.NAME",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "5E0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 1,
+                        "taggedAttributes": 1
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "690200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "person-national-id",
+                            "name": "PERSON_NATIONAL_ID",
+                            "path": "PERSONAL INFORMATION.PERSON_NATIONAL_ID",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "5E0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 0,
+                        "taggedAttributes": 0
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "670200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "phone",
+                            "name": "PHONE",
+                            "path": "PERSONAL INFORMATION.PHONE",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "5E0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 2,
+                        "taggedAttributes": 2
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "620200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "postcode",
+                            "name": "POSTCODE",
+                            "path": "PERSONAL INFORMATION.POSTCODE",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "5E0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 2,
+                        "taggedAttributes": 2
+                    },
+                    "children": []
+                },
+                {
+                    "tagInfo": {
+                        "tag": {
+                            "hierarchyId": "580200A0864FB681170034165F3A2B9E",
+                            "id": "630200A0864FB681170034165F3A2B9E",
+                            "normalizedName": "region",
+                            "name": "REGION",
+                            "path": "PERSONAL INFORMATION.REGION",
+                            "description": "",
+                            "lastModificationDate": "2021-03-10T09:23:30.643Z",
+                            "parentId": "5E0200A0864FB681170034165F3A2B9E"
+                        },
+                        "taggedDatasets": 1,
+                        "taggedAttributes": 1
+                    },
+                    "children": []
+                }
+            ]
+        }
+    ]
+}
