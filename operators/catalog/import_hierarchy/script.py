@@ -32,7 +32,7 @@ def on_input(msg):
 
     att = copy.deepcopy(msg.attributes)
     msg_success = api.Message(attributes=att,body=hierarchy)
-    api.send('success',msg_success)  # data type: message
+    api.send('success',msg_success)  # dev_data type: message
 
 
 api.set_port_callback('input',on_input)

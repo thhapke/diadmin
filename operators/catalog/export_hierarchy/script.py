@@ -28,6 +28,6 @@ def gen():
 
     att = {'hierarchy':api.config.hierarchy}
     msg = api.Message(attributes=att,body=hierarchy)
-    api.send('output',msg)  # data type: message
+    api.send('output',msg)  # dev_data type: message
 
 api.add_generator(gen)

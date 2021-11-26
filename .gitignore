@@ -17,7 +17,7 @@ connections/*
 *.egg-info
 
 dist/
-data/
+dev_data/
 
 
 # Logs

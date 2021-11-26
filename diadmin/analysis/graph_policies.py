@@ -20,18 +20,18 @@ def get_default_resource_classes() :
     return  {
         "connectionConfiguration":"admin",
         "connection":"admin",
-        "connectionContent":"data",
-        "app.datahub-app-data.qualityDashboard":"metadata",
+        "connectionContent":"dev_data",
+        "app.datahub-app-dev_data.qualityDashboard":"metadata",
         "app.datahub-app-core.connectionCredentials":"metadata",
-        "app.datahub-app-data.profile":"metadata",
-        "app.datahub-app-data.qualityRulebook":"metadata",
-        "app.datahub-app-data.system":"metadata",
-        "app.datahub-app-data.catalog":"metadata",
-        "app.datahub-app-data.glossary":"metadata",
-        "app.datahub-app-data.tagHierarchy":"metadata",
-        "app.datahub-app-data.qualityRule":"metadata",
-        "app.datahub-app-data.preparation":"metadata",
-        "app.datahub-app-data.publication":"metadata",
+        "app.datahub-app-dev_data.profile":"metadata",
+        "app.datahub-app-dev_data.qualityRulebook":"metadata",
+        "app.datahub-app-dev_data.system":"metadata",
+        "app.datahub-app-dev_data.catalog":"metadata",
+        "app.datahub-app-dev_data.glossary":"metadata",
+        "app.datahub-app-dev_data.tagHierarchy":"metadata",
+        "app.datahub-app-dev_data.qualityRule":"metadata",
+        "app.datahub-app-dev_data.preparation":"metadata",
+        "app.datahub-app-dev_data.publication":"metadata",
         "application":"application",
         "systemManagement":"admin",
         "certificate":"admin",
@@ -43,7 +43,7 @@ def get_default_color_map() :
         "admin":"black",
         "metadata":"green",
         "application":"orange",
-        "data":"blue",
+        "dev_data":"blue",
         "multiple":"grey"
     }
 
@@ -220,10 +220,10 @@ def draw_graph(graph,resource_classes,color_map,filename = 'analysis.png') :
 
     # filter nodes and edges
 
-    #policy_path_edges = [(f,t) for f,t,att in graph.edges(data=True) if att['type'] =='policy_policy']
-    #root_path_edges = [(f,t) for f,t,att in graph.edges(data=True) if (att['type'] =='root_policy' and graph.nodes[t]['path_node'] == True)]
+    #policy_path_edges = [(f,t) for f,t,att in graph.edges(dev_data=True) if att['type'] =='policy_policy']
+    #root_path_edges = [(f,t) for f,t,att in graph.edges(dev_data=True) if (att['type'] =='root_policy' and graph.nodes[t]['path_node'] == True)]
 
-    #policy_path_nodes = [n for n,att in graph.nodes(data=True) if att['path_node']==True]
+    #policy_path_nodes = [n for n,att in graph.nodes(dev_data=True) if att['path_node']==True]
 
 
     display_nodes = [n for n,att in graph.nodes(data=True) if not n == 'root' ]
