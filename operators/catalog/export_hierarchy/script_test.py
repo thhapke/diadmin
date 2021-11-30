@@ -16,7 +16,7 @@ optest = operator_test(__file__)
 # config parameter
 
 
-api.config.hierarchy = 'License'
+api.config.hierarchy = ''
 api.config.tenant = "default"
 api.config.http_connection = optest.get_json('http_connection.json')
 print(api.config.http_connection)

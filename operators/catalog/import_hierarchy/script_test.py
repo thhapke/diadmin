@@ -16,7 +16,7 @@ optest = operator_test(__file__)
 api.config.http_connection = optest.get_json('http_connection.json')
 api.config.tenant = "default"
 
-file = 'License_converted.json'
+file = 'fieldtypes.json'
 msg = optest.get_msgfile(file)
-msg.attributes['hierarchy'] = file.split('.')[0]
+msg.attributes['hierarchy'] = file[:-4]
 script.on_input(msg)

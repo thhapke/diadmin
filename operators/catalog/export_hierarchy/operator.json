@@ -11,8 +11,7 @@
     "iconsrc": "ExportHierarchy.svg",
     "config": {
         "$type": "http://sap.com/vflow/catalog.export_hierarchy.configSchema.json",
-        "convert": true,
-        "raw": false,
+        "hierarchies": "",
         "script": "file://script.py",
         "tenant": "default"
     },

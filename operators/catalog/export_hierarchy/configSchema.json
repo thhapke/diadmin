@@ -9,15 +9,10 @@
         "script": {
             "type": "string"
         },
-        "hierarchy": {
-            "title": "Hierarchy",
-            "description": "Hierarchy",
+        "hierarchies": {
+            "title": "Hierarchies",
+            "description": "Hierarchies",
             "type": "string"
-        },
-        "convert": {
-            "title": "Convert to Simple Hierarchy Format",
-            "description": "Convert to Simple Hierarchy Format",
-            "type": "boolean"
         },
         "tenant": {
             "title": "Tenant",
