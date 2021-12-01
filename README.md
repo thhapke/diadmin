@@ -47,10 +47,18 @@ Some commands need more configuration parameters. Each command comes with a help
 |diuser | Downloads user, creates new user, deletes user, assignes policies to user ..|USERLISTS, USER_ROLE| vctl| 
 |dicatalog <type> <item> | Downloads and uploads catalog hierarchies and dataset tags. Additionally downloads connections and container (=data source path) | - | metadata api| 
 |dipmonitor | Downloads the runtime pipeline information of user| - | pipeline api|
+|didockerbuild <dockerfile path> | Starts docker build of Dockerfile for user | - | private api|
 
 
 
 ### Packages
+
+- **dimockapi** Creating script templates based on operator.json and configSchema.json and a test-script for offline testing. In addtion it contains a mock_api package.
+- **metadata_api** Using the metadata RestAPIs of SAP API Business Hub 
+- **utils** Collection of helper functions
+- **vctl_cmds** Python wrapper around vctl-commands
+- **analysis** For analysing the policy data
+- 
 
 ### dipolicy 
 
