@@ -46,10 +46,9 @@ Some commands need more configuration parameters. Each command comes with a help
 |dipolicy | Downloads, uploads and analyses DI policies.| RESOURCE_CLASSES, COLOR_MAP, POLICY_FILTER,CLASS_THRESHOLD| vctl|
 |diuser | Downloads user, creates new user, deletes user, assignes policies to user ..|USERLISTS, USER_ROLE| vctl| 
 |dicatalog <type> <item> | Downloads and uploads catalog hierarchies and dataset tags. Additionally downloads connections and container (=data source path) | - | metadata api| 
-|dipmonitor | Downloads the runtime pipeline information of user| - | pipeline api|
+|dipmonitor | Downloads the runtime pipeline information of user| - | runtime api|
 |didockerbuild <dockerfile path> | Starts docker build of Dockerfile for user | - | private api|
-
-
+|dipipelinesbatch <json-batch-file> | Starts pipelines from batch with maximum number of running pipelines. | - | runtime api|
 
 ### Packages
 
@@ -58,7 +57,8 @@ Some commands need more configuration parameters. Each command comes with a help
 - **utils** Collection of helper functions
 - **vctl_cmds** Python wrapper around vctl-commands
 - **analysis** For analysing the policy data
-- 
+
+## Details 
 
 ### dipolicy 
 

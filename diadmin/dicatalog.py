@@ -32,7 +32,6 @@ def main() :
     config_file = 'config.yaml'
     if args.config:
         config_file = add_defaultsuffix(args.config,'yaml')
-
     with open(config_file) as yamls:
         params = yaml.safe_load(yamls)
 
