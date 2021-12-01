@@ -2,21 +2,55 @@
 SPDX-FileCopyrightText: 2021 Thorsten Hapke <thorsten.hapke@sap.com>
 
 SPDX-License-Identifier: Apache-2.0
--->
+-->`
 
-# SAP Data Intelligence Admin  Tools
+# diadmin - SAP Data Intelligence Admin Tools 
 
-These tools help me to manage the user and the security of my DEMO Data Intelligence systems. The pre-requiste is to first install vctl (System Management Command-line) that can be dowloaded from the [SAP Download Center](https://launchpad.support.sap.com/#/softwarecenter/template/products/%20_APP=00200682500000001943&_EVENT=DISPHIER&HEADER=Y&FUNCTIONBAR=N&EVENT=TREE&NE=NAVIGATE&ENR=73554900100800002981&V=INST&TA=ACTUAL&PAGE=SEARCH/DATA%20INTELLIGENCE-SYS%20MGMT%20CLI). 
+Commandline tool with Python packages that helps me to run my operation tasks for the SAP Data Intelligence Cloud instances. Most of the commands use vctl and some official RestAPIs ([SAP API Data Hub](https://api.sap.com/package/SAPDataIntelligenceCloud/overview)) and unoffical RestAPIs.
+
+**Attention**: This is a private and unsupported solution. Of course I am happy to get hints on bugs and try to solve them. 
+
+## Pre-requiste 
+System Management Command-line of SAP Data Intelligence (vctl)
+
+Download: [SAP Download Center](https://launchpad.support.sap.com/#/softwarecenter/template/products/%20_APP=00200682500000001943&_EVENT=DISPHIER&HEADER=Y&FUNCTIONBAR=N&EVENT=TREE&NE=NAVIGATE&ENR=73554900100800002981&V=INST&TA=ACTUAL&PAGE=SEARCH/DATA%20INTELLIGENCE-SYS%20MGMT%20CLI). 
 
 
-
-## Command-line scripts
-
-### Installation
+## Installation
 
 ```
 pip diadmin
 ```
+
+## Summary
+
+### Commandline
+
+All commands use a configuration yaml-file (option: --config) that at least needs the URL and the credentials of the SAP Data Intelligence system:
+
+```
+TENANT: default
+URL: https://vsystem.ingress.xxx.shoot.live.k8s-hana.ondemand.com
+USER: user
+PWD: pwd123
+```
+Some commands need more configuration parameters. Each command comes with a help option (--help)
+
+| Command | Description | Config Parameter | API type|
+|---|---|---|---|
+|dibackup | Downloads some DI artificats (operators, pipelines, dockerfiles, solutions) to local folders.| - | vctl|
+|didownload <type> <artifact>| Downloads the specified artifacts (operators,graphs,dockerfiles,general) to local folder. Wildcards supported.| - | vctl|
+|diupload <type> <artifact>| Uploads the specified artifacts in the local folder to DI.| - | vctl|
+|diconnections | Downloads the connections (Uploaded option open).| - | metadata api|
+|dimock| Creates a script.py template out of operator.json and configSchema.json including a local test-script for offline development. Uses dimockapi package. | - |-|
+|dipolicy | Downloads, uploads and analyses DI policies.| RESOURCE_CLASSES, COLOR_MAP, POLICY_FILTER,CLASS_THRESHOLD| vctl|
+|diuser | Downloads user, creates new user, deletes user, assignes policies to user ..|USERLISTS, USER_ROLE| vctl| 
+|dicatalog <type> <item> | Downloads and uploads catalog hierarchies and dataset tags. Additionally downloads connections and container (=data source path) | - | metadata api| 
+|dipmonitor | Downloads the runtime pipeline information of user| - | pipeline api|
+
+
+
+### Packages
 
 ### dipolicy 
 
@@ -212,3 +246,4 @@ Contains functions for
 * sychronizing local user list with SAP Data Intelligence user, 
 * Assigning and deassigning policies for user
 
+`

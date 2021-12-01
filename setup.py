@@ -12,7 +12,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="diadmin",
-    version="0.0.52",
+    version="0.0.53",
     author="Thorsten Hapke",
     author_email="thorsten.hapke@sap.com",
     description="Utility scripts for SAP Data Intelligence.",
@@ -46,6 +46,7 @@ setuptools.setup(
                             'diprepreuse=diadmin.prepreuse:main',
                             'dicatalog=diadmin.dicatalog:main',
                             'dibackup=diadmin.dibackup:main',
+                            'diconnections=diadmin.diconnections:main',
                             'didockerbuild=diadmin.didockerbuild:main']
     },
     #package_dir={"": "src"},
