@@ -41,10 +41,15 @@ def main() :
         logging.error('Operator folder content invalid. Missing: \'operator.json\'!')
         return -1
 
-
     # Read Operator Json
     with open(join(operator_dir,'operator.json'),'r') as fp:
         opjson = json.load(fp)
+
+    gen2_op = False
+    if opjson['component'] == 'com.sap.system.python3Operator.v2':
+        logging.info('2nd Generation operator')
+        gen2_op = True
+
 
     script_file = re.match('file://(.+)',opjson['config']['script']).group(1)
     script_file = join(operator_dir,script_file)
@@ -116,12 +121,18 @@ def main() :
 '''
 
     for op in opjson['outports']:
-        content +=f'    att = {att}\n'
-        content +=f"    msg_{op['name']} = api.Message(attributes=att,body=dev_data)\n"
-        content +=f"    api.send('{op['name']}',msg_{op['name']})  # dev_data type: {op['type']}\n\n\n"
+        if not gen2_op :
+            content +=f'    att = {att}\n'
+            content +=f"    msg_{op['name']} = api.Message(attributes=att,body=dev_data)\n"
+            content +=f"    api.send('{op['name']}',msg_{op['name']})  # dev_data type: {op['type']}\n\n\n"
+        else :
+            content +=f"    api.outputs.{op['name']}.publish(data)   #  type: {op['type']}  id: {op['vtype-ID']}\n\n\n"
 
     if len(inport_types) == 0 :
-        content += "api.add_generator(gen)"
+        if not gen2_op :
+            content += "api.add_generator(gen)"
+        else:
+            content += "    return 1.0\n\n\napi.add_timer(gen)"
     else :
         content += f"api.set_port_callback([{','.join(inport_names)}],on_input)"
 

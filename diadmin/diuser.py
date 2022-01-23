@@ -21,7 +21,7 @@ from diadmin.vctl_cmds.login import di_login
 from diadmin.vctl_cmds.user import create_user, assign_policies, deassign_policy, get_users, delete_user
 from diadmin.vctl_cmds.policy import get_policy_list_assignments
 from diadmin.utils.genpwds import gen_pwd
-from diadmin.utils.utils import read_userlist,add_defaultsuffix,write_userlist
+from diadmin.utils.utils import read_userlist,add_defaultsuffix,write_userlist, next_user
 
 
 
@@ -227,7 +227,7 @@ def main() :
     if args.add :
         di_login(params)
         users = read_userlist(params['USERLIST']['LIST'])
-        for u in users :
+        for u in next_user(users,with_comments=False) :
             if not u['pwd']:
                 u['pwd'] = gen_pwd()
             create_user(u,'member')
@@ -236,7 +236,7 @@ def main() :
             logging.info(f'Create user: {u["user"]} with role:{u["role"]} ({policies})')
             assign_policies(u,params["USER_ROLE"][u["role"]])
 
-        write_userlist(users,params['USERLIST']['LIST'])
+        write_userlist(users,params['USERLIST']['LIST'],comment=True)
 
     if args.delete :
         di_login(params)

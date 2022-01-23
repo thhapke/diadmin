@@ -1,3 +1,8 @@
+#
+#  SPDX-FileCopyrightText: 2021 Thorsten Hapke <thorsten.hapke@sap.com>
+#
+#  SPDX-License-Identifier: Apache-2.0
+#
 import logging
 import argparse
 from urllib.parse import urljoin
@@ -33,6 +38,7 @@ def main() :
 
     conn = {'url': urljoin(params['URL'] , '/app/pipeline-modeler/service/v1'),
             'auth':(params['TENANT']+'\\'+ params['USER'],params['PWD'])}
+
 
     batch_file = add_defaultsuffix(args.batchfile,'json')
     with open(batch_file) as fp:

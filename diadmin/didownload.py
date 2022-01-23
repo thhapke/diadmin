@@ -23,11 +23,16 @@ VFLOW_PATHS = {'operators':'files/vflow/subengines/com/sap/python36/operators/',
                'graphs':'files/vflow/graphs/',
                'dockerfiles':'files/vflow/dockerfiles/'}
 
+VFLOW_PATHS2 = {'operators':'files/vflow/subengines/com/sap/python3/operators/',
+               'graphs':'files/vflow/graphs/',
+               'dockerfiles':'files/vflow/dockerfiles/'}
 
-
-def change_target_dir(artifact_type,members) :
+def change_target_dir(artifact_type,members,gen=1) :
     for tarinfo in members:
-        tarinfo.name = path.relpath(tarinfo.name,VFLOW_PATHS[artifact_type])
+        if gen == 2 :
+            tarinfo.name = path.relpath(tarinfo.name,VFLOW_PATHS2[artifact_type])
+        else :
+            tarinfo.name = path.relpath(tarinfo.name,VFLOW_PATHS[artifact_type])
         #tarinfo.name = re.sub(VFLOW_PATHS[artifact_type],'',tarinfo.name)
         if not tarinfo.name  == '.':
             yield tarinfo
@@ -50,6 +55,7 @@ def main() :
     parser.add_argument('-v', '--version', help='Version of solution. Required for option --solution')
     parser.add_argument('-u', '--user', help='SAP Data Intelligence user if different from login-user. Not applicable for solutions-download')
     parser.add_argument('-g', '--gitcommit', help='Git commit for the downloaded files',action='store_true')
+    parser.add_argument('-x', '--gen2', help='Generation 2 operators',action='store_true')
     args = parser.parse_args()
 
     if args.init :
@@ -109,10 +115,16 @@ def main() :
                        path.join(args.artifact_type,args.artifact + '.tgz'))]
 
         for t in target :
-            export_artifact(t[0],t[1],t[2],user)
+            if args.gen2 :
+                export_artifact(t[0],t[1],t[2],user,gen=2)
+            else :
+                export_artifact(t[0],t[1],t[2],user)
             with tarfile.open(t[2]) as tar:
                 logging.info(f'Extract \'{t[1]}\' to: {t[2]}')
-                tar.extractall(path=t[0],members=change_target_dir(t[0],tar))
+                if args.gen2 :
+                    tar.extractall(path=t[0],members=change_target_dir(t[0],tar,gen=2))
+                else :
+                    tar.extractall(path=t[0],members=change_target_dir(t[0],tar))
 
                 #toggle_mockapi(comment=False)
 

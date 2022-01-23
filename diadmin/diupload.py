@@ -17,7 +17,7 @@ import yaml
 from diadmin.utils.utils import add_defaultsuffix, toggle_mockapi
 from diadmin.vctl_cmds.login import di_login
 from diadmin.vctl_cmds.vrep import import_artifact, solution_to_repo, import_menue_panel
-from diadmin.utils.utils import read_userlist
+from diadmin.utils.utils import read_userlist, get_operator_generation
 
 
 LOCAL_TEST = False
@@ -26,6 +26,10 @@ VFLOW_PATHS = {'operators':'/files/vflow/subengines/com/sap/python36/',
                'graphs':'/files/vflow/',
                'dockerfiles':'/files/vflow/',
                'general':'files/vflow/'}
+
+VFLOW_PATHS2 = {'operators':'files/vflow/subengines/com/sap/python3/operators/',
+                'graphs':'files/vflow/graphs/',
+                'dockerfiles':'files/vflow/dockerfiles/'}
 
 
 def exclude_files(tarinfo) :
@@ -47,16 +51,19 @@ def make_tarfile(artifact_type,source) :
         sources =[(artifact_type,path.join(artifact_type,source))]
     tar_filename = path.join(artifact_type,source + '.tgz')
 
+    gen = 1
     with tarfile.open(tar_filename, "w:gz") as tar:
         for s in sources :
             if s[0] == 'operators' :
+                gen = get_operator_generation(s[1])
+                logging.info(f'Operator generation: {gen}')
                 toggle_mockapi(s[1],comment = True)
             for d in listdir(s[1]) :
                 sd = path.join(s[1],d)
                 tar.add(sd,filter=exclude_files)
             if s[0] == 'operators' :
                 toggle_mockapi(s[1],comment = False)
-    return tar_filename
+    return tar_filename, gen
 
 def main() :
     logging.basicConfig(level=logging.INFO,format='%(levelname)s:%(message)s')
@@ -129,14 +136,14 @@ def main() :
             else :
                 import_artifact(args.artifact_type,args.artifact,user,conflict)
     else :
-        tf = make_tarfile(args.artifact_type,args.artifact)
+        tf, gen = make_tarfile(args.artifact_type,args.artifact)
         if not LOCAL_TEST :
             if user == 'userlist' :
                 userlist = read_userlist(params['USERLIST']['LIST'])
                 for u in userlist :
-                    import_artifact(args.artifact_type,tf,u['user'],conflict)
+                    import_artifact(args.artifact_type,tf,u['user'],conflict,gen = gen)
             else :
-                import_artifact(args.artifact_type,tf,user,conflict)
+                import_artifact(args.artifact_type,tf,user,conflict,gen = gen)
 
     if args.solution:
         if re.match('.+\.tgz$',args.artifact):

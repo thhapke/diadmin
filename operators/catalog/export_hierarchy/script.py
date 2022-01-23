@@ -1,6 +1,11 @@
+#
+#  SPDX-FileCopyrightText: 2021 Thorsten Hapke <thorsten.hapke@sap.com>
+#
+#  SPDX-License-Identifier: Apache-2.0
+#
 # Mock apis needs to be commented before used within SAP Data Intelligence
-from diadmin.dimockapi.mock_api import mock_api
-api = mock_api(__file__)
+from diadmin.dimockapi.mock_api import api
+api = api(__file__)
 
 from urllib.parse import urljoin
 from diadmin.metadata_api import catalog

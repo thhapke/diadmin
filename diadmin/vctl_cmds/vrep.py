@@ -1,3 +1,8 @@
+#
+#  SPDX-FileCopyrightText: 2021 Thorsten Hapke <thorsten.hapke@sap.com>
+#
+#  SPDX-License-Identifier: Apache-2.0
+#
 import logging
 import subprocess
 from os import path
@@ -5,6 +10,12 @@ from subprocess import check_output, run, CalledProcessError
 
 VFLOW_PATHS = {'bundle':'/',
                'operators':'/files/vflow/subengines/com/sap/python36/',
+               'graphs':'/files/vflow/',
+               'dockerfiles':'/files/vflow/',
+               'general':'files/vflow/'}
+
+VFLOW_PATHS2 = {'bundle':'/',
+               'operators':'/files/vflow/subengines/com/sap/python3/',
                'graphs':'/files/vflow/',
                'dockerfiles':'/files/vflow/',
                'general':'files/vflow/'}
@@ -64,18 +75,26 @@ def upload_file(source,target) :
     logging.info(f"Upload file: {source} -> {target}")
     run(['vctl','vrep','user','put',source,target])
 
-def import_artifact(artifact_type,file,user,flags=None) :
+def import_artifact(artifact_type,file,user,flags=None,gen = 1) :
+
+    vflow = VFLOW_PATHS
+    if gen == 2 :
+        vflows = VFLOW_PATHS2
     if flags :
-        cmd = ['vctl','vrep','user','import',file,VFLOW_PATHS[artifact_type],'-u',user,'-r',flags]
+        cmd = ['vctl','vrep','user','import',file,vflows[artifact_type],'-u',user,'-r',flags]
         logging.info(f'Import {artifact_type[:-1]}: {file} to user: {user} ({" ".join(cmd)})')
         run(cmd)
     else :
-        cmd = ['vctl','vrep','user','import',file,VFLOW_PATHS[artifact_type],'-u',user]
+        cmd = ['vctl','vrep','user','import',file,vflows[artifact_type],'-u',user]
         logging.info(f'Import {artifact_type[:-1]}: {file} to user: {user} ({" ".join(cmd)})')
         run(cmd)
 
-def export_artifact(artifact_type,artifact,file,user) :
+def export_artifact(artifact_type,artifact,file,user,gen=1) :
+
     source = path.join(VFLOW_PATHS[artifact_type],artifact)
+    if gen==2:
+        source = path.join(VFLOW_PATHS2[artifact_type],artifact)
+
     cmd = ['vctl','vrep','user','export',file,source,'-u',user]
     logging.info(f'Export \'{source}\' of user \'{user}\' to file: {file} ({" ".join(cmd)})')
     try :

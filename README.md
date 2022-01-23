@@ -37,7 +37,7 @@ PWD: pwd123
 Some commands need more configuration parameters. Each command comes with a help option (--help)
 
 | Command | Description | Config Parameter | API type|
-|---|---|---|---|
+|---|---|:---:|:---:|
 |dibackup | Downloads some DI artificats (operators, pipelines, dockerfiles, solutions) to local folders.| - | vctl|
 |didownload <type> <artifact>| Downloads the specified artifacts (operators,graphs,dockerfiles,general) to local folder. Wildcards supported.| - | vctl|
 |diupload <type> <artifact>| Uploads the specified artifacts in the local folder to DI.| - | vctl|
