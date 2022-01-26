@@ -1,0 +1,4 @@
+id,name,description,start_time,end_time,status,dataset,dataset_id,num_records,passed,failed,passed_percent,failed_percent,error_threshold,passed_threshold
+ad540fa0bd71f0b817000ce286077533,Pharma Claims,Set of rules to evaluate the quality of dataset used to track pharma claims.,2021-09-13T04:46:46.199Z,2021-09-13T04:47:09.407Z,OK,/shared/techGSA/PATIENT_DATA.csv,7e560fa0bd71f0b817000ce286077533,538,0,538,0.0,100.0,50,80
+ad540fa0bd71f0b817000ce286077533,Pharma Claims,Set of rules to evaluate the quality of dataset used to track pharma claims.,2021-09-13T04:53:54.134Z,2021-09-13T04:54:18.173Z,OK,/shared/techGSA/PATIENT_DATA.csv,7e560fa0bd71f0b817000ce286077533,538,486,52,90.33,9.67,50,80
+ad540fa0bd71f0b817000ce286077533,Pharma Claims,Set of rules to evaluate the quality of dataset used to track pharma claims.,2021-09-16T08:54:27.743Z,2021-09-16T08:56:35.929Z,OK,/shared/techGSA/PATIENT_DATA.csv,7e560fa0bd71f0b817000ce286077533,538,486,52,90.33,9.67,50,80

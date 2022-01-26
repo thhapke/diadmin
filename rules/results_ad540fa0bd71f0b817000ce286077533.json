@@ -1,0 +1,295 @@
+{
+    "createdBy": "catalogquality",
+    "createDate": "2021-09-13T04:35:12.489Z",
+    "lastModifiedDate": "2021-09-13T04:53:48.546Z",
+    "lastModifiedBy": "catalogquality",
+    "description": "Set of rules to evaluate the quality of dataset used to track pharma claims.",
+    "name": "Pharma Claims",
+    "config": {
+        "rulebook": {
+            "scoreRange": {
+                "errorThreshold": 50,
+                "passThreshold": 80
+            }
+        },
+        "datasets": [],
+        "categories": []
+    },
+    "numRuns": 3,
+    "latestStats": [
+        {
+            "endTime": "2021-09-13T04:47:09.407Z",
+            "startTime": "2021-09-13T04:46:46.199Z",
+            "passPercent": 0,
+            "failPercent": 100,
+            "recordsPass": 0,
+            "recordsFail": 538,
+            "recordCount": 538,
+            "errors": [],
+            "status": "OK",
+            "index": 0,
+            "previousFailedRecordSettings": {
+                "enabled": false
+            }
+        },
+        {
+            "endTime": "2021-09-13T04:54:18.173Z",
+            "startTime": "2021-09-13T04:53:54.134Z",
+            "passPercent": 90.33,
+            "failPercent": 9.67,
+            "recordsPass": 486,
+            "recordsFail": 52,
+            "recordCount": 538,
+            "errors": [],
+            "status": "OK",
+            "index": 1,
+            "previousFailedRecordSettings": {
+                "enabled": false
+            }
+        },
+        {
+            "endTime": "2021-09-16T08:56:35.929Z",
+            "startTime": "2021-09-16T08:54:27.743Z",
+            "passPercent": 90.33,
+            "failPercent": 9.67,
+            "recordsPass": 486,
+            "recordsFail": 52,
+            "recordCount": 538,
+            "errors": [],
+            "status": "OK",
+            "index": 2,
+            "previousFailedRecordSettings": {
+                "enabled": false
+            }
+        }
+    ],
+    "results": [
+        {
+            "datasets": [
+                {
+                    "datasetId": "7e560fa0bd71f0b817000ce286077533",
+                    "connectionId": "DI_DATA_LAKE",
+                    "qualifiedName": "/shared/techGSA/PATIENT_DATA.csv",
+                    "displayName": "PATIENT_DATA.csv",
+                    "description": "",
+                    "recordCount": 538,
+                    "recordsPass": 0,
+                    "recordsFailed": 538,
+                    "passPercent": 0,
+                    "failPercent": 100,
+                    "categories": [
+                        {
+                            "catId": "220200a0864fb681170034165f3a2b9e",
+                            "rules": [
+                                {
+                                    "bindingId": "7f560fa0bd71f0b817000ce286077533",
+                                    "recordsFiltered": 0,
+                                    "recordsPass": 0,
+                                    "sample": true,
+                                    "ruleId": "e14e0fa0bd71f0b817000ce286077533",
+                                    "name": "PostalCode",
+                                    "displayName": "Postal Code",
+                                    "description": "A city postal code that must be 5 digits.",
+                                    "parameters": [
+                                        {
+                                            "column": "POSTALCODE",
+                                            "contentType": "DEFAULT",
+                                            "description": "A Postal Code of 5 digits",
+                                            "parameter": "Code",
+                                            "type": "STRING"
+                                        }
+                                    ],
+                                    "passPercent": 0,
+                                    "recordsFail": 538,
+                                    "failPercent": 100,
+                                    "filterPercent": 0,
+                                    "status": "ACTIVE"
+                                }
+                            ],
+                            "recordsPass": 0,
+                            "name": "Conformity",
+                            "description": "The data has the correct data type and is in the required format",
+                            "passPercent": 0,
+                            "recordsFail": 538,
+                            "failPercent": 100
+                        }
+                    ],
+                    "scoreRange": {
+                        "errorThreshold": 50,
+                        "passThreshold": 80
+                    }
+                }
+            ],
+            "executionId": "c7560fa0bd71f0b817000ce286077533",
+            "startTime": "2021-09-13T04:46:46.199Z",
+            "endTime": "2021-09-13T04:47:09.407Z",
+            "status": "OK",
+            "recordCount": 538,
+            "recordsPass": 0,
+            "errors": [],
+            "previousFailedRecordSettings": {
+                "enabled": false
+            },
+            "passPercent": 0
+        },
+        {
+            "datasets": [
+                {
+                    "datasetId": "7e560fa0bd71f0b817000ce286077533",
+                    "connectionId": "DI_DATA_LAKE",
+                    "qualifiedName": "/shared/techGSA/PATIENT_DATA.csv",
+                    "displayName": "PATIENT_DATA.csv",
+                    "description": "",
+                    "recordCount": 538,
+                    "recordsPass": 486,
+                    "recordsFailed": 52,
+                    "passPercent": 90.33,
+                    "failPercent": 9.67,
+                    "categories": [
+                        {
+                            "catId": "220200a0864fb681170034165f3a2b9e",
+                            "rules": [
+                                {
+                                    "bindingId": "7f560fa0bd71f0b817000ce286077533",
+                                    "recordsFiltered": 0,
+                                    "recordsPass": 486,
+                                    "sample": true,
+                                    "ruleId": "e14e0fa0bd71f0b817000ce286077533",
+                                    "name": "PostalCode",
+                                    "displayName": "Postal Code",
+                                    "description": "A city postal code that must be 5 digits.",
+                                    "parameters": [
+                                        {
+                                            "column": "POSTALCODE",
+                                            "contentType": "DEFAULT",
+                                            "description": "A Postal Code of 5 digits",
+                                            "parameter": "Code",
+                                            "type": "STRING"
+                                        }
+                                    ],
+                                    "passPercent": 90.33,
+                                    "recordsFail": 52,
+                                    "failPercent": 9.67,
+                                    "filterPercent": 0,
+                                    "status": "ACTIVE",
+                                    "passDelta": 90.33,
+                                    "filterDelta": 0
+                                }
+                            ],
+                            "recordsPass": 486,
+                            "name": "Conformity",
+                            "description": "The data has the correct data type and is in the required format",
+                            "passPercent": 90.33,
+                            "recordsFail": 52,
+                            "failPercent": 9.67,
+                            "passDelta": 90.33
+                        }
+                    ],
+                    "scoreRange": {
+                        "errorThreshold": 50,
+                        "passThreshold": 80
+                    },
+                    "passDelta": 90.33,
+                    "recordCountDelta": 0
+                }
+            ],
+            "executionId": "23580fa0bd71f0b817000ce286077533",
+            "startTime": "2021-09-13T04:53:54.134Z",
+            "endTime": "2021-09-13T04:54:18.173Z",
+            "status": "OK",
+            "recordCount": 538,
+            "recordsPass": 486,
+            "errors": [],
+            "previousFailedRecordSettings": {
+                "enabled": false
+            },
+            "passPercent": 90.33,
+            "recordCountDelta": 0,
+            "passDelta": 90.33
+        },
+        {
+            "datasets": [
+                {
+                    "datasetId": "7e560fa0bd71f0b817000ce286077533",
+                    "connectionId": "DI_DATA_LAKE",
+                    "qualifiedName": "/shared/techGSA/PATIENT_DATA.csv",
+                    "displayName": "PATIENT_DATA.csv",
+                    "description": "",
+                    "recordCount": 538,
+                    "recordsPass": 486,
+                    "recordsFailed": 52,
+                    "passPercent": 90.33,
+                    "failPercent": 9.67,
+                    "categories": [
+                        {
+                            "catId": "220200a0864fb681170034165f3a2b9e",
+                            "rules": [
+                                {
+                                    "bindingId": "7f560fa0bd71f0b817000ce286077533",
+                                    "recordsFiltered": 0,
+                                    "recordsPass": 486,
+                                    "sample": true,
+                                    "ruleId": "e14e0fa0bd71f0b817000ce286077533",
+                                    "name": "PostalCode",
+                                    "displayName": "Postal Code",
+                                    "description": "A city postal code that must be 5 digits.",
+                                    "parameters": [
+                                        {
+                                            "column": "POSTALCODE",
+                                            "contentType": "DEFAULT",
+                                            "description": "A Postal Code of 5 digits",
+                                            "parameter": "Code",
+                                            "type": "STRING"
+                                        }
+                                    ],
+                                    "passPercent": 90.33,
+                                    "recordsFail": 52,
+                                    "failPercent": 9.67,
+                                    "filterPercent": 0,
+                                    "status": "ACTIVE",
+                                    "passDelta": 0,
+                                    "filterDelta": 0
+                                }
+                            ],
+                            "recordsPass": 486,
+                            "name": "Conformity",
+                            "description": "The data has the correct data type and is in the required format",
+                            "passPercent": 90.33,
+                            "recordsFail": 52,
+                            "failPercent": 9.67,
+                            "passDelta": 0
+                        }
+                    ],
+                    "scoreRange": {
+                        "errorThreshold": 50,
+                        "passThreshold": 80
+                    },
+                    "passDelta": 0,
+                    "recordCountDelta": 0
+                }
+            ],
+            "executionId": "e98712a0bd71f0b817000ce286077533",
+            "startTime": "2021-09-16T08:54:27.743Z",
+            "endTime": "2021-09-16T08:56:35.929Z",
+            "status": "OK",
+            "recordCount": 538,
+            "recordsPass": 486,
+            "errors": [],
+            "previousFailedRecordSettings": {
+                "enabled": false
+            },
+            "passPercent": 90.33,
+            "recordCountDelta": 0,
+            "passDelta": 0
+        }
+    ],
+    "error": false,
+    "failedRecordConfig": {
+        "connectionId": "",
+        "container": "",
+        "filteredByPolicy": false
+    },
+    "terms": [],
+    "createdByUI": "catalogquality",
+    "lastModifiedByUI": "catalogquality"
+}

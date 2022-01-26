@@ -1,0 +1,137 @@
+{
+    "rulebooks": [
+        {
+            "id": "1e2b075099b6248e1700a9ca6da85a58",
+            "name": "Catalog_Quality",
+            "description": "Data Catalog and Data Quality, including rules and dashboards",
+            "createdBy": "catalogquality",
+            "createDate": "2021-04-28T20:08:28.476Z",
+            "lastModifiedBy": "catalogquality",
+            "lastModifiedDate": "2021-04-28T20:09:58.227Z",
+            "numRules": 1,
+            "numRuns": 1,
+            "scoreRange": {
+                "errorThreshold": 50,
+                "passThreshold": 80
+            },
+            "previousFailedRecordSettings": {
+                "enabled": false
+            },
+            "status": "SUCCESS",
+            "passPercent": 78.72,
+            "createdByUI": "catalogquality",
+            "lastModifiedByUI": "catalogquality"
+        },
+        {
+            "id": "ad130320cb31b3c8170033aef772e8f5",
+            "name": "CustomerSales",
+            "description": "",
+            "createdBy": "demo",
+            "createDate": "2021-10-19T23:38:25.488Z",
+            "lastModifiedBy": "demo",
+            "lastModifiedDate": "2021-10-19T23:46:26.032Z",
+            "numRules": 1,
+            "numRuns": 57,
+            "scoreRange": {
+                "errorThreshold": 50,
+                "passThreshold": 80
+            },
+            "previousFailedRecordSettings": {
+                "enabled": false
+            },
+            "status": "SUCCESS",
+            "passPercent": 100,
+            "createdByUI": "demo",
+            "lastModifiedByUI": "demo"
+        },
+        {
+            "id": "a48208505bd531c41700beae556aa6f0",
+            "name": "dataqm CSKA",
+            "description": "Validation of Instances against reference table CSKA",
+            "createdBy": "dataqm",
+            "createDate": "2021-10-11T09:26:22.899Z",
+            "lastModifiedBy": "dataqm",
+            "lastModifiedDate": "2021-10-17T12:43:35.098Z",
+            "numRules": 5,
+            "numRuns": 3,
+            "scoreRange": {
+                "errorThreshold": 85,
+                "passThreshold": 90
+            },
+            "previousFailedRecordSettings": {
+                "mode": "append",
+                "enabled": true,
+                "connectionId": "HANA_QM",
+                "container": "/FAILED",
+                "status": "ERROR",
+                "error": {
+                    "code": "71267",
+                    "message": "Failed record task failed; check logs for details",
+                    "guid": "71bfa3b7-b4a4-4a13-9b8b-64e7c9eb44fc",
+                    "module": "dh-app-metadata",
+                    "causes": [
+                        {
+                            "code": "99999",
+                            "module": "vflow",
+                            "message": "Graph FAILED_RECORD_EXPORT_c8a30020cb31b3c8170033aef772e8f5 failed: Group messages:\nGroup: default; Messages: Graph failure: internalfailedrulemetadataproducer2 failed with the following error:\nGeneral error;10 authentication failed\nProcess(es) terminated with error(s). restartOnFailure==false\n, handle 3234262b0b644d268694dbc073e3e9b4"
+                        }
+                    ]
+                }
+            },
+            "status": "ERROR",
+            "passPercent": 0,
+            "createdByUI": "dataqm",
+            "lastModifiedByUI": "dataqm"
+        },
+        {
+            "id": "a1b10020cb31b3c8170033aef772e8f5",
+            "name": "DEMO_KPI",
+            "description": "Demo for DI Workshop",
+            "createdBy": "demo",
+            "createDate": "2021-10-17T14:52:45.846Z",
+            "lastModifiedBy": "dataqm",
+            "lastModifiedDate": "2021-10-19T18:28:32.478Z",
+            "numRules": 4,
+            "numRuns": 57,
+            "scoreRange": {
+                "errorThreshold": 50,
+                "passThreshold": 80
+            },
+            "previousFailedRecordSettings": {
+                "enabled": false
+            },
+            "status": "SUCCESS",
+            "passPercent": 98.61,
+            "createdByUI": "demo",
+            "lastModifiedByUI": "dataqm"
+        },
+        {
+            "id": "ad540fa0bd71f0b817000ce286077533",
+            "name": "Pharma Claims",
+            "description": "Set of rules to evaluate the quality of dataset used to track pharma claims.",
+            "createdBy": "catalogquality",
+            "createDate": "2021-09-13T04:35:12.489Z",
+            "lastModifiedBy": "catalogquality",
+            "lastModifiedDate": "2021-09-13T04:53:48.546Z",
+            "numRules": 1,
+            "numRuns": 3,
+            "scoreRange": {
+                "errorThreshold": 50,
+                "passThreshold": 80
+            },
+            "previousFailedRecordSettings": {
+                "enabled": false
+            },
+            "status": "SUCCESS",
+            "passPercent": 90.33,
+            "createdByUI": "catalogquality",
+            "lastModifiedByUI": "catalogquality"
+        }
+    ],
+    "count": 5,
+    "failedRecordConfig": {
+        "connectionId": "",
+        "container": "",
+        "filteredByPolicy": false
+    }
+}
