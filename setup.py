@@ -49,7 +49,8 @@ setuptools.setup(
                             'diconnections=diadmin.diconnections:main',
                             'didockerbuild=diadmin.didockerbuild:main',
                             'didqm=diadmin.didqm:main',
-                            'dipipelinesbatch=diadmin.dipipelinesbatch:main']
+                            'dipipelinesbatch=diadmin.dipipelinesbatch:main',
+                            'diopenlog=diadmin.diopenlog:main']
     },
     #package_dir={"": "src"},
     #packages=setuptools.find_packages(),
