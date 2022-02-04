@@ -8,17 +8,11 @@ import subprocess
 from os import path
 from subprocess import check_output, run, CalledProcessError
 
-VFLOW_PATHS = {'bundle':'/',
-               'operators':'/files/vflow/subengines/com/sap/python36/',
-               'graphs':'/files/vflow/',
-               'dockerfiles':'/files/vflow/',
-               'general':'files/vflow/'}
-
-VFLOW_PATHS2 = {'bundle':'/',
-               'operators':'/files/vflow/subengines/com/sap/python3/',
-               'graphs':'/files/vflow/',
-               'dockerfiles':'/files/vflow/',
-               'general':'files/vflow/'}
+VFLOW_PATHS = {'operators':'files/vflow/subengines/com/sap/python36/operators/',
+               'operators_gen2':'files/vflow/subengines/com/sap/python3/operators/',
+               'graphs':'files/vflow/graphs',
+               'vtypes':'files/vflow/vtypes/',
+               'dockerfiles':'files/vflow/dockerfiles/'}
 
 def get_dir_files(dir) :
     logging.info(f'List file in folder: {dir}')
@@ -75,26 +69,19 @@ def upload_file(source,target) :
     logging.info(f"Upload file: {source} -> {target}")
     run(['vctl','vrep','user','put',source,target])
 
-def import_artifact(artifact_type,file,user,flags=None,gen = 1) :
+def import_object(artifact_type, file, user, flags=None) :
 
-    vflow = VFLOW_PATHS
-    if gen == 2 :
-        vflows = VFLOW_PATHS2
     if flags :
-        cmd = ['vctl','vrep','user','import',file,vflows[artifact_type],'-u',user,'-r',flags]
+        cmd = ['vctl','vrep','user','import',file,VFLOW_PATHS[artifact_type],'-u',user,'-r',flags]
         logging.info(f'Import {artifact_type[:-1]}: {file} to user: {user} ({" ".join(cmd)})')
         run(cmd)
     else :
-        cmd = ['vctl','vrep','user','import',file,vflows[artifact_type],'-u',user]
+        cmd = ['vctl','vrep','user','import',file,VFLOW_PATHS[artifact_type],'-u',user]
         logging.info(f'Import {artifact_type[:-1]}: {file} to user: {user} ({" ".join(cmd)})')
         run(cmd)
 
-def export_artifact(artifact_type,artifact,file,user,gen=1) :
-
+def export_artifact(artifact_type,artifact,file,user) :
     source = path.join(VFLOW_PATHS[artifact_type],artifact)
-    if gen==2:
-        source = path.join(VFLOW_PATHS2[artifact_type],artifact)
-
     cmd = ['vctl','vrep','user','export',file,source,'-u',user]
     logging.info(f'Export \'{source}\' of user \'{user}\' to file: {file} ({" ".join(cmd)})')
     try :

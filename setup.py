@@ -12,8 +12,9 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="diadmin",
-    version="0.0.61",
+    version="0.0.64",
     author="Thorsten Hapke",
+    license_file = ("Apache-2.0.txt"),
     author_email="thorsten.hapke@sap.com",
     description="Utility scripts for SAP Data Intelligence.",
     long_description=long_description,

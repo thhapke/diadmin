@@ -16,21 +16,12 @@ import yaml
 
 from diadmin.utils.utils import add_defaultsuffix, toggle_mockapi
 from diadmin.vctl_cmds.login import di_login
-from diadmin.vctl_cmds.vrep import import_artifact, solution_to_repo, import_menue_panel
+from diadmin.vctl_cmds.vrep import import_object, solution_to_repo, import_menue_panel,VFLOW_PATHS
 from diadmin.utils.utils import read_userlist, get_operator_generation
 
-
+# global variable
+root_dir = '.'
 LOCAL_TEST = False
-
-VFLOW_PATHS = {'operators':'/files/vflow/subengines/com/sap/python36/',
-               'graphs':'/files/vflow/',
-               'dockerfiles':'/files/vflow/',
-               'general':'files/vflow/'}
-
-VFLOW_PATHS2 = {'operators':'files/vflow/subengines/com/sap/python3/operators/',
-                'graphs':'files/vflow/graphs/',
-                'dockerfiles':'files/vflow/dockerfiles/'}
-
 
 def exclude_files(tarinfo) :
     basename = path.basename(tarinfo.name)
@@ -39,47 +30,49 @@ def exclude_files(tarinfo) :
     else:
         return tarinfo
 
-def make_tarfile(artifact_type,source) :
-    if artifact_type == 'all' or artifact_type == '*' :
-        sources =  [('operators','operators'),('graphs','graphs'),('dockerfiles','dockerfiles')]
+def get_sources(object_type, source) :
+    if object_type == 'all' or object_type == '*' :
+        sources =  {'operators':'operators','graphs':'graphs','dockerfiles':'dockerfiles'}
     elif source == '.' or source == '*' :
-        sources = [(artifact_type,artifact_type)]
-        source = artifact_type
+        sources = {object_type: object_type}
     else :
-        if not artifact_type == 'ui':
+        if not object_type == 'ui':
             source = source.replace('.',os.sep)
-        sources =[(artifact_type,path.join(artifact_type,source))]
-    tar_filename = path.join(artifact_type,source + '.tgz')
+        sources = {object_type: source}
+    return sources
 
-    gen = 1
-    with tarfile.open(tar_filename, "w:gz") as tar:
-        for s in sources :
-            if s[0] == 'operators' :
-                gen = get_operator_generation(s[1])
-                logging.info(f'Operator generation: {gen}')
-                toggle_mockapi(s[1],comment = True)
-            for d in listdir(s[1]) :
-                sd = path.join(s[1],d)
-                tar.add(sd,filter=exclude_files)
-            if s[0] == 'operators' :
-                toggle_mockapi(s[1],comment = False)
-    return tar_filename, gen
+def make_tarfiles(sources) :
+    tarfiles = dict()
+    for st,sn in sources.items() :
+        tar_filename = path.join(root_dir,st+'_files.tgz')
+        tarfiles[st] = tar_filename
+        with tarfile.open(tar_filename, "w:gz") as tar:
+            obj_path = path.join(root_dir,st,sn)
+            if st == 'operators' or st == 'operators_gen2':
+                toggle_mockapi(obj_path,comment = True)
+            for d in listdir(obj_path) :
+                sd = path.join(obj_path,d)
+                tar.add(sd,arcname=sn,filter=exclude_files)
+            if st == 'operators' or st == 'operators_gen2' :
+                toggle_mockapi(obj_path,comment = False)
+    return tarfiles
 
 def main() :
+    global root_dir
     logging.basicConfig(level=logging.INFO,format='%(levelname)s:%(message)s')
 
     #
     # command line args
     #
-    achoices = ['operators','graphs','dockerfiles','general','all','*']
+    achoices = ['project','operators','operators_gen2','graphs','dockerfiles','general','all','*']
     description =  "Uploads operators, graphs and  dockerfiles to SAP Data Intelligence.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-i','--init', help = 'Creates a config.yaml and the necessary folders. Additionally you need '
                                               'to add \'* *\' as dummy positional arguments',action='store_true')
     parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config_demo.yaml')
     parser.add_argument('-r','--conflict', help = 'Conflict handling flag of \'vctl vrep import\'')
-    parser.add_argument('artifact_type', help='Type of artifacts.',choices=achoices)
-    parser.add_argument('artifact', help='Artifact file(tgz) or directory')
+    parser.add_argument('object_type', help='Type of artifacts.',choices=achoices)
+    parser.add_argument('object_name', help='Artifact file(tgz) or directory')
     parser.add_argument('-n', '--solution', help='Solution name if uploaded artificats should be exported to solution repository as well.')
     parser.add_argument('-s', '--description', help='Description string for solution.')
     parser.add_argument('-v', '--version', help='Version of solution. Necessary if exported to solution repository.',default='0.0.1')
@@ -109,6 +102,8 @@ def main() :
     with open(config_file) as yamls:
         params = yaml.safe_load(yamls)
 
+    if 'ROOT_DIR' in params:
+        root_dir = params['ROOT_DIR']
     ret = 0
     if not LOCAL_TEST :
         ret = di_login(params)
@@ -124,42 +119,57 @@ def main() :
         conflict = args.conflict
 
 
-    #if args.artifact_type == 'ui' :
-        #args.artifact ='vsolution_vflow_pa_settings.json'
+    #if args.object_name_type == 'ui' :
+        #args.object_name ='vsolution_vflow_pa_settings.json'
 
-    if (re.match('.+\.tgz$',args.artifact) or re.match('.+\.tar.gz$',args.artifact)):
+    if (re.match('.+\.tgz$',args.object_name) or re.match('.+\.tar.gz$',args.object_name)):
         if not LOCAL_TEST :
             if user == 'userlist' :
                 userlist = read_userlist(params['USERLIST']['LIST'])
                 for u in userlist :
-                    import_artifact(args.artifact_type,args.artifact,u['user'],conflict)
+                    import_object(args.object_type,args.object_name,u['user'],conflict)
             else :
-                import_artifact(args.artifact_type,args.artifact,user,conflict)
+                import_object(args.object_type,args.object_name,user,conflict)
     else :
-        tf, gen = make_tarfile(args.artifact_type,args.artifact)
+        sources = dict()
+        if args.object_type == 'project' :
+            project_file = add_defaultsuffix(args.object_name,'yaml')
+            with open(path.join('projects',project_file)) as yamls:
+                project = yaml.safe_load(yamls)
+            for object_type in project :
+                if object_type in ['graphs','operators','operators_gen2','dockerfiles','vtypes'] and not project[object_type] == None:
+                    for object_name in project[object_type] :
+                        sources.update(get_sources(object_type,object_name))
+                else :
+                    logging.error(f'Unknown project item: {object_type}')
+        else :
+            sources = get_sources(args.object_type,args.object_name)
+        tarfiles = make_tarfiles(sources)
         if not LOCAL_TEST :
             if user == 'userlist' :
                 userlist = read_userlist(params['USERLIST']['LIST'])
                 for u in userlist :
-                    import_artifact(args.artifact_type,tf,u['user'],conflict,gen = gen)
+                    for st,fn in tarfiles.items() :
+                        import_object(st,fn,u['user'],conflict)
             else :
-                import_artifact(args.artifact_type,tf,user,conflict,gen = gen)
+                for st,fn in tarfiles.items() :
+                    import_object(st,fn,user,conflict)
 
     if args.solution:
-        if re.match('.+\.tgz$',args.artifact):
-            basename =  re.match('(.+)\.tgz$',args.artifact).group(0)
-        elif re.match('.+\.tar.gz$',args.artifact) :
-            basename = re.match('(.+)\.tar.gz$',args.artifact).group(0)
-        elif args.artifact == '*' or args.artifact == '.' :
-            basename = args.artifact_type
+        if re.match('.+\.tgz$',args.object_name):
+            basename =  re.match('(.+)\.tgz$',args.object_name).group(0)
+        elif re.match('.+\.tar.gz$',args.object_name) :
+            basename = re.match('(.+)\.tar.gz$',args.object_name).group(0)
+        elif args.object_name == '*' or args.object_name == '.' :
+            basename = args.object_name_type
         else :
-            basename = args.artifact
+            basename = args.object_name
         basename = path.basename(basename)
-        source = path.join(VFLOW_PATHS[args.artifact_type],basename)
+        source = path.join(VFLOW_PATHS[args.object_type],basename)
         solution_to_repo(source, args.solution, args.version, args.description)
 
     if args.gitcommit :
-        folder = path.join(args.artifact_type,args.artifact)
+        folder = path.join(args.object_name_type,args.object_name)
         logging.info(f'Auto-commit for uploaded artifact: {folder}')
         run(['git','add',folder])
         run(['git','commit','-m','diupload'])
