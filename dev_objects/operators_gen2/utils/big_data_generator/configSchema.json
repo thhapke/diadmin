@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "http://sap.com/vflow/utils.big_data_generator.configSchema.json",
+    "type": "object",
+    "properties": {
+        "codelanguage": {
+            "type": "string"
+        },
+        "errorHandling": {
+            "type": "string"
+        },
+        "script": {
+            "type": "string"
+        },
+        "num_rows": {
+            "title": "Number of Records",
+            "description": "Number of Records",
+            "type": "integer"
+        },
+        "periodicity": {
+            "title": "Periodicity (s)",
+            "description": "Periodicity (s)",
+            "type": "number"
+        },
+        "max_index": {
+            "title": "Maximum Number of Data Generations",
+            "description": "Maximum Number of Data Generations",
+            "type": "string"
+        },
+        "snapshot_time": {
+            "title": "Snapshot Wait Time",
+            "description": "Snapshot Wait Time",
+            "type": "number"
+        },
+        "crash_index": {
+            "title": "Index to Crash",
+            "description": "Index to Crash",
+            "type": "integer"
+        },
+        "max_time": {
+            "title": "Maximum Runtime (minutes)",
+            "description": "Maximum Runtime (minutes)",
+            "type": "string"
+        }
+    }
+}

@@ -1,0 +1,110 @@
+{
+    "properties": {},
+    "description": "Parameter Graph",
+    "processes": {
+        "py3datagenerator1": {
+            "component": "com.sap.util.datageneratorpy3",
+            "metadata": {
+                "label": "Py3 Data Generator",
+                "x": 12,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "generation": 1,
+                "config": {
+                    "script": "import random\n\ncounter = 0\n\n\ndef get_random(min_, max_):\n    return random.random() * (max_ - min_) + min_\n\n\ndef do_tick():\n    global counter  # to modify variable in global scope needs to declare it as global in the local scope.\n    api.send(\"output\", str(counter) + \",\" + generate_data())\n    counter += 1\n\n\napi.add_timer(\"5000ms\", do_tick)\n\n\ndef generate_data():\n    # Example:  payload = \"3,26.4,60.9,532.0,1.0,24.0,55.0,0,657.0,437.0,1388,5,-33,3.33\"\n\n    payload = str(random.randint(2, 6)) + \",\"  # DeviceID\n    payload += str(get_random(25, 26)) + \",\"  # Temperature\n    payload += str(get_random(40, 60)) + \",\"  # Humidity\n    payload += str(get_random(500, 600)) + \",\"  # CO2\n    payload += str(get_random(0.9, 1.1)) + \",\"  # CO\n    payload += str(get_random(23, 25)) + \",\"  # LPG\n    payload += str(get_random(50, 60)) + \",\"  # Smoke\n    payload += str(random.randint(0, 1)) + \",\"  # Presence\n    payload += str(get_random(600, 800)) + \",\"  # Light\n    payload += str(get_random(400, 500)) + \"\\r\\n\"  # Sound\n\n    return payload\n"
+                }
+            }
+        },
+        "writefile1": {
+            "component": "com.sap.file.write",
+            "metadata": {
+                "label": "Write File",
+                "x": 295.9999990463257,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "generation": 1,
+                "config": {
+                    "pathMode": "Static with placeholders",
+                    "connection": {
+                        "configurationType": "Connection Management",
+                        "connectionID": "DI_DATA_LAKE"
+                    },
+                    "path": "/shared/developer/testfiles/${filename}_<date>_<time>.csv",
+                    "joinBatches": false
+                }
+            }
+        },
+        "tofile1": {
+            "component": "com.sap.file.toFile",
+            "metadata": {
+                "label": "To File",
+                "x": 196.99999904632568,
+                "y": 27,
+                "height": 50,
+                "width": 50,
+                "generation": 1,
+                "config": {}
+            }
+        },
+        "graphterminator1": {
+            "component": "com.sap.util.graphTerminator",
+            "metadata": {
+                "label": "Graph Terminator",
+                "x": 493,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "generation": 1,
+                "config": {}
+            }
+        }
+    },
+    "groups": [],
+    "connections": [
+        {
+            "metadata": {
+                "points": "136,52 163.99999952316284,52 163.99999952316284,61 191.99999904632568,61"
+            },
+            "src": {
+                "port": "output",
+                "process": "py3datagenerator1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "tofile1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "250.99999904632568,52 290.9999990463257,52"
+            },
+            "src": {
+                "port": "file",
+                "process": "tofile1"
+            },
+            "tgt": {
+                "port": "file",
+                "process": "writefile1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "419.9999990463257,43 454,43 454,52 488,52"
+            },
+            "src": {
+                "port": "file",
+                "process": "writefile1"
+            },
+            "tgt": {
+                "port": "stop",
+                "process": "graphterminator1"
+            }
+        }
+    ],
+    "inports": {},
+    "outports": {},
+    "metadata": {}
+}

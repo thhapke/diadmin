@@ -1,0 +1,27 @@
+{
+    "description": "Device Null",
+    "component": "com.sap.system.python3Operator.v2",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "input",
+            "type": "table",
+            "vtype-ID": "diadmin.utils.performance_test"
+        }
+    ],
+    "outports": [
+        {
+            "name": "log",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.string"
+        }
+    ],
+    "icon": "puzzle-piece",
+    "iconsrc": "devnull.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/utils.device_null.configSchema.json",
+        "batch_size": -1,
+        "errorHandling": "{\"type\":\"terminate on error\"}",
+        "script": "file://script.py"
+    }
+}

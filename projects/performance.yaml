@@ -1,0 +1,15 @@
+graphs:
+    - utils.big_data_generator
+    - utils.big_data_generator_file
+
+operators_gen2:
+    - utils.big_data_generator
+    - utils.device_null
+
+vtypes:
+    - structures.diadmin
+    - tables.diadmin
+
+dockerfiles:
+
+operators:

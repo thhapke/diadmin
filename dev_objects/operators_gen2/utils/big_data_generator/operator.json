@@ -1,0 +1,35 @@
+{
+    "description": "Big Data Generator",
+    "component": "com.sap.system.python3Operator.v2",
+    "versionStatus": "active",
+    "outports": [
+        {
+            "name": "output",
+            "type": "table",
+            "vtype-ID": "diadmin.utils.performance_test"
+        },
+        {
+            "name": "log",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.string"
+        },
+        {
+            "name": "stop",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.bool"
+        }
+    ],
+    "icon": "puzzle-piece",
+    "iconsrc": "table_generator.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/utils.big_data_generator.configSchema.json",
+        "crash_index": 3,
+        "errorHandling": "{\"type\":\"terminate on error\"}",
+        "max_index": 10,
+        "max_time": "60",
+        "num_rows": 10,
+        "periodicity": 2.5,
+        "script": "file://script.py",
+        "snapshot_time": 3
+    }
+}

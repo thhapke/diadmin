@@ -1,0 +1,31 @@
+{
+    "description": "Batch Pipelines2",
+    "component": "com.sap.system.python3Operator.v2",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "input",
+            "type": "table",
+            "vtype-ID": "*"
+        }
+    ],
+    "outports": [
+        {
+            "name": "output",
+            "type": "table",
+            "vtype-ID": "diadmin.utils.batch_log"
+        }
+    ],
+    "icon": "puzzle-piece",
+    "iconsrc": "batch.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/utils.pipelines_batch2.configSchema.json",
+        "errorHandling": "{\"type\":\"terminate on error\"}",
+        "script": "file://script.py",
+        "sleep_time": null,
+        "tenant": "default"
+    },
+    "tags": {
+        "diadmin": ""
+    }
+}

@@ -1,0 +1,108 @@
+{
+    "description": "Batch Pipelines 2",
+    "processes": {
+        "structuredfileconsumer1": {
+            "component": "com.sap.storage.consumer.v3",
+            "metadata": {
+                "label": "Structured File Consumer",
+                "x": 311,
+                "y": 138,
+                "height": 80,
+                "width": 120,
+                "extensible": false,
+                "generation": 2,
+                "isNewAPI": true,
+                "config": {
+                    "service": "S3",
+                    "serviceConnection": {
+                        "configurationType": "Configuration Manager",
+                        "connectionID": "S3_Catalog"
+                    },
+                    "source": {
+                        "remoteObjectReference": {
+                            "connection": {
+                                "id": "S3_Catalog",
+                                "type": "S3"
+                            },
+                            "name": "datagen4.csv",
+                            "remoteObjectType": "FILE.CSV",
+                            "qualifiedName": "/batches/datagen4.csv",
+                            "nativeQualifiedName": "/batches/datagen4.csv",
+                            "owner": "flowagent",
+                            "size": 274,
+                            "version": {
+                                "dataLastModified": 1638449282000,
+                                "metadataLastModified": 1638449282000,
+                                "metadataVersionNumber": 1638449282000
+                            }
+                        },
+                        "dataAccessConfiguration": {
+                            "rowDelimiter": "\n",
+                            "charset": "ISO-8859-1",
+                            "textDelimiter": "\"",
+                            "header": true,
+                            "escapeCharacter": "\"",
+                            "colDelimiter": ","
+                        },
+                        "schema": {
+                            "genericType": "TABLE",
+                            "tableBasedRepresentation": {
+                                "attributes": []
+                            }
+                        },
+                        "capabilityProperties": [
+                            {
+                                "name": "isProfileable",
+                                "value": "true"
+                            }
+                        ]
+                    },
+                    "failOnStringTruncation": true
+                },
+                "outports": [
+                    {
+                        "name": "outTable",
+                        "type": "table",
+                        "vtype-ID": "$GRAPH.generated.structuredfileconsumer1_outTable"
+                    }
+                ]
+            }
+        },
+        "wiretap1": {
+            "component": "com.sap.util.wiretap.v2",
+            "metadata": {
+                "label": "Wiretap",
+                "x": 511,
+                "y": 158,
+                "height": 80,
+                "width": 120,
+                "generation": 2,
+                "isNewAPI": true,
+                "ui": "dynpath",
+                "config": {}
+            }
+        }
+    },
+    "groups": [],
+    "connections": [
+        {
+            "metadata": {
+                "points": "435,178 470.5,178 470.5,198 506,198"
+            },
+            "src": {
+                "port": "outTable",
+                "process": "structuredfileconsumer1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "wiretap1"
+            }
+        }
+    ],
+    "inports": {},
+    "outports": {},
+    "properties": {},
+    "metadata": {
+        "generation": 2
+    }
+}

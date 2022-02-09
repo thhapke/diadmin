@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <text style="fill: rgb(130, 130, 130); font-family: Arial, sans-serif; font-size: 18.1px; white-space: pre;" transform="matrix(7.166598, 0, 0, 8.456891, -304.052338, -650.681152)" x="43.661" y="96.758">/dev/null</text>
+  <rect x="78.126" y="201.529" width="114.655" height="188.107" style="fill: rgb(176, 176, 176);" transform="matrix(1, 0.000314, 0.097518, 1.000031, 69.79306, 84.828094)"/>
+  <rect x="74.902" y="201.501" width="92.816" height="188.163" style="fill: rgb(176, 176, 176);" transform="matrix(0.999959, -0.009027, -0.226415, 1.002085, 230.378601, 85.468445)"/>
+  <g transform="matrix(0.985638, 0.168876, -0.168876, 0.985638, 50.177086, -50.40522)">
+    <rect x="151.821" y="254.605" width="211.959" height="24.247" rx="14" ry="14" style="fill: rgb(216, 216, 216);"/>
+    <ellipse style="fill: rgb(216, 216, 216);" cx="259.217" cy="255.868" rx="26.217" ry="13.961"/>
+  </g>
+</svg>

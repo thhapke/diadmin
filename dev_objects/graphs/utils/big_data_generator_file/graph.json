@@ -1,0 +1,195 @@
+{
+    "properties": {},
+    "description": "Big Data to File",
+    "processes": {
+        "wiretap1": {
+            "component": "com.sap.util.wiretap.v2",
+            "metadata": {
+                "label": "Wiretap",
+                "x": 196.99999904632568,
+                "y": 132,
+                "height": 80,
+                "width": 120,
+                "generation": 2,
+                "isNewAPI": true,
+                "ui": "dynpath",
+                "config": {}
+            }
+        },
+        "graphterminator1": {
+            "component": "com.sap.util.graphTerminator.v2",
+            "metadata": {
+                "label": "Graph Terminator",
+                "x": 196.99999904632568,
+                "y": 252,
+                "height": 80,
+                "width": 120,
+                "generation": 2,
+                "isNewAPI": true,
+                "config": {}
+            }
+        },
+        "structuredfileproducer1": {
+            "component": "com.sap.storage.producer.v3",
+            "metadata": {
+                "label": "Structured File Producer",
+                "x": 196.99999904632568,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "extensible": false,
+                "generation": 2,
+                "isNewAPI": true,
+                "config": {
+                    "service": "S3",
+                    "serviceConnection": {
+                        "configurationType": "Configuration Manager",
+                        "connectionID": "S3_Catalog"
+                    },
+                    "source": {
+                        "remoteObjectReference": {
+                            "connection": {
+                                "id": "S3_Catalog",
+                                "type": "S3"
+                            },
+                            "qualifiedName": "/performance/p3.csv",
+                            "name": "p3.csv"
+                        },
+                        "schema": {
+                            "genericType": "TABLE",
+                            "tableBasedRepresentation": {
+                                "attributes": [
+                                    {
+                                        "name": "batch",
+                                        "templateType": "int64"
+                                    },
+                                    {
+                                        "name": "id",
+                                        "templateType": "int64"
+                                    },
+                                    {
+                                        "name": "timestamp",
+                                        "templateType": "string"
+                                    },
+                                    {
+                                        "name": "string_value",
+                                        "templateType": "string"
+                                    },
+                                    {
+                                        "name": "float_value",
+                                        "templateType": "float64"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "format": "CSV",
+                    "mode": "overwrite",
+                    "additionalProperties_csv": {
+                        "columnDelimiter": ",",
+                        "csvHeaderIncluded": true
+                    },
+                    "writePartFiles": false,
+                    "attributeMappings": [
+                        {
+                            "expression": "\"batch\"",
+                            "target": "batch"
+                        },
+                        {
+                            "expression": "\"id\"",
+                            "target": "id"
+                        },
+                        {
+                            "expression": "\"timestamp\"",
+                            "target": "timestamp"
+                        },
+                        {
+                            "expression": "\"string_value\"",
+                            "target": "string_value"
+                        },
+                        {
+                            "expression": "\"float_value\"",
+                            "target": "float_value"
+                        }
+                    ]
+                },
+                "inports": [
+                    {
+                        "name": "inTable",
+                        "type": "table",
+                        "vtype-ID": "diadmin.utils.performance_test"
+                    }
+                ]
+            }
+        },
+        "bigdatagenerator1": {
+            "component": "utils.big_data_generator",
+            "metadata": {
+                "label": "Big Data Generator",
+                "x": 12,
+                "y": 132,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "filesRequired": [
+                    "script.py"
+                ],
+                "generation": 2,
+                "isNewAPI": true,
+                "config": {
+                    "crash_index": -1,
+                    "num_rows": 7,
+                    "max_time": "${MaxTime}",
+                    "max_index": "${MaxBatch}"
+                }
+            }
+        }
+    },
+    "groups": [],
+    "connections": [
+        {
+            "metadata": {
+                "points": "136,154 163.99999952316284,154 163.99999952316284,52 191.99999904632568,52"
+            },
+            "src": {
+                "port": "output",
+                "process": "bigdatagenerator1"
+            },
+            "tgt": {
+                "port": "inTable",
+                "process": "structuredfileproducer1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "136,172 191.99999904632568,172"
+            },
+            "src": {
+                "port": "log",
+                "process": "bigdatagenerator1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "wiretap1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "136,190 163.99999952316284,190 163.99999952316284,292 191.99999904632568,292"
+            },
+            "src": {
+                "port": "stop",
+                "process": "bigdatagenerator1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "graphterminator1"
+            }
+        }
+    ],
+    "inports": {},
+    "outports": {},
+    "metadata": {
+        "generation": 2
+    }
+}

@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "http://sap.com/vflow/utils.pipelines_batch2.configSchema.json",
+    "type": "object",
+    "properties": {
+        "codelanguage": {
+            "type": "string"
+        },
+        "errorHandling": {
+            "type": "string"
+        },
+        "script": {
+            "type": "string"
+        },
+        "tenant": {
+            "title": "Tenant",
+            "description": "Tenant",
+            "type": "string"
+        },
+        "sleep_time": {
+            "title": "Sleep Time",
+            "description": "Sleep Time",
+            "type": "number"
+        },
+        "http_connection": {
+            "title": "HTTP Connection",
+            "description": "HTTP Connection",
+            "type": "object",
+            "properties": {
+                "connectionID": {
+                    "title": "ConnectionID",
+                    "type": "string",
+                    "format": "com.sap.dh.connection.id",
+                    "sap_vflow_valuehelp": {
+                        "url": "/app/datahub-app-connection/connections?connectionTypes=HTTP",
+                        "valuepath": "id",
+                        "displayStyle": "autocomplete"
+                    }
+                }
+            }
+        }
+    }
+}

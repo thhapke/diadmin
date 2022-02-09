@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <rect x="48.013" y="292.704" width="209.176" height="1.422" style="fill: rgb(216, 216, 216);"/>
+  <polygon style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" points="476.443 289.741"/>
+  <polygon style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" points="464.859 119.686"/>
+  <polygon style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" points="-0.259 371.502"/>
+  <polygon style="fill: rgb(216, 216, 216); stroke-width: 4px; stroke: rgb(121, 121, 121);" points="48.013 483.71 307.881 484.394 362.835 368.629 132.4 372.009"/>
+  <rect x="48.013" y="226.156" width="209.176" height="1.422" style="fill: rgb(216, 216, 216);"/>
+  <polygon style="fill: rgb(216, 216, 216); stroke-width: 4px; stroke: rgb(121, 121, 121);" points="48.013 450.436 307.881 451.12 362.835 335.355 132.4 338.736"/>
+  <polygon style="fill: rgb(216, 216, 216); stroke-width: 4px; stroke: rgb(120, 120, 120);" points="48.013 417.161 307.881 417.844 362.835 302.079 132.4 305.461"/>
+  <polygon style="fill: rgb(216, 216, 216); stroke-width: 4px; stroke: rgb(120, 120, 120);" points="48.013 383.887 307.881 384.571 362.835 268.806 132.4 272.188"/>
+  <polygon style="fill: rgb(216, 216, 216); stroke-width: 4px; stroke: rgb(120, 120, 120);" points="48.013 341.235 307.881 341.921 362.835 226.156 132.4 229.538"/>
+  <polygon style="fill: rgb(216, 216, 216); stroke: rgb(238, 171, 48); stroke-width: 4px;" points="48.013 301.396 307.881 302.079 362.835 186.314 132.4 189.696"/>
+  <polygon style="fill: rgb(216, 216, 216); stroke: rgb(238, 171, 48); stroke-width: 4px;" points="48.013 263.452 307.881 264.135 362.835 148.37 132.4 151.752"/>
+  <polygon style="fill: rgb(216, 216, 216); stroke: rgb(238, 171, 48); stroke-width: 4px;" points="48.013 225.472 307.881 226.156 362.835 110.392 132.4 113.772"/>
+  <polygon style="stroke-width: 4px; fill: rgb(255, 255, 255); stroke: rgb(156, 156, 156);" points="111.316 185.645 154.84 185.865 164.044 148.819 125.45 149.902"/>
+  <polygon style="stroke-width: 4px; fill: rgb(255, 255, 255); stroke: rgb(156, 156, 156);" points="180.106 185.419 220.929 185.64 229.328 148.593 193.137 149.676" transform="matrix(0.999959, 0.009086, -0.009086, 0.999959, 1.526828, -1.853108)"/>
+  <polygon style="stroke-width: 4px; fill: rgb(255, 255, 255); stroke: rgb(156, 156, 156);" points="247.29 185.868 288.112 186.089 296.512 149.042 260.321 150.125" transform="matrix(0.999959, 0.009086, -0.009086, 0.999959, 1.53368, -2.463507)"/>
+  <line style="stroke: rgb(0, 0, 0);" x1="156.34" y1="169.56" x2="185.481" y2="167.258"/>
+  <line style="stroke: rgb(0, 0, 0);" x1="229.496" y1="167.258" x2="258.195" y2="167.258"/>
+  <path d="M 508.369 102.1865 H 611.91 L 611.91 94.196 L 635.467 112.5785 L 611.91 130.961 L 611.91 122.9705 H 508.369 V 102.1865 Z" style="fill: rgb(238, 171, 48);" transform="matrix(1, 0.000001, -0.000001, 1, -135.466843, -2.187211)" bx:shape="arrow 508.369 94.196 127.098 36.765 20.784 23.557 0 1@95759fd9"/>
+  <path d="M 508.369 102.187 H 611.91 L 611.91 94.196 L 635.467 112.579 L 611.91 130.961 L 611.91 122.971 H 508.369 V 102.187 Z" style="fill: rgb(238, 171, 48);" transform="matrix(1, 0.000001, -0.000001, 1, -135.466888, 34.598366)" bx:shape="arrow 508.369 94.196 127.098 36.765 20.784 23.557 0 1@bfb16243"/>
+  <path d="M 508.369 102.187 H 611.91 L 611.91 94.196 L 635.467 112.579 L 611.91 130.961 L 611.91 122.971 H 508.369 V 102.187 Z" style="fill: rgb(238, 171, 48);" transform="matrix(1, 0.000001, -0.000001, 1, -135.466843, 75.363495)" bx:shape="arrow 508.369 94.196 127.098 36.765 20.784 23.557 0 1@bfb16243" bx:origin="0.675 1.835"/>
+</svg>

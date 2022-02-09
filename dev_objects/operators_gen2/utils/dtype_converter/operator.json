@@ -1,0 +1,30 @@
+{
+    "description": "Data Type Converter",
+    "component": "com.sap.system.python3Operator.v2",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "input",
+            "type": "table",
+            "vtype-ID": "*"
+        }
+    ],
+    "outports": [
+        {
+            "name": "log",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.string"
+        },
+        {
+            "name": "output",
+            "type": "table",
+            "vtype-ID": "diadmin.utils.batch_pipelines"
+        }
+    ],
+    "icon": "puzzle-piece",
+    "config": {
+        "$type": "http://sap.com/vflow/utils.dtype_converter.configSchema.json",
+        "errorHandling": "{\"type\":\"terminate on error\"}",
+        "script": "\n\ndef custom_response_callback(msg_id, ex):\n    if ex:\n        api.logger.error(\"Error when publishing %s: %s\".format(str(msg_id), str(ex)))\n        api.outputs.log.publish(f\"{str(msg_id)} - {str(ex)}\")\n\ndef on_input(msg_id, header, msg_data):\n\n    new_header = header.copy()\n    table = msg_data.get()\n\n    try :\n        #to_type_id = api.DataTypeReference(\"table\",api.config.to_dtype_name)\n        #to_vtype = api.type_context.get_vtype(to_type_id)\n        #api.outputs.log.publish(f\"TO VTYPE columns: {str(to_vtype.columns.keys())}\")\n        \n        api.outputs.log.publish(\"==HEADER==\")\n        api.outputs.log.publish(str(new_header))\n        \n        api.outputs.log.publish(\"==BODY==\")\n        api.outputs.log.publish(str(table.is_typed()))\n        \n        #api.outputs.log.publish(f\"Type of msg_body: {str(type(msg_body.get()))}\")\n        api.outputs.log.publish(f\"Type of body: {str(type(table))}\")\n        #b = table(infer_dynamic_type(to_vtype.columns.keys()))\n        #api.outputs.log.publish(f\"infer type: {str(b)}\")\n        #api.outputs.log.publish(f\"Row[0]: {str(table[0])}\")\n        \n        row0=None\n        for row in table :\n            row0 = row\n            break\n        api.outputs.log.publish(f\"DATA ROW: {str(row0)}\")\n            \n        \n    except Exception as e:\n        code = 1\n        text = str(e)\n        details = \"NONE\"\n        raise api.OperatorException(code, text, details)\n    \n\n    \n    #types = msg_data.infer_dynamic_type(to_vtype.columns.keys())\n    \n    \n    #from_vtype = api.type_context.infer_schema_from_row(data[0], list(to_vtype.columns.keys()))\n    #api.outputs.log.publish(f\"FROM Vtype: {str(from_vtype)}\")\n    #api.outputs.log.publish(f\"FROM Vtype: {json.dumps(from_vtype,indent=4)}\")\n    \n    \n    #api.outputs.log.publish(f\"TO   Vtype: {str(to_vtype.columns)}\")\n    #api.outputs.log.publish(f\"FROM Vtype: {str(from_vtype.columns)}\")\n    \n    #table = api.Table(data,to_type_id)\n    #api.outputs.output.publish(table,new_header)\n\n\napi.set_port_callback(\"input\", on_input)"
+    }
+}

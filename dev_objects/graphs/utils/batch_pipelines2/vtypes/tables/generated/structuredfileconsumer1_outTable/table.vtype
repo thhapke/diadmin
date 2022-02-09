@@ -1,0 +1,63 @@
+{
+	"name": "generated.structuredfileconsumer1_outTable",
+	"description": "auto-generated generated.structuredfileconsumer1_outTable",
+	"vflow.type": "table",
+	"rows": {
+		"components": [
+			{
+				"pipeline": {
+					"vflow.type": "scalar",
+					"vtype-ID": "$GRAPH.generated.string_18"
+				}
+			},
+			{
+				"name": {
+					"vflow.type": "scalar",
+					"vtype-ID": "$GRAPH.generated.string_9"
+				}
+			},
+			{
+				"config": {
+					"vflow.type": "scalar",
+					"vtype-ID": "$GRAPH.generated.string_10"
+				}
+			},
+			{
+				"user": {
+					"vflow.type": "scalar",
+					"vtype-ID": "$GRAPH.generated.string_5000"
+				}
+			},
+			{
+				"tenant": {
+					"vflow.type": "scalar",
+					"vtype-ID": "$GRAPH.generated.string_5000"
+				}
+			},
+			{
+				"status": {
+					"vflow.type": "scalar",
+					"vtype-ID": "$GRAPH.generated.string_5000"
+				}
+			},
+			{
+				"submitted": {
+					"vflow.type": "scalar",
+					"vtype-ID": "$GRAPH.generated.string_5000"
+				}
+			},
+			{
+				"started": {
+					"vflow.type": "scalar",
+					"vtype-ID": "$GRAPH.generated.string_5000"
+				}
+			},
+			{
+				"stopped": {
+					"vflow.type": "scalar",
+					"vtype-ID": "$GRAPH.generated.string_1"
+				}
+			}
+		]
+	}
+}

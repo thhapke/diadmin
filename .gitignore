@@ -29,3 +29,4 @@ build/Release
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
+!/dev_objects/
