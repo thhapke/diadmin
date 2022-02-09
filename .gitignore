@@ -17,8 +17,6 @@ connections/*
 *.egg-info
 
 dist/
-dev_data/
-
 
 # Logs
 logs
@@ -27,10 +25,6 @@ logs
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
-
-# dotenv environment variables file
-.env
-.env.test
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
