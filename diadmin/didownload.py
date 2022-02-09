@@ -14,7 +14,7 @@ import yaml
 
 from diadmin.utils.utils import add_defaultsuffix, toggle_mockapi,mksubdirs
 from diadmin.vctl_cmds.login import di_login
-from diadmin.vctl_cmds.vrep import get_all_files, read_file, export_artifact, solution_from_repo, VFLOW_PATHS
+from diadmin.vctl_cmds.vrep import get_all_files, read_file, export_object, solution_from_repo, VFLOW_PATHS
 from diadmin.vctl_cmds.solution import download_solution
 
 # global variable
@@ -118,13 +118,12 @@ def main() :
                         target_list += get_targetlist(object_type,artifact)
                 else :
                     logging.error(f'Unknown project item: {object_type}')
-
         else :
             target_list = get_targetlist(args.object_type,args.object_name)
 
         for t in target_list :
             mksubdirs('.',t[2])
-            export_artifact(t[0],t[1],t[2],user)
+            export_object(t[0], t[1], t[2], user)
             with tarfile.open(t[2]) as tar:
                 logging.info(f'Extract \'{t[1]}\' to: {t[2]}')
                 obj_path = path.join(root_dir,t[0])

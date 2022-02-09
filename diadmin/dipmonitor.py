@@ -22,8 +22,9 @@ def main() :
     #
     description =  "Monitors SAP Data Intelligence pipelines of a user"
     parser = argparse.ArgumentParser(description=description)
-    help_config = 'Specifies config_demo.yaml file with the parameters: URL, TENANT, USER, PWD'
+    help_config = 'Specifies config.yaml file with the parameters like URL, TENANT, USER, PWD'
     parser.add_argument('-c','--config', help = help_config,default='config.yamls')
+    parser.add_argument('-u','--user', help = 'Userlist ',default='config.yamls')
     args = parser.parse_args()
 
     with open(args.config) as yamls:

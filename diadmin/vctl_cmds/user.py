@@ -18,7 +18,7 @@ from diadmin.utils.genpwds import gen_pwd
 
 # create user from userlist
 def create_user(user,role) :
-    create_user = ['vctl','user','create',user['tenant'],user['user'],user['pwd'],role]
+    create_user = ['vctl','user','create',user['tenant'],user['user'],user['password'],role]
     run(create_user)
 
 # assign policy to user
@@ -40,12 +40,14 @@ def deassign_policy(user,policy) :
 
 # get di user
 def get_users() :
+    logging.info('Get user list')
     userlist = ['vctl','user','list']
     di_user_list = check_output(userlist).decode('utf-8').split('\n')
     users =  [ u.split() for u in di_user_list][1:-1]
     return [{'tenant':u[0],'user':u[1]} for u in users]
 
 def delete_user(user) :
+    logging.info(f"Delete user: {user}")
     userdelete = ['vctl','user','delete',user['tenant'],user['user']]
     run(userdelete)
 

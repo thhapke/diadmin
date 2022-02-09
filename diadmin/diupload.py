@@ -22,6 +22,7 @@ from diadmin.utils.utils import read_userlist, get_operator_generation
 # global variable
 root_dir = '.'
 LOCAL_TEST = False
+OBJECT_TYPES = ['project','operators','operators_gen2','graphs','dockerfiles','vtypes','general']
 
 def exclude_files(tarinfo) :
     basename = path.basename(tarinfo.name)
@@ -32,29 +33,48 @@ def exclude_files(tarinfo) :
 
 def get_sources(object_type, source) :
     if object_type == 'all' or object_type == '*' :
-        sources =  {'operators':'operators','graphs':'graphs','dockerfiles':'dockerfiles'}
+        sources =  dict(zip(OBJECT_TYPES,OBJECT_TYPES))
     elif source == '.' or source == '*' :
-        sources = {object_type: object_type}
-    else :
-        if not object_type == 'ui':
+        sources = {object_type: [object_type]}
+    elif object_type in OBJECT_TYPES and not object_type == 'project':
+        if not object_type == 'general':
             source = source.replace('.',os.sep)
-        sources = {object_type: source}
+        sources = {object_type: [source]}
+    elif object_type == 'project':
+        project_file = add_defaultsuffix(source,'yaml')
+        with open(path.join('projects',project_file)) as yamls:
+            project = yaml.safe_load(yamls)
+        sources = dict()
+        for object_type, object_list in project.items() :
+            if not object_type in OBJECT_TYPES:
+                raise ValueError(f"Unknown object type in project file {source}: {object_type}")
+            if object_list == None :
+                continue
+            sources[object_type] = list()
+            for object_name in object_list :
+                if not object_type == 'general':
+                    object_name = object_name.replace('.',os.sep)
+                sources[object_type].append(object_name)
+    else :
+        raise ValueError(f"Unknown object type: {object_type}")
     return sources
 
 def make_tarfiles(sources) :
     tarfiles = dict()
-    for st,sn in sources.items() :
-        tar_filename = path.join(root_dir,st+'_files.tgz')
-        tarfiles[st] = tar_filename
+    for object_type,object_names in sources.items() :
+        tar_filename = path.join(root_dir,object_type+'.tgz')
+        tarfiles[object_type] = tar_filename
         with tarfile.open(tar_filename, "w:gz") as tar:
-            obj_path = path.join(root_dir,st,sn)
-            if st == 'operators' or st == 'operators_gen2':
-                toggle_mockapi(obj_path,comment = True)
-            for d in listdir(obj_path) :
-                sd = path.join(obj_path,d)
-                tar.add(sd,arcname=sn,filter=exclude_files)
-            if st == 'operators' or st == 'operators_gen2' :
-                toggle_mockapi(obj_path,comment = False)
+            zip_path = path.join(root_dir,object_type)
+            for object_name in object_names :
+                obj_path = path.join(zip_path,object_name)
+                if object_type == 'operators' or object_type == 'operators_gen2':
+                    toggle_mockapi(obj_path,comment = True)
+                for d in listdir(obj_path) :
+                    sd = path.join(obj_path,d)
+                    tar.add(sd,arcname=path.relpath(sd,zip_path),filter=exclude_files)
+                if object_type == 'operators' or object_type == 'operators_gen2' :
+                    toggle_mockapi(obj_path,comment = False)
     return tarfiles
 
 def main() :
@@ -64,7 +84,7 @@ def main() :
     #
     # command line args
     #
-    achoices = ['project','operators','operators_gen2','graphs','dockerfiles','general','all','*']
+    achoices = OBJECT_TYPES + ['all','*']
     description =  "Uploads operators, graphs and  dockerfiles to SAP Data Intelligence.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-i','--init', help = 'Creates a config.yaml and the necessary folders. Additionally you need '
@@ -131,19 +151,7 @@ def main() :
             else :
                 import_object(args.object_type,args.object_name,user,conflict)
     else :
-        sources = dict()
-        if args.object_type == 'project' :
-            project_file = add_defaultsuffix(args.object_name,'yaml')
-            with open(path.join('projects',project_file)) as yamls:
-                project = yaml.safe_load(yamls)
-            for object_type in project :
-                if object_type in ['graphs','operators','operators_gen2','dockerfiles','vtypes'] and not project[object_type] == None:
-                    for object_name in project[object_type] :
-                        sources.update(get_sources(object_type,object_name))
-                else :
-                    logging.error(f'Unknown project item: {object_type}')
-        else :
-            sources = get_sources(args.object_type,args.object_name)
+        sources = get_sources(args.object_type,args.object_name)
         tarfiles = make_tarfiles(sources)
         if not LOCAL_TEST :
             if user == 'userlist' :

@@ -14,13 +14,9 @@ import yaml
 from diadmin.utils.utils import add_defaultsuffix
 from diadmin.vctl_cmds.login import di_login
 from diadmin.vctl_cmds.user import get_users
-from diadmin.vctl_cmds.vrep import export_artifact
+from diadmin.vctl_cmds.vrep import export_object, VFLOW_PATHS
 
-VFLOW_PATHS = {'operators':'files/vflow/subengines/com/sap/python36/operators/',
-               'graphs':'files/vflow/graphs/',
-               'dockerfiles':'files/vflow/dockerfiles/'}
-
-ARTIFACTS = ['operators','graphs','dockerfiles']
+OBJECT_TYPES = ['operators','graphs','dockerfiles','vtypes','operators_gen2']
 
 def mksubdir(parentdir,dir) :
     newdir = path.join(parentdir,dir)
@@ -35,24 +31,22 @@ def main() :
     #
     # command line args
     #
-    achoices = ['operators','graphs','dockerfiles','menu','all','*','solution']
-    description =  "Backup development artifacts of all users.\nPre-requiste: vctl."
+    description =  "Backup development objects of all users.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config_demo.yaml')
+
+    parser.add_argument('cluster', help = 'URL of cluster')
+    parser.add_argument('tenant', help = 'tenant name')
+    parser.add_argument('-u','--user', help = 'Admin user')
+    parser.add_argument('-p','--password', help = 'Password')
     args = parser.parse_args()
 
-    if args.config:
-        config_file = add_defaultsuffix(args.config,'yaml')
-    with open(config_file) as yamls:
-        params = yaml.safe_load(yamls)
-
-    disystem = re.match('.+vsystem\.ingress\.([a-zA-Z0-9-_]+)\.([a-zA-Z0-9-_]+).+',params['URL'])
-    disystem = disystem.group(1) + '.' + disystem.group(1) + '-'+ params['TENANT']
+    disystem = re.match('.+vsystem\.ingress\.([a-zA-Z0-9-_]+)\.([a-zA-Z0-9-_]+).+',args.cluster)
+    disystem = disystem.group(1) + '.' + disystem.group(2) + '-'+ args.tenant
 
     backupsdir = mksubdir('.','backups')
     systemdir = mksubdir(backupsdir,disystem)
 
-    ret = di_login(params)
+    ret = di_login({'URL':args.cluster,'TENANT':args.tenant,'USER':args.user,'PWD':args.password})
     if not ret == 0 :
         return ret
 
@@ -62,13 +56,13 @@ def main() :
     #users = [users[0]]
     for u in users :
         systemdiruser = mksubdir(systemdir,u['user'])
-        logging.info(f"Download artifacts of user: {u['user']}")
+        logging.info(f"Download objects of user: {u['user']}")
         count_exported = 0
-        for a in ARTIFACTS :
-            file = path.join(systemdiruser,a+'.tgz')
-            count_exported += export_artifact(a,a,file,u['user'])
+        for object_type in OBJECT_TYPES :
+            file = path.join(systemdiruser,object_type+'.tgz')
+            count_exported += export_object(object_type, None, file, u['user'])
         if count_exported == 0 :
-            logging.info(f'No artifacts to backup.')
+            logging.info(f'No development objects to backup.')
             rmdir(systemdiruser)
 
 

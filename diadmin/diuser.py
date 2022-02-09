@@ -8,6 +8,7 @@
 
 
 import csv
+import sys
 from pprint import pprint
 import logging
 
@@ -21,8 +22,9 @@ from diadmin.vctl_cmds.login import di_login
 from diadmin.vctl_cmds.user import create_user, assign_policies, deassign_policy, get_users, delete_user
 from diadmin.vctl_cmds.policy import get_policy_list_assignments
 from diadmin.utils.genpwds import gen_pwd
-from diadmin.utils.utils import read_userlist,add_defaultsuffix,write_userlist, next_user
+from diadmin.utils.utils import add_defaultsuffix, csvlist
 
+MAX_DELETE = 3
 
 
 # Create pwd for new user
@@ -224,25 +226,32 @@ def main() :
                               pwd_length= params['USERLIST']['PWD_LENGTH'],
                               tenant=params['TENANT'])
 
+    userlist = csvlist(path.join('users',params['USERLIST']['LIST']))
+
     if args.add :
         di_login(params)
-        users = read_userlist(params['USERLIST']['LIST'])
-        for u in next_user(users,with_comments=False) :
-            if not u['pwd']:
-                u['pwd'] = gen_pwd()
+        userlist.with_comments = False
+        userlist.filter = ('status','TO_ADD')
+        for u in userlist :
+            if not u['password']:
+                u['password'] = gen_pwd()
+            u['status'] = 'EXISTS'
             create_user(u,'member')
             deassign_policy(u,'sap.dh.member')
             policies = params['USER_ROLE'][u['role']]
-            logging.info(f'Create user: {u["user"]} with role:{u["role"]} ({policies})')
             assign_policies(u,params["USER_ROLE"][u["role"]])
-
-        write_userlist(users,params['USERLIST']['LIST'],comment=True)
+            logging.info(f'Create user: {u["user"]} with role:{u["role"]} ({policies})')
+        userlist.save()
 
     if args.delete :
         di_login(params)
-        users = read_userlist(args.userlist)
-        for u in users :
+        userlist.filter = ('status','TO_DELETE')
+        logging.info(f"Delete user marked in user list with \'status\': \'TO_DELETE\'.")
+        for i,u in enumerate(userlist) :
+            if i >= MAX_DELETE:
+                break
             delete_user(u)
+            userlist.remove(u)
 
     if args.assign_policies :
         di_login(params)
@@ -261,14 +270,9 @@ def main() :
     if args.download:
         di_login(params)
         users = get_users()
-        users_sysfile = path.join('users',params['USERLIST']['LIST'][:-4]+'-sys.csv')
-        logging.info(f'Download user to file: {users_sysfile}')
-        with open(users_sysfile,'w') as fp:
-            for u in users :
-                if params['USERLIST']['FORMAT'] == '%name %firstname':
-                    u['name'] = (u['user'][:-1] + ' ' + u['user'][-1:]).title()
-                user_row = [u['tenant'],u['user'],u['name'],'-','STANDARD']
-                fp.write(','.join(user_row)+'\n')
+        userlist.extend(users)
+        userlist.set_default({'status':'EXISTS'})
+
 
 if __name__ == '__main__':
     main()

@@ -80,8 +80,10 @@ def import_object(artifact_type, file, user, flags=None) :
         logging.info(f'Import {artifact_type[:-1]}: {file} to user: {user} ({" ".join(cmd)})')
         run(cmd)
 
-def export_artifact(artifact_type,artifact,file,user) :
-    source = path.join(VFLOW_PATHS[artifact_type],artifact)
+def export_object(object_type, object_name, file, user) :
+    source = VFLOW_PATHS[object_type]
+    if object_name :
+        source = path.join(VFLOW_PATHS[object_type], object_name)
     cmd = ['vctl','vrep','user','export',file,source,'-u',user]
     logging.info(f'Export \'{source}\' of user \'{user}\' to file: {file} ({" ".join(cmd)})')
     try :
