@@ -63,7 +63,7 @@ def start_graph(connection,config) :
 
 
 
-def start_batch(connection, batch, max_procs = 2) :
+def start_batch(connection, batch, max_procs = 100, wait_running = False) :
 
     processing = True
     num_procs = 0
@@ -128,7 +128,7 @@ def start_batch(connection, batch, max_procs = 2) :
     # Wait until all processes are complete
 
     running = True
-    while(running) :
+    while(running and wait_running) :
 
         running = False
         runtime_graphs = list()

@@ -12,7 +12,8 @@ import yaml
 
 
 from diadmin.vctl_cmds.login import di_login
-from diadmin.vctl_cmds.tenant import get_info
+from diadmin.vctl_cmds.tenant import get_info,get_configuration
+from diadmin.utils.utils import add_defaultsuffix
 
 
 
@@ -24,19 +25,22 @@ def main() :
     #
     description =  "Get tenant info.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('-c','--config', help = 'Specifies yaml-config file')
+    parser.add_argument('command', help = 'Tenant command [get,configuration,list]',default='get')
+    parser.add_argument('-t','--tenant', help = 'tenant name',default='default')
+    parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config.yaml')
     parser.add_argument('-o','--format', help = 'Output format',default='json')
     args = parser.parse_args()
 
-    if args.config:
-        config_file = args.config
-        if not re.match('.+\.yaml',config_file) :
-            config_file += '.yaml'
+
+    config_file = add_defaultsuffix(args.config,'yaml')
     with open(config_file) as yamls:
         params = yaml.safe_load(yamls)
 
     di_login(params)
-    info_dict, info_str = get_info(params['TENANT'],args.format)
+    if args.command == 'get':
+        info_dict, info_str = get_info(args.tenant,args.format)
+    elif args.command == 'configuration':
+        info_dict, info_str = get_configuration()
     print(info_str)
 
 

@@ -8,11 +8,17 @@ import json
 from subprocess import check_output
 
 
-def get_info(tenant_name,format = 'json') :
+def get_info(tenant_name='default',format = 'json') :
     cmd = ['vctl','tenant','get',tenant_name,'--format','json']
     output_str = check_output(cmd).decode('utf-8')
     output_dict = json.loads(output_str)
     if not format == 'json' :
         cmd = ['vctl','tenant','get',tenant_name,'--format',format]
         output_str = check_output(cmd).decode('utf-8')
+    return output_dict, output_str
+
+def get_configuration() :
+    cmd = ['vctl','tenant','configuration']
+    output_str = check_output(cmd).decode('utf-8')
+    output_dict = json.loads(output_str)
     return output_dict, output_str

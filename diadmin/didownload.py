@@ -31,11 +31,11 @@ def change_target_dir(object_type,members) :
 def get_targetlist(object_type, object_name) :
     target = list()
     if object_type == 'all' :
-        target = [('operators','operators',root_dir+'/operators/operator.tgz'),
+        target = [('operators','operators',root_dir+'/operators/operators.tgz'),
+                  ('operators_gen2','operators_gen2',root_dir+'/operators_gen2/operators_gen2.tgz')
                   ('graphs','graphs',root_dir+'/graphs/graphs.tgz'),
                   ('dockerfiles','dockerfiles',root_dir+'/dockerfiles/dockerfiles.tgz'),
-                  ('vtypes','vtypes',root_dir+'/vtypes/vtypes.tgz'),
-                  ('general','general',root_dir+'/general/general.tgz')]
+                  ('vtypes','vtypes',root_dir+'/vtypes/vtypes.tgz')]
     elif object_name == '.' or object_name == '*':
         target = [(object_type, object_type, path.join(root_dir,object_type, object_type + '.tgz'))]
     else :
@@ -52,7 +52,7 @@ def main() :
     #
     # command line args
     #
-    achoices = ['project','operators','operators_gen2','graphs','dockerfiles','vtypes','menu','all','*','solution']
+    achoices = ['project','operators','operators_gen2','graphs','dockerfiles','vtypes','all','*','solution']
     description =  "Downloads operators, pipelines, vtypes, menus, dockerfiles or solution from SAP Data Intelligence to local file system.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config_demo.yaml')

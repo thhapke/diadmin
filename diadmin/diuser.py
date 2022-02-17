@@ -201,6 +201,7 @@ def main() :
 
     args = parser.parse_args()
 
+    config_file = args.config
     if args.config:
         config_file = add_defaultsuffix(args.config,'yaml')
     with open(config_file) as yamls:

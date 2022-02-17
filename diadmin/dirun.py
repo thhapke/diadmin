@@ -14,6 +14,7 @@ import json
 from os import path
 
 from diadmin.pipeline_api.runtime import start_batch
+from diadmin.vctl_cmds.login import di_login
 from diadmin.utils.utils import add_defaultsuffix
 
 template_header = ["pipeline","name","user","password","config"]
@@ -30,7 +31,8 @@ def main() :
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('batchfile', help = "json-batch-file")
     parser.add_argument('-c','--config', help = help_config,default='config.yamls')
-    parser.add_argument('-n','--number',type=int, help='Max. number of parallel running pipelines',default=2)
+    parser.add_argument('-n','--number',type=int, help='Max. number of parallel running pipelines',default=100)
+    parser.add_argument('-w','--wait',type=int, help='Wait until last pipeline completed')
 
     args = parser.parse_args()
 
@@ -48,7 +50,12 @@ def main() :
     with open(path.join('batches',batch_file),mode='r',newline='\n') as jsonfp :
         batch = json.load(jsonfp)
 
-    procs = start_batch(conn,batch = batch,max_procs=args.number)
+    ret = di_login(params)
+    if not ret == 0 :
+        return ret
+
+    wait_running = True if args.wait else False
+    procs = start_batch(conn,batch = batch,max_procs=args.number,wait_running=wait_running)
 
     log_file = batch_file[:-4] + 'log'
     with open(log_file,'w') as fp:
