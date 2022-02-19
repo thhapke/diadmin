@@ -1,18 +1,46 @@
 {
-  "name": "Status",
-  "description": "Status of dataset (http://purl.org/adms/status/Completed)",
-  "nodes": [
-    {
-      "name": "in process",
-      "description": "In process"
+    "Status": {
+        "name": "Status",
+        "description": "Status of dataset (http://purl.org/adms/status/Completed)",
+        "path": "Status",
+        "tag_id": "",
+        "parent_path": "",
+        "hierarchy_id": "90CE01A0BD71F0B817000CE286077533",
+        "hierarchy_name": "Status"
     },
-    {
-      "name": "deprecated",
-      "description": "Deprecated"
+    "Status/completed": {
+        "name": "completed",
+        "description": "Completed",
+        "path": "Status/completed",
+        "tag_id": "93CE01A0BD71F0B817000CE286077533",
+        "parent_path": "",
+        "hierarchy_id": "90CE01A0BD71F0B817000CE286077533",
+        "hierarchy_name": "Status"
     },
-    {
-      "name": "completed",
-      "description": "Completed"
+    "Status/deprecated": {
+        "name": "deprecated",
+        "description": "Deprecated",
+        "path": "Status/deprecated",
+        "tag_id": "92CE01A0BD71F0B817000CE286077533",
+        "parent_path": "",
+        "hierarchy_id": "90CE01A0BD71F0B817000CE286077533",
+        "hierarchy_name": "Status"
+    },
+    "Status/in process": {
+        "name": "in process",
+        "description": "In process",
+        "path": "Status/in process",
+        "tag_id": "91CE01A0BD71F0B817000CE286077533",
+        "parent_path": "",
+        "hierarchy_id": "90CE01A0BD71F0B817000CE286077533",
+        "hierarchy_name": "Status"
+    },
+    "Status/rejected": {
+        "name": "rejected",
+        "description": "rejected",
+        "path": "Status/rejected",
+        "parent_path": "",
+        "hierarchy_id": "90CE01A0BD71F0B817000CE286077533",
+        "hierarchy_name": "Status"
     }
-  ]
 }

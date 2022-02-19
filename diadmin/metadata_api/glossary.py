@@ -60,7 +60,7 @@ def get_glossary_categories(connection,glossary_id) :
 def get_glossary_category_id(categories,category_name) :
     for c in categories :
         if c["name"] == category_name :
-            return c["id"]
+            return c["id"], c
     logging.warning(f"Glossary category not found: {category_name}")
     return None
 
@@ -86,13 +86,13 @@ def upload_glossary_term(connection,glossary_id,term) :
     restapi = f"/glossaries/{glossary_id}/terms"
     url = connection['url'] + restapi
     # params = {"hierarchyId":hierarchy_id,"withTags":True}
-    headers = {'X-Requested-With': 'XMLHttpRequest'}
+    headers = {'X-Requested-With': 'XMLHttpRequest','accept': 'application/json'}
 
     r = requests.post(url, headers=headers, auth=connection['auth'], data = term)
     response = json.loads(r.text)
 
     if r.status_code != 200:
-        logging.error(f"Get glossaries: {response['message']}")
+        logging.error(f"Upload glossaries: {response['message']}")
 
     return response
 
@@ -104,20 +104,33 @@ if __name__ == '__main__' :
 
     logging.basicConfig(level=logging.DEBUG)
 
-    with open('../config.yaml') as yamls:
+    with open('config_catalog.yaml') as yamls:
         params = yaml.safe_load(yamls)
 
-    conn = {'url':params['url'],
-            'auth':(params['tenant']+'\\'+ params['user'],params['password'])}
-    data_directory = params['data_directory']
+    glossary_resource = "/app/datahub-app-metadata"
+    conn = {'url':params['URL']+glossary_resource,
+            'auth':(params['TENANT']+'\\'+ params['USER'],params['PWD'])}
+    #data_directory = params['data_directory']
 
-    glossary_id = get_glossary_id(conn,"Additional Dataset Metadata")
+    glossary_name = 'Chemical Industry'
+    category_name = 'Company Products'
+
+    glossary_id = get_glossary_id(conn, glossary_name)
     categories = get_glossary_categories(conn,glossary_id)
     print(json.dumps(categories,indent=4))
-    category_id = get_glossary_category_id(categories,"Population and Society")
+
+    category_id, category = get_glossary_category_id(categories,category_name)
 
     terms = get_glossary_terms(conn,glossary_id,category_id)
     print(json.dumps(terms,indent=4))
 
+    term = {
+        "categories":[category],
+        "name": "ACCUREL® 98 CM 496",
+        "customInputs": [],
+        "keywords": [{"key": "ACCUREL", "name": "ACCUREL"}],
+        "synonyms":[{"key": "ACCUREL", "name": "ACCUREL"}],
+        "description": "ACCUREL® 98 CM 496 is an additive masterbatch of TAICROS® on LLDPE. The active ingredient TAICROS® is a trifunctional monomer which can polymerize in the presence of radicals formed by irradiation or peroxides."}
 
+    upload_glossary_term(conn,glossary_id=glossary_id,term=term)
 

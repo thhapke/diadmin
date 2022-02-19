@@ -13,6 +13,7 @@ sql.txt
 localtest/*
 users/*
 connections/*
+catalogs/*
 
 *.egg-info
 
@@ -30,3 +31,6 @@ build/Release
 .cache
 
 !/dev_objects/
+!/diadmin/utils/genpwds.py
+
+!/diadmin/utils/utils.py

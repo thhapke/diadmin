@@ -18,6 +18,7 @@ import requests
 import json
 import yaml
 
+from diadmin.utils.utils import get_system_id
 
 def get_connections(connection,filter_type='',filter_tags=''):
     logging.info(f"Get Connections of type: {filter_type}")
@@ -165,13 +166,14 @@ if __name__ == '__main__':
     conn = {'url': urljoin(params['URL'] , '/app/datahub-app-metadata/api/v1'),
             'auth': (params['TENANT'] + '\\' + params['USER'], params['PWD'])}
 
+    sysid = get_system_id(params['URL'],params['TENANT'])
 
     CONNECTIONS = False
     if CONNECTIONS :
         #connection_type = "SDL"
         connection_type = ''
         connections = get_connections(conn,filter_type=connection_type)
-        with open(path.join('catalogs','connections.json'),'w') as fp:
+        with open(path.join('catalog','connections_'+sysid+'.json'),'w') as fp:
             json.dump(connections,fp,indent=4)
 
 
@@ -186,8 +188,12 @@ if __name__ == '__main__':
         container_filter = 'connectionType eq \'SDL\''
         get_containers(conn,containers,root,container_filter=None)
 
-        with open(path.join('catalogs','containers.json'),'w') as fp:
+        with open(path.join('catalog','container_'+sysid+'.json'),'w') as fp:
             json.dump(containers,fp,indent=4)
+
+    GET_DATASETS = True
+    if GET_DATASETS :
+        container_id =
 
     GET_ATTRIBUTES = False
     if GET_ATTRIBUTES :
@@ -204,7 +210,7 @@ if __name__ == '__main__':
         with open(path.join('catalogs','dataset_tags.json'),'w') as fp:
             json.dump(tags,fp,indent=4)
 
-    ADD_ATTRIBUTES = True
+    ADD_ATTRIBUTES = False
     if ADD_ATTRIBUTES :
         with open(path.join('catalogs','dataset_tags.json'),'r') as fp:
             dataset_tags = json.load(fp)
