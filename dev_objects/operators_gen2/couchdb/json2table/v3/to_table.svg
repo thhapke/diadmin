@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <rect x="242.286" y="127.172" width="250.666" height="272.81" style="fill: none; stroke: rgb(16, 74, 146); stroke-width: 8px;"/>
+  <rect x="242.286" y="84.876" width="250.666" height="42.296" style="stroke: rgb(16, 74, 146); fill: rgba(16, 75, 146, 0.17); stroke-width: 8px;"/>
+  <line style="fill: none; stroke: rgb(16, 74, 146); stroke-width: 8px;" x1="242.316" y1="166.719" x2="492.969" y2="166.719"/>
+  <line style="fill: none; stroke: rgb(16, 74, 146); stroke-width: 8px;" x1="242.316" y1="205.893" x2="492.969" y2="205.893" bx:origin="0.414 0"/>
+  <line style="fill: none; stroke: rgb(16, 74, 146); stroke-width: 8px;" x1="242.316" y1="245.066" x2="492.969" y2="245.066" bx:origin="0.503 0"/>
+  <line style="fill: none; stroke: rgb(16, 74, 146); stroke-width: 8px;" x1="242.316" y1="284.241" x2="492.969" y2="284.241" bx:origin="0.526 0"/>
+  <line style="fill: none; stroke: rgb(16, 74, 146); stroke-width: 8px;" x1="242.286" y1="323.414" x2="492.938" y2="323.414"/>
+  <line style="fill: none; stroke: rgb(16, 74, 146); stroke-width: 8px;" x1="242.286" y1="362.589" x2="492.938" y2="362.589"/>
+  <line style="fill: none; stroke: rgb(16, 74, 146); stroke-width: 8px;" x1="148.829" y1="243.668" x2="461.5" y2="243.668" transform="matrix(-0.006295, -0.99998, 0.99998, -0.006295, 63.422344, 550.360352)"/>
+  <line style="fill: none; stroke: rgb(16, 74, 146); stroke-width: 8px;" x1="206.416" y1="241.208" x2="519.087" y2="241.208" transform="matrix(-0.006295, -0.99998, 0.99998, -0.006295, 123.831787, 605.470703)"/>
+  <line style="fill: none; stroke: rgb(16, 74, 146); stroke-width: 8px;" x1="273.943" y1="243.668" x2="586.612" y2="243.668" transform="matrix(-0.006295, -0.99998, 0.99998, -0.006295, 189.322922, 675.470886)"/>
+  <path d="M 33.898 505.797 H 140.554 L 140.554 469.477 L 181.554 537.576 L 140.554 605.676 L 140.554 569.356 H 33.898 V 505.797 Z" style="stroke: rgb(16, 74, 146); fill: rgb(16, 74, 146);" transform="matrix(0.999976, 0.006918, -0.006918, 0.999976, 169.810776, -283.750732)" bx:shape="arrow 33.898 469.477 147.656 136.199 63.559 40.999 0 1@b688458e"/>
+  <text style="fill: rgba(16, 75, 146, 0.48); font-family: Arial, sans-serif; font-size: 18.1px; white-space: pre;" transform="matrix(6.819907, 0, 0, 11.570946, -99.938919, -1795.126953)" x="14.654" y="181.018">{...}</text>
+</svg>

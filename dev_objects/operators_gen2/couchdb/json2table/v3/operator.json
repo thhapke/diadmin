@@ -1,5 +1,5 @@
 {
-    "description": "JSON2Table",
+    "description": "JSON To Table",
     "component": "com.sap.system.python3Operator.v2",
     "versionStatus": "active",
     "inports": [
@@ -13,7 +13,7 @@
         {
             "name": "table",
             "type": "table",
-            "vtype-ID": "diadmin.mc.visits"
+            "vtype-ID": "diadmin.couchdb.table"
         },
         {
             "name": "log",
@@ -23,7 +23,7 @@
     ],
     "iconsrc": "to_table.svg",
     "config": {
-        "$type": "http://sap.com/vflow/couchdb.json2table.configSchema.json",
+        "$type": "http://sap.com/vflow/couchdb.json2table.v3.configSchema.json",
         "errorHandling": "{\"type\":\"terminate on error\"}",
         "script": "file://script.py"
     }

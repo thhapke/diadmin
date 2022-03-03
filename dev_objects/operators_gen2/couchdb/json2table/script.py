@@ -1,5 +1,5 @@
 # Mock apis needs to be commented before used within SAP Data Intelligence
-from diadmin.dimockapi.mock_api import api
+#from diadmin.dimockapi.mock_api import api
 
 import json
 import pandas as pd
@@ -38,9 +38,7 @@ def on_input(msg_id, header, body):
     #writer.close()
 
     # Publish data
-    batchtable = api.Table(table_list[0:5])
-    api.outputs.table.publish(batchtable,header=header)
-    #api.outputs.table.publish(table,header=header)
-
+    api.outputs.table.publish(api.Table(table_list),header=header)
+    
 
 api.set_port_callback('JSON',on_input)
