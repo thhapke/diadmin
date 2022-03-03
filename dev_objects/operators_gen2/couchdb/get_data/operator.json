@@ -1,0 +1,18 @@
+{
+    "description": "CouchDB GET",
+    "component": "com.sap.system.python3Operator.v2",
+    "versionStatus": "active",
+    "outports": [
+        {
+            "name": "json",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.string"
+        }
+    ],
+    "iconsrc": "couchdb-2.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/couchdb.get_data.configSchema.json",
+        "errorHandling": "{\"type\":\"terminate on error\"}",
+        "script": "file://script.py"
+    }
+}

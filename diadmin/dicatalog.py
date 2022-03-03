@@ -8,12 +8,16 @@ import logging
 import argparse
 from urllib.parse import urljoin
 
-import yaml
 import json
 from os import path
 
+import yaml
+import csv
+import pandas as pd
+
 from diadmin.metadata_api import catalog, container
-from diadmin.utils.utils import add_defaultsuffix, mksubdir
+from diadmin.utils.utils import add_defaultsuffix, mksubdir,get_system_id
+
 
 def main() :
     logging.basicConfig(level=logging.INFO)
@@ -22,11 +26,11 @@ def main() :
     # command line args
     #
     description =  "Upload and download catalog items."
-    achoices = ['hierarchies','connections','containers','tags']
+    achoices = ['hierarchies','connections','containers','tags','metadata','autotag']
     parser = argparse.ArgumentParser(description=description)
     help_config = 'Specifies config_demo.yaml file with the parameters: URL, TENANT, USER, PWD'
     parser.add_argument('type',choices=achoices, help = "Catalog type [connections,containers] only download..")
-    parser.add_argument('item',help = "Content file. if \'*\' default values are used w/o suffix \'.json\' [hierachies,tags,connections,containers]")
+    parser.add_argument('item',help = "Content file. if \'*\' default values are used w/o suffix [hierachies,tags,connections,containers,autotag]")
     parser.add_argument('-d','--download', help='Exports hierarchies',action='store_true')
     parser.add_argument('-u','--upload', help='Imports hierarchies (json-file with or w/o suffix)',action='store_true')
     parser.add_argument('-f','--hierarchies_file', help='Use downloaded hierarchy_maps.json file instead of downloading it freshly',action='store_true')
@@ -43,16 +47,19 @@ def main() :
     conn = {'url': urljoin(params['URL'] , '/app/datahub-app-metadata/api/v1'),
             'auth':(params['TENANT']+'\\'+ params['USER'],params['PWD'])}
 
+    sysid = get_system_id(params['URL'],params['TENANT'])
+
     catalog_directory = mksubdir('.','catalogs')
 
     if args.download :
         if args.type == 'hierarchies':
             hfilter = None if args.item == '*' else args.item
             filename = 'hierarchies.json' if args.item == '*' else args.item+'.json'
+            filename = path.join(catalog_directory,filename)
             logging.info(f"Download hierarchies to {filename}")
             hierarchies = catalog.download_hierarchies(conn,hierarchy_name=hfilter)
             logging.info(f"Save file {filename}")
-            with open(path.join(catalog_directory,filename),'w') as fp:
+            with open(filename,'w') as fp:
                 json.dump(hierarchies,fp,indent=4)
 
         elif args.type == 'connections':
@@ -95,6 +102,10 @@ def main() :
             logging.info(f"Dataset tags saved to: {tags_file}")
             with open(tags_file,'w') as fp:
                 json.dump(tags,fp,indent=4)
+
+
+
+
 
     if args.upload :
         if args.type == 'hierarchies':
@@ -139,6 +150,27 @@ def main() :
         else :
             logging.error('Only \'hierarchies\' and \'tags\' can be uploaded')
             return -1
+
+    if args.type == 'metadata':
+        df = container.export_catalog(conn)
+        filename = path.join('catalogs','metadata_'+sysid+'.csv')
+        df.to_csv(filename,index = False)
+
+    elif  args.type == 'autotag':
+        tagmap = list()
+        autotagfile = add_defaultsuffix(args.item,'csv')
+        with open(path.join('catalogs',autotagfile)) as fp:
+            csvreader = csv.reader(fp)
+            header = next(csvreader)
+            for row in csvreader:
+                if row[0][0] == '#':
+                    continue
+                tagmap.append(row)
+
+        metadata_df = container.export_catalog(conn)
+        container.auto_tag(conn,metadata_df,tagmap)
+
+
 
 
 if __name__ == '__main__':

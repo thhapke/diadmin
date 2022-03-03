@@ -10,9 +10,9 @@ from subprocess import check_output, run, CalledProcessError
 
 VFLOW_PATHS = {'operators':'files/vflow/subengines/com/sap/python36/operators/',
                'operators_gen2':'files/vflow/subengines/com/sap/python3/operators/',
-               'graphs':'files/vflow/graphs',
+               'graphs':'files/vflow/graphs/',
                'vtypes':'files/vflow/vtypes/',
-               'dockerfiles':'files/vflow/dockerfiles/'}
+               'dockerfiles':'files/vflow/dockerfiles'}
 
 def get_dir_files(dir) :
     logging.info(f'List file in folder: {dir}')

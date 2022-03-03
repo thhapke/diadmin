@@ -129,7 +129,7 @@ def generate_userlist(userlist,
                 for line in csvreader:
                     if line[0][0] == '#' :
                         continue
-                    users.append({'tenant':tenant,'user':line[0].lower(),'name':' '.join(line),'pwd':gen_pwd(pwd_length),'role':role})
+                    users.append({'tenant':tenant,'user':line[0].lower(),'name':' '.join(line),'password':gen_pwd(pwd_length),'role':role})
             elif format == '%name %firstname':
                 csvreader = csv.reader(csvfile,delimiter = ' ')
                 for line in csvreader:
@@ -143,7 +143,7 @@ def generate_userlist(userlist,
         for i in range(1,num+1) :
             newuser = {'tenant':tenant,'user':user_prefix+str(i).zfill(zf),'name':'user','role':role}
             if pwd and pwd != 'RANDOM':
-                newuser['pwd'] = pwd
+                newuser['password'] = pwd
             else :
                 newuser['pwd'] = gen_pwd(pwd_length)
             users.append(newuser)
@@ -152,9 +152,10 @@ def generate_userlist(userlist,
     # OPEN
 
     with open(path.join('users',filename),'w') as fp :
+        fp.write('tenant,user,name,password,role,status\n')
         for u in users :
-            user_row = [u['tenant'],u['user'],u['name'],u['pwd'],u['role']]
-            fp.write(','.join(user_row)+'\n')
+            user_row = [u['tenant'],u['user'],u['name'],u['password'],u['role']]
+            fp.write(','.join(user_row)+',TO_ADD\n')
 
 def user_assignment_matrix(user_assignment,file) :
 
@@ -192,7 +193,7 @@ def main() :
     parser.add_argument('-l','--userlist', help = 'List of user to generate new userlist. If <nameless> userlist without names are generated.')
     parser.add_argument('-e','--deassign_policies', nargs='+', help = 'Deassign policies from user in userlist')
     parser.add_argument('-r','--role', help = 'User role with policies defined in config.',default='STANDARD')
-    parser.add_argument('-g','--generate', help = 'Generate userlist',action='store_true')
+    parser.add_argument('-g','--generate', help = 'Generate userlist with given filename.')
     parser.add_argument('-o','--output', help = 'Output file of generated userlist',action='store_true')
     parser.add_argument('-a','--add', help = 'Add users of userlist',action='store_true')
     parser.add_argument('-d','--delete', help = 'Delete users of userlist',action='store_true')
@@ -208,10 +209,11 @@ def main() :
         params = yaml.safe_load(yamls)
 
     if args.generate :
-        if args.userlist == 'nameless' :
-            logging.info('Generate \'nameless\'-userlist')
+        if not args.userlist :
+            newuserlist = add_defaultsuffix(args.generate,'csv')
+            logging.info(f'Generic userlist: {newuserlist}')
             generate_userlist(userlist=None,
-                              filename=params['USERLIST']['LIST'],
+                              filename=newuserlist,
                               num=params['USERLIST']['NUMBER'],
                               pwd= params['USERLIST']['PASSWORD'],
                               pwd_length= params['USERLIST']['PWD_LENGTH'],

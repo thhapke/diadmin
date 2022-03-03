@@ -17,7 +17,7 @@ import yaml
 from diadmin.utils.utils import add_defaultsuffix, toggle_mockapi
 from diadmin.vctl_cmds.login import di_login
 from diadmin.vctl_cmds.vrep import import_object, solution_to_repo, import_menue_panel,VFLOW_PATHS
-from diadmin.utils.utils import read_userlist, get_operator_generation
+from diadmin.utils.utils import csvlist
 
 # global variable
 root_dir = '.'
@@ -85,7 +85,7 @@ def main() :
     # command line args
     #
     achoices = OBJECT_TYPES + ['all','*']
-    description =  "Uploads operators, graphs and  dockerfiles to SAP Data Intelligence.\nPre-requiste: vctl."
+    description =  "Uploads operators, graphs, project and  dockerfiles to SAP Data Intelligence.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-i','--init', help = 'Creates a config.yaml and the necessary folders. Additionally you need '
                                               'to add \'* *\' as dummy positional arguments',action='store_true')
@@ -145,7 +145,7 @@ def main() :
     if (re.match('.+\.tgz$',args.object_name) or re.match('.+\.tar.gz$',args.object_name)):
         if not LOCAL_TEST :
             if user == 'userlist' :
-                userlist = read_userlist(params['USERLIST']['LIST'])
+                userlist = csvlist(path.join('users',params['USERLIST']['LIST']))
                 for u in userlist :
                     import_object(args.object_type,args.object_name,u['user'],conflict)
             else :
@@ -155,7 +155,7 @@ def main() :
         tarfiles = make_tarfiles(sources)
         if not LOCAL_TEST :
             if user == 'userlist' :
-                userlist = read_userlist(params['USERLIST']['LIST'])
+                userlist = csvlist(params['USERLIST']['LIST'])
                 for u in userlist :
                     for st,fn in tarfiles.items() :
                         import_object(st,fn,u['user'],conflict)

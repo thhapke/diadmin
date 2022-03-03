@@ -14,7 +14,7 @@ class outport :
         self.port_name = port_name
         self.msgs = msg_list
     def publish(self,data,header=None):
-        self.msgs.append({'port':self.port_name,'dev_data':data})
+        self.msgs.append({'port':self.port_name,'msg':data})
 
 
 class mock_logger :
@@ -92,7 +92,7 @@ class api:
             self.attributes = attributes
 
     def send(port,msg):
-        api.msg_list.append({'port':port, 'dev_data':msg})
+        api.msg_list.append({'port':port, 'msg':msg})
         if api.print_send_msg :
             if isinstance(msg,str) :
                 print('PORT {}: {}'.format(port,msg))
@@ -101,6 +101,8 @@ class api:
 
     def set_port_callback(*args):
         pass
+    def set_prestart(*args):
+            pass
     def add_generator(*args):
         pass
     def add_timer(timer_func):
@@ -122,4 +124,5 @@ class api:
     def set_serialize_callback(serialize_func) :
         api.serialize = serialize_func
 
-
+    def DataTypeReference(type_cat, type_name) :
+        return type_cat +' - ' +  type_name

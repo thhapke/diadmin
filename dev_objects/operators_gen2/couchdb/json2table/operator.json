@@ -1,0 +1,25 @@
+{
+    "description": "JSON2Table",
+    "component": "com.sap.system.python3Operator.v2",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "JSON",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.string"
+        }
+    ],
+    "outports": [
+        {
+            "name": "table",
+            "type": "table",
+            "vtype-ID": "diadmin.mc.visits"
+        }
+    ],
+    "iconsrc": "to_table.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/couchdb.json2table.configSchema.json",
+        "errorHandling": "{\"type\":\"terminate on error\"}",
+        "script": "file://script.py"
+    }
+}

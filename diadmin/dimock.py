@@ -14,6 +14,9 @@ import argparse
 import re
 import os
 from os.path import isdir, join, isfile, basename
+import shutil
+
+root_dir = '.'
 
 
 def main() :
@@ -23,12 +26,19 @@ def main() :
     description =  "Prepare script for offline development"
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('operator', help = 'Operator folder')
-    parser.add_argument('-w','--overwrite', help = 'Forcefully overwrite existing script',action='store_true')
+    parser.add_argument('-d','--directory', help = 'Directory of operators',default='.')
+    parser.add_argument('-g','--generation', help = 'Directory of operators',default='2')
+
     args = parser.parse_args()
 
     # Preliminary checks on arguments
+    if args.generation == '2':
+        op_dir = join(args.directory,"operators_gen2")
+    else :
+        op_dir = join(args.directory,"operators")
+
     args.operator = args.operator.replace('.',os.sep)
-    operator_dir = join('operators',args.operator)
+    operator_dir = join(op_dir,args.operator)
     if not isdir(operator_dir) :
         raise logging.error('Operator argument are not a folder!')
         return -1
@@ -53,24 +63,24 @@ def main() :
 
     script_file = re.match('file://(.+)',opjson['config']['script']).group(1)
     script_file = join(operator_dir,script_file)
-    if isfile(script_file) and not args.overwrite:
-        logging.error(f"Script file \'{basename(script_file)}\' exists already. Cannot be modified but only created newly!")
-        return -1
-
-    if isfile(script_file) and args.overwrite:
-        logging.warning(f'Script-file \'{script_file}\' exists. Will be overwritten!')
+    if isfile(script_file) :
+        nfile = script_file[:-3]+'_backup.py'
+        shutil.copy(script_file,nfile)
+        logging.error(f"Script file \'{basename(script_file)}\' exists already. Copy to {nfile}!")
+        #return -1
 
     # Read Schema Json
     with open(join(operator_dir,'configSchema.json'),'r') as fp:
         cfgschema = json.load(fp)
 
     content = '# Mock apis needs to be commented before used within SAP Data Intelligence\n'
-    content += 'from diadmin.dimockapi.mock_api import mock_api\n'
-    content += 'api = mock_api(__file__)\n\n\n'
+    content += 'from diadmin.dimockapi.mock_api import api\n'
+    #content += 'api = mock_api(__file__)\n\n\n'
 
-    content += 'import copy\n'
-    content += 'import pandas as pd\n'
-    content += 'import io\n\n\n'
+    #content += 'import copy\n'
+    #content += 'import io\n'
+    #content += 'import pandas as pd\n'
+    content += '\n\n'
 
     if "inports" in opjson :
         inport_types = [p['type'] for p in opjson['inports']]

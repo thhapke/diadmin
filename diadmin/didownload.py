@@ -36,8 +36,8 @@ def get_targetlist(object_type, object_name) :
                   ('graphs','graphs',root_dir+'/graphs/graphs.tgz'),
                   ('dockerfiles','dockerfiles',root_dir+'/dockerfiles/dockerfiles.tgz'),
                   ('vtypes','vtypes',root_dir+'/vtypes/vtypes.tgz')]
-    elif object_name == '.' or object_name == '*':
-        target = [(object_type, object_type, path.join(root_dir,object_type, object_type + '.tgz'))]
+    elif object_name == '.' or object_name == '*' or object_name =='all':
+        target = [(object_type, None, path.join(root_dir,object_type, object_type + '.tgz'))]
     else :
         object_name = object_name.replace('.', path.sep)
         target = [(object_type, object_name,path.join(root_dir,object_type, object_name + '.tgz'))]
@@ -52,14 +52,14 @@ def main() :
     #
     # command line args
     #
-    achoices = ['project','operators','operators_gen2','graphs','dockerfiles','vtypes','all','*','solution']
+    achoices = ['project','operators','operators_gen2','graphs','dockerfiles','vtypes','all','solution']
     description =  "Downloads operators, pipelines, vtypes, menus, dockerfiles or solution from SAP Data Intelligence to local file system.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config_demo.yaml')
     parser.add_argument('-i','--init', help = 'Creates a config.yaml and the necessary folders. Additionally you need '
-                                              'to add \'* *\' as dummy positional arguments',action='store_true')
+                                              'to add \'all all\' as dummy positional arguments',action='store_true')
     parser.add_argument('object_type', help='Type of development object.',choices=achoices)
-    parser.add_argument('object_name', help='DI development object name, incl. \'*\'. For \'all\' wildcard is required.',default='*')
+    parser.add_argument('object_name', help='DI development object name or \'all\'.',default='all')
     parser.add_argument('-n', '--solution', help='Solution imported to vrep before artifacts downloaded.')
     parser.add_argument('-v', '--version', help='Version of solution. Required for option --solution')
     parser.add_argument('-u', '--user', help='SAP Data Intelligence user if different from login-user. Not applicable for solutions-download')
@@ -97,9 +97,6 @@ def main() :
     if  args.user :
         user = args.user
 
-    if not path.isdir(args.object_type) :
-        mkdir(args.object_type)
-
     if args.solution:
         solution_from_repo(args.solution, args.version)
 
@@ -125,7 +122,8 @@ def main() :
             mksubdirs('.',t[2])
             export_object(t[0], t[1], t[2], user)
             with tarfile.open(t[2]) as tar:
-                logging.info(f'Extract \'{t[1]}\' to: {t[2]}')
+                obn = t[1] if not t[1] == 0 else t[0]
+                logging.info(f'Extract \'{t[0]}\' - \'{obn}\' to: {t[2]}')
                 obj_path = path.join(root_dir,t[0])
                 tar.extractall(path=obj_path,members=change_target_dir(t[0],tar.getmembers()))
                 #toggle_mockapi(comment=False)
