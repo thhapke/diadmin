@@ -103,20 +103,20 @@ def get_datasets(connection, container_id):
 
     response = json.loads(r.text)
     if r.status_code != 200:
-        logging.error("Get datasets: {}".format(response['message']))
+        logging.error("Get metadata_datasets: {}".format(response['message']))
 
-    return response['datasets']
+    return response['metadata_datasets']
 
 def get_dataset_summary(connection,dataset_name,dataset_id):
     logging.info(f"Get Dataset summary: {dataset_name}")
-    restapi = f'/catalog/datasets/{dataset_id}/summary'
+    restapi = f'/catalog/metadata_datasets/{dataset_id}/summary'
     url = connection['url'][:-6] + restapi
     headers = {'X-Requested-With': 'XMLHttpRequest'}
     r = requests.get(url, headers=headers, auth=connection['auth'])
 
     response = json.loads(r.text)
     if r.status_code != 200:
-        logging.error("Get datasets: {}".format(response['message']))
+        logging.error("Get metadata_datasets: {}".format(response['message']))
     return response
 
 def get_dataset_tags(connection,dataset_path,connection_id=None,tag_hierarchies=None):
@@ -128,7 +128,7 @@ def get_dataset_tags(connection,dataset_path,connection_id=None,tag_hierarchies=
         qualified_name = '/'+'/'.join(path_list[0:])
 
     qualified_name = urllib.parse.quote(qualified_name,safe='')
-    restapi = f"/catalog/connections/{connection_id}/datasets/{qualified_name}/tags"
+    restapi = f"/catalog/connections/{connection_id}/metadata_datasets/{qualified_name}/tags"
     url = connection['url'] + restapi
     logging.info(f'Get Dataset Tags for: {dataset_path} ({connection_id})')
     headers = {'X-Requested-With': 'XMLHttpRequest'}
@@ -136,7 +136,7 @@ def get_dataset_tags(connection,dataset_path,connection_id=None,tag_hierarchies=
     r = requests.get(url, headers=headers, auth=connection['auth'], params=params)
 
     if r.status_code != 200:
-        logging.error(f"Get datasets attributes unsuccessful for {dataset_path}: {r.status}\n{json.loads(r.text)}")
+        logging.error(f"Get metadata_datasets attributes unsuccessful for {dataset_path}: {r.status}\n{json.loads(r.text)}")
         return None
     return json.loads(r.text)
 
@@ -148,7 +148,7 @@ def export_catalog(connection) :
     for name,container in containers.items() :
         dsets = get_datasets(connection, container['id'])
         if len(dsets) > 0:
-            logging.info(f"Scanned container:{container['qualifiedName']} - #datasets:{len(dsets)}")
+            logging.info(f"Scanned container:{container['qualifiedName']} - #metadata_datasets:{len(dsets)}")
             datasets.extend(dsets)
 
     for dataset in datasets:
@@ -192,7 +192,7 @@ def add_dataset_tag(connection,dataset_path,hierarchy_id,tag_id,connection_id=No
         qualified_name = '/'+'/'.join(path_list[0:])
 
     qualified_name = urllib.parse.quote(qualified_name,safe='')
-    restapi = f"/catalog/connections/{connection_id}/datasets/{qualified_name}/tagHierarchies/{hierarchy_id}/tags"
+    restapi = f"/catalog/connections/{connection_id}/metadata_datasets/{qualified_name}/tagHierarchies/{hierarchy_id}/tags"
     url = connection['url'] + restapi
     logging.info(f'add_dataset_tags URL: {url}')
     headers = {'X-Requested-With': 'XMLHttpRequest'}
@@ -217,7 +217,7 @@ def add_dataset_attribute_tag(connection,dataset_path,hierarchy_id,tag_id,attrib
 
     qualified_name = urllib.parse.quote(qualified_name,safe='')
     attributes_qn = urllib.parse.quote(attributes_qn,safe='')
-    restapi = f"/catalog/connections/{connection_id}/datasets/{qualified_name}/attributes/{attributes_qn}/tagHierarchies/{hierarchy_id}/tags"
+    restapi = f"/catalog/connections/{connection_id}/metadata_datasets/{qualified_name}/attributes/{attributes_qn}/tagHierarchies/{hierarchy_id}/tags"
     url = connection['url'] + restapi
     logging.info(f'add_dataset_attribute_tag URL: {url}')
     headers = {'X-Requested-With': 'XMLHttpRequest'}
@@ -358,7 +358,7 @@ if __name__ == '__main__':
         for name,container in containers.items() :
             dsets = get_datasets(connection, container['id'])
             if len(dsets) > 0:
-                logging.info(f"Scanned container:{container['qualifiedName']} - #datasets:{len(dsets)}")
+                logging.info(f"Scanned container:{container['qualifiedName']} - #metadata_datasets:{len(dsets)}")
                 datasets.extend(dsets)
 
         with open(path.join('catalogs','datasets_'+sysid+'.json'),'w') as fp:

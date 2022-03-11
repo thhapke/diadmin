@@ -15,7 +15,7 @@ import yaml
 import csv
 import pandas as pd
 
-from diadmin.metadata_api import catalog, container
+from diadmin.metadata_api import catalog, container, connection
 from diadmin.utils.utils import add_defaultsuffix, mksubdir,get_system_id
 
 
@@ -26,13 +26,14 @@ def main() :
     # command line args
     #
     description =  "Upload and download catalog items."
-    achoices = ['hierarchies','connections','containers','tags','metadata','autotag']
+    achoices = ['hierarchies','connections','containers','tags','datasets','metadata','autotag']
     parser = argparse.ArgumentParser(description=description)
     help_config = 'Specifies config_demo.yaml file with the parameters: URL, TENANT, USER, PWD'
     parser.add_argument('type',choices=achoices, help = "Catalog type [connections,containers] only download..")
     parser.add_argument('item',help = "Content file. if \'*\' default values are used w/o suffix [hierachies,tags,connections,containers,autotag]")
     parser.add_argument('-d','--download', help='Exports hierarchies',action='store_true')
     parser.add_argument('-u','--upload', help='Imports hierarchies (json-file with or w/o suffix)',action='store_true')
+    parser.add_argument('-r','--remove', help='Removes connection_id',action='store_true')
     parser.add_argument('-f','--hierarchies_file', help='Use downloaded hierarchy_maps.json file instead of downloading it freshly',action='store_true')
     parser.add_argument('-c','--config', help = help_config,default='config.yamls')
     parser.add_argument('-s','--synced', help='Use synced file hierarchies.json',action='store_true')
@@ -63,11 +64,11 @@ def main() :
                 json.dump(hierarchies,fp,indent=4)
 
         elif args.type == 'connections':
-            cfilter = None if args.item == '*' else args.item
+            connection_id = None if args.item in ['*','all'] else args.item
             filename = 'connections.json' if args.item == '*' else 'connections_'+args.item+'.json'
-            filename = path.join('catalogs',filename)
-            logging.info(f"Download connections to: {filename}")
-            connections = container.get_connections(conn,filter_type=cfilter,filter_tags='')
+            filename = path.join('connections',filename)
+            logging.info(f"Download connections {args.item} to: {filename}")
+            connections = connection.get_connections(conn,connection_id = connection_id)
             with open(filename,'w') as fp:
                 json.dump(connections,fp,indent=4)
 
@@ -102,9 +103,6 @@ def main() :
             logging.info(f"Dataset tags saved to: {tags_file}")
             with open(tags_file,'w') as fp:
                 json.dump(tags,fp,indent=4)
-
-
-
 
 
     if args.upload :
@@ -147,9 +145,29 @@ def main() :
                     tag_id = hierarchies[ast]['tag_id']
                     container.add_dataset_attribute_tag(conn,ds,hierarchy_id,tag_id,attribute)
 
+        elif args.type == 'connections' :
+            # load metadata_dataset
+            conn_file = add_defaultsuffix(args.item,'json')
+            with open(path.join('connections',conn_file)) as fp :
+                conn_data = json.load(fp)
+            connection.upload_connection(conn,conn_data)
+
+        elif args.type == 'datasets':
+            dataset_file = add_defaultsuffix(args.item,'json')
+            with open(path.join('metadata_datasets',dataset_file)) as fp :
+                dataset_data = json.load(fp)
+            task = connection.upload_dataset(conn,dataset_data)
+            logging.info(f"Upload Dataset Metadata. Task ID: {task}")
+
         else :
             logging.error('Only \'hierarchies\' and \'tags\' can be uploaded')
             return -1
+
+    if args.remove:
+        if args.type == 'connections':
+            connection.delete_connection(conn,args.item)
+        else :
+            logging.error("Remove only implemented for type: \'connections\'.")
 
     if args.type == 'metadata':
         df = container.export_catalog(conn)

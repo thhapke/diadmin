@@ -14,7 +14,7 @@ import yaml
 
 
 ### RULES
-def get_rules(connection,rulebook_id=None) :
+def get_rules(connection,rulebook_id=None,filter_category = None,filter_rule=None) :
 
     restapi = f"/rules"
     url = connection['url'] + restapi
@@ -28,6 +28,22 @@ def get_rules(connection,rulebook_id=None) :
 
     if r.status_code != 200:
         logging.error(f"GET Rules: {response['message']}")
+
+    # Apply filter
+    kept_categories = list()
+    for category in response['categories'] :
+        if filter_category and not category['name'] == filter_category:
+            continue
+        kept_rules = list()
+        for rule in category['rules']:
+            if filter_rule and not rule['name'] == filter_rule:
+                continue
+            kept_rules.append(rule)
+        if filter_rule :
+            category['rules'] = kept_rules
+        kept_categories.append(category)
+    if filter_category:
+        response['categories'] = kept_categories
 
     return response
 
@@ -132,7 +148,7 @@ def get_rulebook_results(connection,rulebook_id) :
 def flat_results(results,rulebook_id) :
     flat_results = list()
     for r in results['results'] :
-        for d in r['datasets']:
+        for d in r['metadata_datasets']:
             nr = {'id':rulebook_id,'name':results['name'],'description':results['description'],
                   'start_time':r['startTime'],'end_time':r['endTime'],'status':r['status'],
                   'dataset':d['qualifiedName'],'dataset_id':d['datasetId'],
@@ -253,12 +269,16 @@ def main() :
     conn = {'url':params['URL']+'/app/datahub-app-metadata/api/v1',
             'auth':(params['TENANT']+'\\'+ params['USER'],params['PWD'])}
 
-    RULES = False
+    RULES = True
     if RULES :
-        rules = get_rules(conn)
-        rules = condense_rules(rules)
-        rules = flat_rules(rules)
+        rule_id = 'Test_IMPORT'
+        filter_category = 'Accuracy'
+        filter_rule = 'Test_IMPORT'
+        rules = get_rules(conn,filter_category=filter_category,filter_rule=filter_rule)
         print(json.dumps(rules,indent=4))
+        #rules = condense_rules(rules)
+        #rules = flat_rules(rules)
+        #print(json.dumps(rules,indent=4))
 
     RULEBOOKS = False
     if RULEBOOKS:
@@ -281,7 +301,7 @@ def main() :
         response = start_rulebook(conn,rulebook_id,save_failed_records=False)
         print(response)
 
-    PREPARATIONS = True
+    PREPARATIONS = False
     if PREPARATIONS :
         prep_id, prep_name = get_preparation_id(conn,"Fast_")
         start_preparation(conn,prep_id,connection_id='S3_catalog',path='/dqm/prepared/'+prep_name+'.csv')
