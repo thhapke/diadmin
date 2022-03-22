@@ -24,6 +24,7 @@ import pandas as pd
 
 from diadmin.utils.utils import get_system_id
 from diadmin.metadata_api.catalog import download_hierarchies
+from diadmin.connect.connect_neo4j import neo4jConnection
 
 
 def re_str(pattern) :
@@ -105,11 +106,14 @@ def get_datasets(connection, container_id):
     if r.status_code != 200:
         logging.error("Get metadata_datasets: {}".format(response['message']))
 
-    return response['metadata_datasets']
+    #if response['currentContainer']['catalogObjectType'] == 'REFERENCED_CONNECTION':
+    #    return None
+
+    return response['datasets']
 
 def get_dataset_summary(connection,dataset_name,dataset_id):
     logging.info(f"Get Dataset summary: {dataset_name}")
-    restapi = f'/catalog/metadata_datasets/{dataset_id}/summary'
+    restapi = f'catalog/datasets/{dataset_id}/summary'
     url = connection['url'][:-6] + restapi
     headers = {'X-Requested-With': 'XMLHttpRequest'}
     r = requests.get(url, headers=headers, auth=connection['auth'])
@@ -128,7 +132,7 @@ def get_dataset_tags(connection,dataset_path,connection_id=None,tag_hierarchies=
         qualified_name = '/'+'/'.join(path_list[0:])
 
     qualified_name = urllib.parse.quote(qualified_name,safe='')
-    restapi = f"/catalog/connections/{connection_id}/metadata_datasets/{qualified_name}/tags"
+    restapi = f"/catalog/connections/{connection_id}/datasets/{qualified_name}/tags"
     url = connection['url'] + restapi
     logging.info(f'Get Dataset Tags for: {dataset_path} ({connection_id})')
     headers = {'X-Requested-With': 'XMLHttpRequest'}
@@ -136,7 +140,7 @@ def get_dataset_tags(connection,dataset_path,connection_id=None,tag_hierarchies=
     r = requests.get(url, headers=headers, auth=connection['auth'], params=params)
 
     if r.status_code != 200:
-        logging.error(f"Get metadata_datasets attributes unsuccessful for {dataset_path}: {r.status}\n{json.loads(r.text)}")
+        logging.error(f"Get datasets attributes unsuccessful for {dataset_path}: {r.status_code}\n{json.loads(r.text)}")
         return None
     return json.loads(r.text)
 
@@ -147,13 +151,16 @@ def export_catalog(connection) :
     containers = get_containers(connection,containers)
     for name,container in containers.items() :
         dsets = get_datasets(connection, container['id'])
-        if len(dsets) > 0:
-            logging.info(f"Scanned container:{container['qualifiedName']} - #metadata_datasets:{len(dsets)}")
+        if dsets and len(dsets) > 0:
+            logging.info(f"Scanned container:{container['qualifiedName']} - #datasets:{len(dsets)}")
             datasets.extend(dsets)
 
     for dataset in datasets:
         ds = get_dataset_summary(connection,dataset['qualifiedName'],dataset['id'])
         if 'code' in ds and ds['code'] == '70016' :
+            logging.warning(f"Read dataset summary for {dataset['qualifiedName']}: {ds['message']}")
+            continue
+        if 'code' in ds and ds['code'] == 'internal' :
             logging.warning(f"Read dataset summary for {dataset['qualifiedName']}: {ds['message']}")
             continue
         for c in ds['additionalInfo']['columns']:
@@ -172,6 +179,9 @@ def export_catalog(connection) :
 
     for i,dsc in df_ds.iterrows() :
         dataset_attributes = get_dataset_tags(connection,dsc['dataset_path'],dsc['connection_id'])
+        if not dataset_attributes :
+            logging.warning("No dataset attributes!")
+            continue
         tags = dataset_attributes_str(dataset_attributes)
         df.loc[(df['connection_id'] == dsc['connection_id']) & (df['dataset_path'] == dsc['dataset_path']),'dataset_tags'] = tags['dataset_tags']
         for at,at_tags in tags['attribute_tags'].items() :
@@ -325,16 +335,41 @@ if __name__ == '__main__':
     connection = {'url': urljoin(params['URL'], '/app/datahub-app-metadata/api/v1'),
             'auth': (params['TENANT'] + '\\' + params['USER'], params['PWD'])}
 
+    if 'GRAPHDB' in params:
+        connection['GRAPHDB'] = params['GRAPHDB']
+        connection['TENANT'] = params['TENANT']
+        connection['URL'] = params['URL']
+
+
     sysid = get_system_id(params['URL'],params['TENANT'])
 
-    CONNECTIONS = False
+    gdb = None
+    node_tenant = None
+    NEO4J = True
+    if NEO4J:
+        gdb = neo4jConnection( connection['GRAPHDB']['URL']+':'+str(connection['GRAPHDB']['PORT']), \
+                               connection['GRAPHDB']['USER'], connection['GRAPHDB']['PWD'],connection['GRAPHDB']['DB'])
+        node_tenant = {'label':'TENANT',
+                       'properties':{'tenant':connection['TENANT'],'url':connection['URL']}}
+        gdb.create_node(node_tenant)
+
+    CONNECTIONS = True
     if CONNECTIONS :
         #connection_type = "SDL"
         connection_type = ''
         connections = get_connections(connection, filter_type=connection_type)
-        with open(path.join('catalog','connections_'+sysid+'.json'),'w') as fp:
-            json.dump(connections,fp,indent=4)
 
+        if NEO4J :
+            for k,c in connections.items() :
+                node_connection = {'label':'CONNECTION',
+                                   'properties':{'id':c['id'],'type':c['type'],'description':c['description']},
+                                   'keys':['id']}
+                gdb.create_node(node_tenant)
+                relationship = {'node_from':node_tenant,'node_to':node_connection,'relation':{'label':'HAS_CONNECTION'}}
+                gdb.create_relationship(relationship)
+
+        with open(path.join('catalogs','connections_'+sysid+'.json'),'w') as fp:
+            json.dump(connections,fp,indent=4)
 
     CONTAINER_CALL = False
     if CONTAINER_CALL :
@@ -426,7 +461,7 @@ if __name__ == '__main__':
                 tag_id = hierarchies[ast]['tag_id']
                 add_dataset_attribute_tag(connection, ds, hierarchy_id, tag_id, attribute)
 
-    EXPORT = True
+    EXPORT = False
     if EXPORT :
         df = export_catalog(connection)
         df.to_csv(path.join('catalogs','metadata_'+sysid+'.csv'),index=False)
