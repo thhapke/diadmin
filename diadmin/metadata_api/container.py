@@ -38,7 +38,7 @@ def re_str(pattern) :
         re_pat = f'^{pattern}$'
     return re_pat
 
-
+### CONNECTIONS
 def get_connections(connection,filter_type='',filter_tags=''):
     logging.info(f"Get Connections of type: {filter_type}")
     restapi = '/catalog/connections'
@@ -61,6 +61,19 @@ def get_connections(connection,filter_type='',filter_tags=''):
                                    'contentData':c['contentData']}
     return connections
 
+# ADD GRAPHDB
+def add_connections_graphdb(gdb,connection,connections):
+    node_tenant = {'label':'TENANT',
+                   'properties':{'tenant':connection['TENANT'],'url':connection['URL']}}
+    for k,c in connections.items() :
+        node_connection = {'label':'CONNECTION',
+                           'properties':{'id':c['id'],'type':c['type'],'description':c['description']},
+                           'keys':['id']}
+        gdb.create_node(node_connection)
+        relationship = {'node_from':node_tenant,'node_to':node_connection,'relation':{'label':'HAS_CONNECTION'}}
+        gdb.create_relationship(relationship)
+
+### CONTAINERS
 def get_containers(connection,containers,container = None,container_filter=None):
 
     if container == None :
@@ -94,7 +107,27 @@ def get_containers(connection,containers,container = None,container_filter=None)
         get_containers(connection,containers,c,container_filter=container_filter)
     return containers
 
+# add GRAPHDB
+def add_containers_graphdb(gdb,containers) :
+    for c in containers.values() :
+        node_container = {'label':'CONTAINER',
+                          'properties':{'id':c['id'],'name':c['name'],'qualifiedName':c['qualifiedName']},
+                          'keys':['id']}
+        gdb.create_node(node_container)
+        if c['parentId'] == 'connectionRoot' :
+            node_connection =  {'label':'CONNECTION',
+                                'properties':{'id':c['connectionId']}}
+            relationship_to = {'node_from':node_container,'node_to':node_connection,'relation':{'label':'PARENT'}}
+            relationship_from = {'node_from':node_connection,'node_to':node_container,'relation':{'label':'CONTAINER'}}
+        else :
+            node_parent =  {'label':'CONTAINER',
+                            'properties':{'id':c['parentId']}}
+            relationship_to = {'node_from':node_container,'node_to':node_parent,'relation':{'label':'PARENT_CONTAINER'}}
+            relationship_from = {'node_from':node_parent,'node_to':node_container,'relation':{'label':'CHILD_CONTAINER'}}
+        gdb.create_relationship(relationship_to)
+        gdb.create_relationship(relationship_from)
 
+### DATASETS
 def get_datasets(connection, container_id):
     restapi = f"/catalog/containers/{container_id}/children"
     url = connection['url'] + restapi
@@ -106,11 +139,21 @@ def get_datasets(connection, container_id):
     if r.status_code != 200:
         logging.error("Get metadata_datasets: {}".format(response['message']))
 
-    #if response['currentContainer']['catalogObjectType'] == 'REFERENCED_CONNECTION':
-    #    return None
-
     return response['datasets']
 
+# add GRAPHDB
+def add_dataset_graphdb(gdb,dataset) :
+    node_container = {'label':'CONTAINER','properties':{'id':dataset['parentId']}}
+    node_dataset = { 'label':'DATASET',
+                     'properties':{'id':dataset['id'],'name':dataset['name'],'path':dataset['qualifiedName'],
+                                   'connection_id':dataset['connectionId']}}
+    gdb.create_node(node_dataset)
+    relationship_from = {'node_from':node_container,'node_to':node_dataset,'relation':{'label':'DATASET'}}
+    gdb.create_relationship(relationship_from)
+    relationship_to = {'node_from':node_dataset,'node_to':node_container,'relation':{'label':'CONTAINER'}}
+    gdb.create_relationship(relationship_to)
+
+### DATASET ATTRIBUTES
 def get_dataset_summary(connection,dataset_name,dataset_id):
     logging.info(f"Get Dataset summary: {dataset_name}")
     restapi = f'catalog/datasets/{dataset_id}/summary'
@@ -123,6 +166,22 @@ def get_dataset_summary(connection,dataset_name,dataset_id):
         logging.error("Get metadata_datasets: {}".format(response['message']))
     return response
 
+# add GRAPHDB
+def add_dataset_attribute_graphdb(gdb,dataset_id,attribute) :
+    node_dataset = { 'label':'DATASET','properties':{'id':dataset_id}}
+    node_attribute  = {'label':'ATTRIBUTE',
+                       'properties':{'id':attribute['name'],'dataset_id':dataset_id,'datatype':attribute['datatype']},
+                       'keys':['id','dataset_id']}
+    if 'length' in attribute:
+        node_attribute['properties']['length'] = attribute['length']
+
+    gdb.create_node(node_attribute)
+    relation_to = {'node_from':node_dataset,'node_to':node_attribute,'relation':{'label':'ATTRIBUTE'}}
+    gdb.create_relationship(relation_to)
+    relation_from = {'node_from':node_attribute,'node_to':node_dataset,'relation':{'label':'DATASET'}}
+    gdb.create_relationship(relation_from)
+
+#### DATASET TAGS
 def get_dataset_tags(connection,dataset_path,connection_id=None,tag_hierarchies=None):
     path_list = dataset_path.strip('/').split("/")
     if connection_id == None or connection_id == path_list[0]:
@@ -143,6 +202,17 @@ def get_dataset_tags(connection,dataset_path,connection_id=None,tag_hierarchies=
         logging.error(f"Get datasets attributes unsuccessful for {dataset_path}: {r.status_code}\n{json.loads(r.text)}")
         return None
     return json.loads(r.text)
+
+# add GRAPHDB
+def add_tag_relationship_graphdb(gdb,dataset_id,dataset_tags) :
+    dnode = {'label':'DATASET','properties':{'id':dataset_id}}
+    for dt in dataset_tags['tagsOnDataset']:
+        for t in dt['tags'] :
+            tnode = {'label':'CATALOG_TAG','properties':{'id':t['tag']['id']}}
+            relation_to = {'node_from':dnode,'node_to':tnode,'relation':{'label':'HAS_TAG'}}
+            relation_from = {'node_from':tnode,'node_to':dnode,'relation':{'label':'TAG'}}
+            gdb.create_relationship(relation_from)
+            gdb.create_relationship(relation_to)
 
 def export_catalog(connection) :
     containers = dict()
@@ -190,6 +260,43 @@ def export_catalog(connection) :
                    (df['column_name'] == at),'column_tags'] = at_tags
 
     return df
+
+
+def export_graphdb(connection):
+    gdb = neo4jConnection( connection['GRAPHDB']['URL']+':'+str(connection['GRAPHDB']['PORT']), \
+                           connection['GRAPHDB']['USER'], connection['GRAPHDB']['PWD'],connection['GRAPHDB']['DB'])
+
+    # TENANT
+    node_tenant = {'label':'TENANT',
+                   'properties':{'tenant':connection['TENANT'],'url':connection['URL']}}
+    gdb.create_node(node_tenant)
+
+    # CONNECTIONS
+    connections = get_connections(connection)
+    add_connections_graphdb(gdb,connection,connections)
+
+    # CONTAINER
+    containers = dict()
+    get_containers(connection, containers)
+    add_containers_graphdb(gdb,containers)
+
+    # DATASETS
+    for name,container in containers.items() :
+        datasets = get_datasets(connection, container['id'])
+        for dataset in datasets :
+            add_dataset_graphdb(gdb,dataset)
+            # ATTRIBUTES
+            ds = get_dataset_summary(connection, dataset['qualifiedName'], dataset['id'])
+            if 'code' in ds and ds['code'] == '70016' :
+                logging.warning(f"Read dataset summary for {dataset['qualifiedName']}: {ds['message']}")
+                continue
+            for att in ds['additionalInfo']['columns']:
+                add_dataset_attribute_graphdb(gdb,dataset['id'],att)
+
+            # TAGS
+            dataset_tags = get_dataset_tags(connection, dataset['qualifiedName'], dataset['connectionId'])
+            add_tag_relationship_graphdb(gdb,dataset['id'],dataset_tags)
+
 
 # Add tag to dataset
 def add_dataset_tag(connection,dataset_path,hierarchy_id,tag_id,connection_id=None) :
@@ -343,30 +450,15 @@ if __name__ == '__main__':
 
     sysid = get_system_id(params['URL'],params['TENANT'])
 
-    gdb = None
-    node_tenant = None
     NEO4J = True
     if NEO4J:
-        gdb = neo4jConnection( connection['GRAPHDB']['URL']+':'+str(connection['GRAPHDB']['PORT']), \
-                               connection['GRAPHDB']['USER'], connection['GRAPHDB']['PWD'],connection['GRAPHDB']['DB'])
-        node_tenant = {'label':'TENANT',
-                       'properties':{'tenant':connection['TENANT'],'url':connection['URL']}}
-        gdb.create_node(node_tenant)
+        export_graphdb(connection)
 
-    CONNECTIONS = True
+    CONNECTIONS = False
     if CONNECTIONS :
         #connection_type = "SDL"
         connection_type = ''
         connections = get_connections(connection, filter_type=connection_type)
-
-        if NEO4J :
-            for k,c in connections.items() :
-                node_connection = {'label':'CONNECTION',
-                                   'properties':{'id':c['id'],'type':c['type'],'description':c['description']},
-                                   'keys':['id']}
-                gdb.create_node(node_tenant)
-                relationship = {'node_from':node_tenant,'node_to':node_connection,'relation':{'label':'HAS_CONNECTION'}}
-                gdb.create_relationship(relationship)
 
         with open(path.join('catalogs','connections_'+sysid+'.json'),'w') as fp:
             json.dump(connections,fp,indent=4)
@@ -392,6 +484,7 @@ if __name__ == '__main__':
             containers = json.load(fp)
         for name,container in containers.items() :
             dsets = get_datasets(connection, container['id'])
+
             if len(dsets) > 0:
                 logging.info(f"Scanned container:{container['qualifiedName']} - #metadata_datasets:{len(dsets)}")
                 datasets.extend(dsets)
@@ -411,13 +504,14 @@ if __name__ == '__main__':
                 continue
             for c in ds['additionalInfo']['columns']:
                 length = c['length'] if 'length' in c else ''
+                template = c['templateType'] if 'templateType' in c else ''
                 datasets_cols.append({'connection_type':ds['remoteObject']['connectionType'],
                                      'connection_id':ds['remoteObject']['connectionId'],
                                      'dataset_path':ds['remoteObject']['qualifiedName'],
                                      'dataset_name':ds['remoteObject']['name'],
                                      'column_name': c['name'],
                                      'length': length,
-                                     'dtype':c['templateType']})
+                                     'dtype':template})
 
         with open(path.join('catalogs','datasets_cols_dh-1svpfuea.dhaas-live_default.json'),'w') as fp:
             json.dump(datasets_cols, fp, indent=4)
@@ -434,6 +528,7 @@ if __name__ == '__main__':
 
         for i,dsc in df_ds.iterrows() :
             dataset_attributes = get_dataset_tags(connection, dsc['dataset_path'], dsc['connection_id'])
+
             tags = dataset_attributes_str(dataset_attributes)
             df.loc[(df['connection_id'] == dsc['connection_id']) & (df['dataset_path'] == dsc['dataset_path']),'dataset_tags'] = tags['dataset_tags']
             for at,at_tags in tags['attribute_tags'].items() :

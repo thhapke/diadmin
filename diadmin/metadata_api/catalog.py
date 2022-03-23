@@ -9,12 +9,11 @@ import json
 from os import path
 import urllib
 import logging
-from os.path import join
 import yaml
-from pprint import pprint
 from rdflib import Graph, term
 import re
 
+from diadmin.connect.connect_neo4j import neo4jConnection
 
 # read availibility_rdf
 def read_availibility_rdf(url) :
@@ -205,6 +204,41 @@ def exfrmt_hierarchy(hierarchies,di_hierarchy) :
             add_di_tag(hierarchies,hierarchy['name'],hierarchy['hierarchy_id'],hierarchy['parent_path'],c)
 
 
+def add_catalog_graphdb(connection) :
+    gdb = neo4jConnection( connection['GRAPHDB']['URL']+':'+str(connection['GRAPHDB']['PORT']), \
+                           connection['GRAPHDB']['USER'], connection['GRAPHDB']['PWD'],connection['GRAPHDB']['DB'])
+    node_tenant = {'label':'TENANT',
+                   'properties':{'tenant':connection['TENANT'],'url':connection['URL']}}
+    gdb.create_node(node_tenant)
+
+    # HIERARCHIES
+    hierarchies = download_hierarchies(connection)
+
+    for t in hierarchies.values():
+        levels = len([c for c in t['path'] if c =='/'])
+        if levels == 0 :
+            node  = {'label':'CATALOG_HIERARCHY',
+                     'properties':{'id':t['hierarchy_id'],'name':t['name']},
+                     'keys':['id']}
+            gdb.create_node(node)
+        else :
+            node = {'label':'CATALOG_TAG',
+                    'properties':{'id':t['tag_id'],'name':t['name'],'path':t['path']},
+                    'keys':['id']}
+            gdb.create_node(node)
+            if levels == 1 :
+                hnode = {'label':'CATALOG_HIERARCHY','properties':{'id':t['hierarchy_id']}}
+                relation_to = {'node_from':hnode,'node_to':node,'relation':{'label':'TAG_CHILD'}}
+                relation_from = {'node_from':node,'node_to':hnode,'relation':{'label':'TAG_HIERARCHY'}}
+                gdb.create_relationship(relation_to)
+                gdb.create_relationship(relation_from)
+            else :
+                pnode = {'label':'CATALOG_TAG','properties':{'path':t['parent_path']}}
+                relation_to = {'node_from':pnode,'node_to':node,'relation':{'label':'TAG_CHILD'}}
+                relation_from = {'node_from':node,'node_to':pnode,'relation':{'label':'TAG_PARENT'}}
+                gdb.create_relationship(relation_to)
+                gdb.create_relationship(relation_from)
+
 #########
 # MAIN
 ########
@@ -215,10 +249,21 @@ def main() :
     with open('config_demo.yaml') as yamls:
         params = yaml.safe_load(yamls)
 
-    conn = {'url':params['URL']+'/app/datahub-app-metadata/api/v1',
+    connection = {'url':params['URL']+'/app/datahub-app-metadata/api/v1',
             'auth':(params['TENANT']+'\\'+ params['USER'],params['PWD'])}
 
-    UPLOAD = True
+    if 'GRAPHDB' in params:
+        connection['GRAPHDB'] = params['GRAPHDB']
+        connection['TENANT'] = params['TENANT']
+        connection['URL'] = params['URL']
+
+    gdb = None
+    node_tenant = None
+    NEO4J = True
+    if NEO4J:
+        add_catalog_graphdb(connection)
+
+    UPLOAD = False
     hierarchy_filename = 'License.json'
     if UPLOAD :
         with open(path.join('catalogs',hierarchy_filename),'r') as fp:
@@ -228,13 +273,14 @@ def main() :
             hierarchies = json.load(fp)
 
         hierarchies = None
-        hierarchies = upload_hierarchies(conn,new_hierarchies,hierarchies)
+        hierarchies = upload_hierarchies(connection,new_hierarchies,hierarchies)
 
     #hierarchy_name = 'License'
     #hierarchy_name = None
     DOWNLOAD_HIERARCHIES = False
     if DOWNLOAD_HIERARCHIES :
-        hierarchies = download_hierarchies(conn,hierarchy_name=hierarchy_name)
+        hierarchy_name = None
+        hierarchies = download_hierarchies(connection,hierarchy_name=hierarchy_name)
         filename = 'hierarchies.json'
         if hierarchy_name :
             filename = hierarchy_name + '.json'

@@ -35,17 +35,17 @@ class neo4jConnection:
                 session.close()
         return response
 
-    def _eq_str(self,properties,variable='n',joined=', ',keys=None):
+    def _eq_str(self,properties,variable='',achar = ':',joined=', ',keys=None):
         prop_list = list()
         for p,v in properties.items() :
             if keys and not  p in keys :
                 continue
             if type(v) == int or  type(v) == float :
-                prop_list.append(f"{variable}.{p} = {str(v)}")
+                prop_list.append(f"{variable}{p} {achar} {str(v)}")
             elif type(v) == datetime :
-                prop_list.append(f"{variable}.{p} = \'{v.isoformat()}\'")
+                prop_list.append(f"{variable}{p} {achar} \'{v.isoformat()}\'")
             else :
-                prop_list.append(f"{variable}.{p} = \'{v}\'")
+                prop_list.append(f"{variable}{p} {achar} \'{v}\'")
         return joined.join(prop_list)
 
     def create_node(self,node):
@@ -57,7 +57,7 @@ class neo4jConnection:
         properties = node['properties']
         label = node['label']
         prop_str = self._eq_str(properties)
-        query = f'MERGE (n:{label}) SET {prop_str} RETURN n'
+        query = f'MERGE (n:{label}{{{prop_str}}})  RETURN n'
         result = tx.run(query)
         return result.single()[0]
 
@@ -70,11 +70,11 @@ class neo4jConnection:
         query = 'MATCH (n_from:{}), (n_to:{}) WHERE '.format(relationship['node_from']['label'],relationship['node_to']['label'])
         keysnf =  None if not 'keys' in relationship['node_from'] else relationship['node_from']['keys']
         keysnt =  None if not 'keys' in relationship['node_to'] else relationship['node_to']['keys']
-        query += self._eq_str(relationship['node_from']['properties'],variable='n_from',keys=keysnf,joined=' AND ') + ' AND ' + \
-                 self._eq_str(relationship['node_to']['properties'],variable='n_to',keys=keysnt,joined=' AND ') + ' '
+        query += self._eq_str(relationship['node_from']['properties'],achar='=',variable='n_from.',keys=keysnf,joined=' AND ') + ' AND ' + \
+                 self._eq_str(relationship['node_to']['properties'],achar='=',variable='n_to.',keys=keysnt,joined=' AND ') + ' '
         query += 'MERGE (n_from)-[:{}]->(n_to) RETURN n_from,n_to'.format(relationship['relation']['label'])
         result = tx.run(query)
-        logging.info("Relationship: {result}")
+        logging.info(f"Relationship: {result}")
 
 if __name__ == "__main__":
 
