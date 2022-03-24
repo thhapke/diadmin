@@ -51,7 +51,6 @@ class neo4jConnection:
     def create_node(self,node):
         with self.__driver.session(database=self.db) as session:
             result = session.write_transaction(self._create_node, node)
-            print(result)
 
     def _create_node(self,tx,node):
         properties = node['properties']
@@ -59,12 +58,11 @@ class neo4jConnection:
         prop_str = self._eq_str(properties)
         query = f'MERGE (n:{label}{{{prop_str}}})  RETURN n'
         result = tx.run(query)
-        return result.single()[0]
+        logging.info(f"Node: {query} ({result.single()})")
 
     def create_relationship(self,relationship):
         with self.__driver.session(database=self.db) as session:
             result = session.write_transaction(self._create_relationship, relationship)
-            print(result)
 
     def _create_relationship(self,tx,relationship):
         query = 'MATCH (n_from:{}), (n_to:{}) WHERE '.format(relationship['node_from']['label'],relationship['node_to']['label'])
@@ -74,7 +72,7 @@ class neo4jConnection:
                  self._eq_str(relationship['node_to']['properties'],achar='=',variable='n_to.',keys=keysnt,joined=' AND ') + ' '
         query += 'MERGE (n_from)-[:{}]->(n_to) RETURN n_from,n_to'.format(relationship['relation']['label'])
         result = tx.run(query)
-        logging.info(f"Relationship: {result}")
+        logging.info(f"Relationship: {query}")
 
 if __name__ == "__main__":
 

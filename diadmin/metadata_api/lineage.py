@@ -40,33 +40,29 @@ def get_lineage(connection,dataset_name,dataset_id) :
     return response
 
 def add_lineage(gdb,lineage) :
-    keys = dict()
+    key_nodes = dict()
     for n in lineage['nodes']:
-        if 'transform' in n:
-            continue
-        elif 'publishedDataset' in n['dataset']['remoteReferences'][0]:
-            keys['key'] = n['dataset']['remoteReferences'][0]['publishedDataset']['datasetId']
+        if not 'transform' in n:
+            sup_ref = n['dataset']['remoteReferences'][0]
+            if 'publishedDataset' in n['dataset']['remoteReferences'][0]:
+                key_nodes[n['key']] = {'label':'DATASET','properties':{'id':sup_ref['publishedDataset']['datasetId']}}
+            else :
+                key_nodes[n['key']] = {'label':'DATASET','properties':{'connection_id':sup_ref['connectionId'],
+                                                                      'path':sup_ref['qualifiedName']}}
         else :
-            keys['key'] = (n['dataset']['remoteReferences'][0]['connectionId'],n['dataset']['remoteReferences'][0]['qualifiedName'])
+            key_nodes[n['key']] = {'label':'TRANSFORM','properties':{'id':n['transform']['definition']['computationArtifactRef'],
+                                                                         'name':n['transform']['definition']['name'],
+                                                                         'type':n['transform']['transformType']}}
+            gdb.create_node(key_nodes[n['key']])
+
     nkeys = { n['key']:len(n['dataset']['remoteReferences']) for n in lineage['nodes'] if not 'transform' in n}
     for k,n in nkeys.items():
         if n > 1 :
             logging.warning(f"Lineage of lineage key \'{k}\' has {n} references")
-    for edge in lineage['edges']:
-        if not edge['from'] in keys or not edge['to'] in keys:
-            continue
-        if isinstance(keys[edge['from']],tuple) :
-            node_from = {'label':'DATASET','properties':{'connection_id':keys[edge['from']][0],
-                                                         'path':keys[edge['from']][1]}}
-        else :
-            node_from = {'label':'DATASET','properties':{'id':keys[edge['from']]}}
-        if isinstance(keys[edge['to']],tuple) :
-            node_to = {'label':'DATASET','properties':{'connection_id':keys[edge['to']][0],
-                                                         'path':keys[edge['to']][1]}}
-        else :
-            node_to = {'label':'DATASET','properties':{'id':keys[edge['to']]}}
 
-        relationship = {'node_from':node_from,'node_to':node_to,'relation':{'label':'LINEAGE_'+edge['kind']}}
+    for edge in lineage['edges']:
+        logging.info(f"Lineage relationship")
+        relationship = {'node_from':key_nodes[edge['from']],'node_to':key_nodes[edge['to']],'relation':{'label':edge['kind']}}
         gdb.create_relationship(relationship)
 
 

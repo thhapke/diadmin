@@ -23,7 +23,7 @@ import pandas as pd
 
 
 from diadmin.utils.utils import get_system_id
-from diadmin.metadata_api.catalog import download_hierarchies
+from diadmin.metadata_api.catalog import download_hierarchies, add_catalog_graphdb
 from diadmin.connect.connect_neo4j import neo4jConnection
 
 
@@ -83,8 +83,8 @@ def get_containers(connection,containers,container = None,container_filter=None)
                      'catalogObjectType': 'ROOT_FOLDER'}
 
     # exclude internal DI_Data_Lake
-    if re.match('\/*DI_DATA_LAKE',container['qualifiedName']) :
-        return 1
+    #if re.match('\/*DI_DATA_LAKE',container['qualifiedName']) :
+    #    return 1
 
     if not container['id'] == 'connectionRoot' :
         container['qualifiedName'] = container['qualifiedName'].strip('/')
@@ -265,6 +265,9 @@ def export_catalog(connection) :
 def export_graphdb(connection):
     gdb = neo4jConnection( connection['GRAPHDB']['URL']+':'+str(connection['GRAPHDB']['PORT']), \
                            connection['GRAPHDB']['USER'], connection['GRAPHDB']['PWD'],connection['GRAPHDB']['DB'])
+
+    # CATALOG
+    add_catalog_graphdb(connection)
 
     # TENANT
     node_tenant = {'label':'TENANT',
