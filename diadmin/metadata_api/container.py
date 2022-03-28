@@ -8,11 +8,10 @@
 #### Doc: https://api.sap.com/api/metadata/resource
 ########################################################
 import logging
-import sys
+from datetime import datetime
 from urllib.parse import urljoin
 import urllib
 from os import path
-import re
 import csv
 
 
@@ -24,6 +23,7 @@ import pandas as pd
 
 from diadmin.utils.utils import get_system_id
 from diadmin.metadata_api.catalog import download_hierarchies, add_catalog_graphdb
+from diadmin.metadata_api.connection import get_connections, add_connections_graphdb
 from diadmin.connect.connect_neo4j import neo4jConnection
 
 
@@ -38,40 +38,7 @@ def re_str(pattern) :
         re_pat = f'^{pattern}$'
     return re_pat
 
-### CONNECTIONS
-def get_connections(connection,filter_type='',filter_tags=''):
-    logging.info(f"Get Connections of type: {filter_type}")
-    restapi = '/catalog/connections'
-    url = connection['url'] + restapi
-    headers = {'X-Requested-With': 'XMLHttpRequest'}
-    parameter = {"connectionTypes":filter_type}
-    r = requests.get(url, headers=headers, auth=connection['auth'], params=parameter)
 
-    if r.status_code != 200:
-        logging.error(r)
-        return None
-
-    resp = json.loads(r.text)
-    if len(resp) == 0 :
-        logging.info(f"No connections with filter type: {filter_type} - tags: {filter_tags} ")
-
-    connections = dict()
-    for c in resp :
-        connections[c['id']] = {'id':c['id'],'type':c['type'],'description':c['description'],'tags':c['tags'],
-                                   'contentData':c['contentData']}
-    return connections
-
-# ADD GRAPHDB
-def add_connections_graphdb(gdb,connection,connections):
-    node_tenant = {'label':'TENANT',
-                   'properties':{'tenant':connection['TENANT'],'url':connection['URL']}}
-    for k,c in connections.items() :
-        node_connection = {'label':'CONNECTION',
-                           'properties':{'id':c['id'],'type':c['type'],'description':c['description']},
-                           'keys':['id']}
-        gdb.create_node(node_connection)
-        relationship = {'node_from':node_tenant,'node_to':node_connection,'relation':{'label':'HAS_CONNECTION'}}
-        gdb.create_relationship(relationship)
 
 ### CONTAINERS
 def get_containers(connection,containers,container = None,container_filter=None):
@@ -106,6 +73,39 @@ def get_containers(connection,containers,container = None,container_filter=None)
     for c in sub_containers:
         get_containers(connection,containers,c,container_filter=container_filter)
     return containers
+
+def get_connection_datasets(connection,connection_id,datasets=None,container=None):
+    if datasets == None:
+        datasets = dict()
+    if container == None :
+        container = {'name': 'Root',
+                     'qualifiedName': '/',
+                     'parentQualifiedName':"/"}
+
+    qualified_name = urllib.parse.quote(container['qualifiedName'],safe='')
+    logging.info(f"Get Connection Containers {connection_id} - {container['qualifiedName']}")
+    restapi = f"catalog/connections/{connection_id}/containers/{qualified_name}/children"
+    url = connection['url'][:-6] + restapi
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+    r = requests.get(url, headers=headers, auth=connection['auth'])
+
+    if r.status_code != 200:
+        logging.error(f"Status code: {r.status_code}, {r.text}")
+        return -1
+
+    sub_containers = json.loads(r.text)['nodes']
+    for c in sub_containers:
+        if c['isContainer'] :
+            get_connection_datasets(connection,connection_id,datasets,c)
+        else :
+            datasets[c['qualifiedName']] = c
+    return datasets
+
+def compare_snapshots(latest,current) :
+    new_datasets = [ current[connection][dataset] for connection in current for dataset in current[connection]
+                     if not dataset in latest[connection].keys()]
+    return new_datasets
+
 
 # add GRAPHDB
 def add_containers_graphdb(gdb,containers) :
@@ -450,10 +450,9 @@ if __name__ == '__main__':
         connection['TENANT'] = params['TENANT']
         connection['URL'] = params['URL']
 
-
     sysid = get_system_id(params['URL'],params['TENANT'])
 
-    NEO4J = True
+    NEO4J = False
     if NEO4J:
         export_graphdb(connection)
 
@@ -461,10 +460,29 @@ if __name__ == '__main__':
     if CONNECTIONS :
         #connection_type = "SDL"
         connection_type = ''
+        catalog_connections = False
         connections = get_connections(connection, filter_type=connection_type)
 
-        with open(path.join('catalogs','connections_'+sysid+'.json'),'w') as fp:
+        with open(path.join('catalogs','catalog_connections_'+sysid+'.json'),'w') as fp:
             json.dump(connections,fp,indent=4)
+
+    ALL_CONNECTION_DATASETS = True
+    if ALL_CONNECTION_DATASETS:
+        connections = get_connections(connection)
+        with open(path.join('catalogs','all_connections_'+sysid+'.json'),'w') as fp:
+            json.dump(connections,fp,indent=4)
+        datasets = dict()
+        for connection_id in ['S3_Catalog','DI_DEMO'] :
+            datasets[connection_id] = get_connection_datasets(connection,connection_id)
+
+        with open(path.join('connections/snapshots','connection_datasets_'+sysid+'.json')) as fp:
+            latest_snapshot = json.load(fp)
+        new_datasets = compare_snapshots(latest_snapshot,datasets)
+        print(new_datasets)
+
+        if len(new_datasets) >0 :
+            with open(path.join('connections/snapshots','connection_datasets_'+sysid+'.json'),'w') as fp:
+                json.dump(datasets,fp,indent=4)
 
     CONTAINER_CALL = False
     if CONTAINER_CALL :

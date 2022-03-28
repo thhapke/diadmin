@@ -19,25 +19,61 @@ import requests
 
 from diadmin.utils.utils import get_system_id
 
-def get_connections(connection,connection_id = None,connection_types = None,filter = None) :
-
-    url = connection['url'] + f'/catalog/connections'
-    if connection_id :
-        url += '/{connection_id}'
-    params = {'connectionTypes':connection_types,'showMetadataImport':True}
-
-    logging.info(f'Get connections: {url}')
+### CONNECTIONS
+def get_connections(connection,filter_type='',filter_tags=''):
+    logging.info(f"Get Connections of type: {filter_type}")
+    restapi = '/catalog/connections'
+    url = connection['url'] + restapi
+    parameter = {"connectionTypes":filter_type}
     headers = {'X-Requested-With': 'XMLHttpRequest'}
-    r = requests.get(url, headers=headers, auth=connection['auth'],params=params)
 
-    response = json.loads(r.text)
+    r = requests.get(url, headers=headers, auth=connection['auth'], params=parameter)
     if r.status_code != 200:
-        logging.error(f"Check TaskID status: {response['message']}  status: {r.status_code}\n{response}")
+        logging.error(r)
+        return None
 
-    if filter :
-        filtered = [  c for c in response if c[filter[0]] == filter[1]]
-        response = filtered
-    return response
+    resp = json.loads(r.text)
+    if len(resp) == 0 :
+        logging.info(f"No connections with filter type: {filter_type} - tags: {filter_tags} ")
+
+    connections = dict()
+    for c in resp :
+        connections[c['id']] = {'id':c['id'],'type':c['type'],'description':c['description'],'tags':c['tags'],
+                                'contentData':c['contentData']}
+    return connections
+
+def get_all_connections(connection):
+    restapi = '/catalog/connections'
+    url = connection['url'][:-6] + restapi
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+
+    r = requests.get(url, headers=headers, auth=connection['auth'])
+
+    if r.status_code != 200:
+        logging.error(r)
+        return None
+
+    resp = json.loads(r.text)
+    if len(resp) == 0 :
+        logging.info(f"No connections")
+
+    connections = dict()
+    for c in resp.connections :
+        connections[c['id']] = {'id':c['id'],'type':c['type'],'description':c['description'],'tags':c['tags'],
+                                'contentData':c['contentData']}
+    return connections
+
+# ADD GRAPHDB
+def add_connections_graphdb(gdb,connection,connections):
+    node_tenant = {'label':'TENANT',
+                   'properties':{'tenant':connection['TENANT'],'url':connection['URL']}}
+    for k,c in connections.items() :
+        node_connection = {'label':'CONNECTION',
+                           'properties':{'id':c['id'],'type':c['type'],'description':c['description']},
+                           'keys':['id']}
+        gdb.create_node(node_connection)
+        relationship = {'node_from':node_tenant,'node_to':node_connection,'relation':{'label':'HAS_CONNECTION'}}
+        gdb.create_relationship(relationship)
 
 def get_nat_getway(connection) :
     #conn_id = "INFO_NAT_GATEWAY_IP"

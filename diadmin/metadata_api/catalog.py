@@ -12,6 +12,8 @@ import logging
 import yaml
 from rdflib import Graph, term
 import re
+import io
+import csv
 
 from diadmin.connect.connect_neo4j import neo4jConnection
 
@@ -239,6 +241,27 @@ def add_catalog_graphdb(connection) :
                 gdb.create_relationship(relation_to)
                 gdb.create_relationship(relation_from)
 
+
+def csv_hierarchies(connection) :
+    # HIERARCHIES
+    hierarchies = download_hierarchies(connection)
+    tags = list()
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(['PARENT','TAG','DESCRIPTION','PATH','ID','HIERARCHY','HIERARCHY_ID'])
+    for h in hierarchies.values() :
+        if h['parent_path'] =="" and not '/' in h['path'] :
+            continue
+        if h['parent_path'] =="":
+            h['parent_path'] = h['hierarchy_name']
+        parent = h['parent_path'].split('/')[-1]
+        writer.writerow([parent,h['name'],h['description'],h['path'],h['tag_id'],h['hierarchy_name'],h['hierarchy_id']])
+
+    output.seek(0)
+    return output.read()
+
+
+
 #########
 # MAIN
 ########
@@ -259,9 +282,15 @@ def main() :
 
     gdb = None
     node_tenant = None
-    NEO4J = True
+    NEO4J = False
     if NEO4J:
         add_catalog_graphdb(connection)
+
+    CSV = True
+    if CSV :
+        h_str = csv_hierarchies(connection)
+        with open('catalogs/hierarchies.csv','w') as fp:
+            fp.write(h_str)
 
     UPLOAD = False
     hierarchy_filename = 'License.json'
