@@ -21,7 +21,7 @@ import pandas as pd
 
 
 from diadmin.utils.utils import get_system_id
-from diadmin.metadata_api.catalog import download_hierarchies, add_catalog_graphdb
+from diadmin.metadata_api.catalog import download_hierarchies, add_catalog_neo4j
 from diadmin.metadata_api.connection import get_connections, add_connections_graphdb, get_connection_details
 from diadmin.connect.connect_neo4j import neo4jConnection
 
@@ -290,7 +290,7 @@ def export_graphdb(connection):
                            connection['GRAPHDB']['USER'], connection['GRAPHDB']['PWD'],connection['GRAPHDB']['DB'])
 
     # CATALOG
-    add_catalog_graphdb(connection)
+    add_catalog_neo4j(connection)
 
     # TENANT
     node_tenant = {'label':'TENANT',

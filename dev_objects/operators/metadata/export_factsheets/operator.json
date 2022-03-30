@@ -1,0 +1,20 @@
+{
+    "description": "Export Dataset Factsheets",
+    "component": "com.sap.system.python3Operator",
+    "versionStatus": "active",
+    "outports": [
+        {
+            "name": "output",
+            "type": "message"
+        },
+        {
+            "name": "logging",
+            "type": "string"
+        }
+    ],
+    "iconsrc": "factsheet.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/metadata.export_factsheets.configSchema.json",
+        "script": "file://script.py"
+    }
+}

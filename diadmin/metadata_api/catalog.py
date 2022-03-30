@@ -206,7 +206,7 @@ def exfrmt_hierarchy(hierarchies,di_hierarchy) :
             add_di_tag(hierarchies,hierarchy['name'],hierarchy['hierarchy_id'],hierarchy['parent_path'],c)
 
 
-def add_catalog_graphdb(connection) :
+def add_catalog_neo4j(connection) :
     gdb = neo4jConnection( connection['GRAPHDB']['URL']+':'+str(connection['GRAPHDB']['PORT']), \
                            connection['GRAPHDB']['USER'], connection['GRAPHDB']['PWD'],connection['GRAPHDB']['DB'])
     node_tenant = {'label':'TENANT',
@@ -241,6 +241,8 @@ def add_catalog_graphdb(connection) :
                 gdb.create_relationship(relation_to)
                 gdb.create_relationship(relation_from)
 
+
+def add_hierarchy_rdf(connection) :
 
 def csv_hierarchies(connection) :
     # HIERARCHIES
@@ -284,7 +286,7 @@ def main() :
     node_tenant = None
     NEO4J = False
     if NEO4J:
-        add_catalog_graphdb(connection)
+        add_catalog_neo4j(connection)
 
     CSV = True
     if CSV :
