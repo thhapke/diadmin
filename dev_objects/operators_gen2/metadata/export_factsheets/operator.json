@@ -1,0 +1,24 @@
+{
+    "description": "Export Factsheets",
+    "component": "com.sap.system.python3Operator.v2",
+    "versionStatus": "active",
+    "outports": [
+        {
+            "name": "logging",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.string"
+        },
+        {
+            "name": "factsheet",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.string"
+        }
+    ],
+    "icon": "puzzle-piece",
+    "iconsrc": "factsheet.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/metadata.export_factsheets.configSchema.json",
+        "errorHandling": "{\"type\":\"terminate on error\"}",
+        "script": "file://script.py"
+    }
+}
