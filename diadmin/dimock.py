@@ -27,7 +27,7 @@ def main() :
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('operator', help = 'Operator folder')
     parser.add_argument('-d','--directory', help = 'Directory of operators',default='.')
-    parser.add_argument('-g','--generation', help = 'Directory of operators',default='2')
+    parser.add_argument('-g','--generation', help = 'Operator generation',default='2')
 
     args = parser.parse_args()
 

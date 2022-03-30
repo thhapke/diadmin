@@ -75,6 +75,20 @@ def add_connections_graphdb(gdb,connection,connections):
         relationship = {'node_from':node_tenant,'node_to':node_connection,'relation':{'label':'HAS_CONNECTION'}}
         gdb.create_relationship(relationship)
 
+def get_connection_details(connection,connection_id) :
+
+    url = connection['url'] + f'/catalog/connections/{connection_id}'
+
+    logging.info(f'Get connections: {url}')
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+    r = requests.get(url, headers=headers, auth=connection['auth'])
+
+    response = json.loads(r.text)
+    if r.status_code != 200:
+        logging.error(f"Connection details: {response['message']}  status: {r.status_code}\n{response}")
+
+    return response
+
 def get_nat_getway(connection) :
     #conn_id = "INFO_NAT_GATEWAY_IP"
     url = connection['url'] + f'/catalog/connections'

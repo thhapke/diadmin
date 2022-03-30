@@ -8,7 +8,6 @@
 #### Doc: https://api.sap.com/api/metadata/resource
 ########################################################
 import logging
-from datetime import datetime
 from urllib.parse import urljoin
 import urllib
 from os import path
@@ -23,7 +22,7 @@ import pandas as pd
 
 from diadmin.utils.utils import get_system_id
 from diadmin.metadata_api.catalog import download_hierarchies, add_catalog_graphdb
-from diadmin.metadata_api.connection import get_connections, add_connections_graphdb
+from diadmin.metadata_api.connection import get_connections, add_connections_graphdb, get_connection_details
 from diadmin.connect.connect_neo4j import neo4jConnection
 
 
@@ -66,7 +65,7 @@ def get_containers(connection,containers,container = None,container_filter=None)
     r = requests.get(url, headers=headers, auth=connection['auth'], params=params)
 
     if r.status_code != 200:
-        logging.error(r.status)
+        logging.error(f"Status code: {r.status_code}  - {r.text}")
         return -1
 
     sub_containers = json.loads(r.text)['containers']
@@ -74,13 +73,18 @@ def get_containers(connection,containers,container = None,container_filter=None)
         get_containers(connection,containers,c,container_filter=container_filter)
     return containers
 
-def get_connection_datasets(connection,connection_id,datasets=None,container=None):
+def get_connection_datasets(connection,connection_id,datasets=None,container=None,with_details = False):
     if datasets == None:
         datasets = dict()
     if container == None :
         container = {'name': 'Root',
                      'qualifiedName': '/',
                      'parentQualifiedName':"/"}
+    elif isinstance(container,str) :
+        path_elements = container.split('/')
+        container = {'name': path_elements[-1],
+                     'qualifiedName': container,
+                     'parentQualifiedName':'/'.join(path_elements[:-1])}
 
     qualified_name = urllib.parse.quote(container['qualifiedName'],safe='')
     logging.info(f"Get Connection Containers {connection_id} - {container['qualifiedName']}")
@@ -98,7 +102,12 @@ def get_connection_datasets(connection,connection_id,datasets=None,container=Non
         if c['isContainer'] :
             get_connection_datasets(connection,connection_id,datasets,c)
         else :
-            datasets[c['qualifiedName']] = c
+            if not with_details :
+                datasets[c['qualifiedName']] = c
+            else :
+                ds = get_dataset_factsheet(connection,connection_id,c['qualifiedName'])
+                datasets[c['qualifiedName']] = ds
+
     return datasets
 
 def compare_snapshots(latest,current) :
@@ -164,6 +173,20 @@ def get_dataset_summary(connection,dataset_name,dataset_id):
     response = json.loads(r.text)
     if r.status_code != 200:
         logging.error("Get metadata_datasets: {}".format(response['message']))
+    return response
+
+### DATASET ATTRIBUTES
+def get_dataset_factsheet(connection,connection_id,dataset_name):
+    logging.info(f"Get Dataset factsheet: {dataset_name}")
+    qualified_name = urllib.parse.quote(dataset_name,safe='')
+    restapi = f'catalog/connections/{connection_id}/datasets/{qualified_name}/factsheets'
+    url = connection['url'][:-6] + restapi
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+    r = requests.get(url, headers=headers, auth=connection['auth'])
+
+    response = json.loads(r.text)
+    if r.status_code != 200:
+        logging.error("Get dataset factsheet: {}".format(response['message']))
     return response
 
 # add GRAPHDB
@@ -263,7 +286,7 @@ def export_catalog(connection) :
 
 
 def export_graphdb(connection):
-    gdb = neo4jConnection( connection['GRAPHDB']['URL']+':'+str(connection['GRAPHDB']['PORT']), \
+    gdb = neo4jConnection( connection['GRAPHDB']['URL']+':'+str(connection['GRAPHDB']['PORT']),
                            connection['GRAPHDB']['USER'], connection['GRAPHDB']['PWD'],connection['GRAPHDB']['DB'])
 
     # CATALOG
@@ -429,7 +452,20 @@ def auto_tag(connection,metadata,tagging_map):
                             connection_id=dsc['connection_id'])
 
 
+# Trigger Profiling
+# WARNING: Private API - unsupported
+def start_profiling(connection,connection_id,connection_type,qualified_name) :
+    logging.info(f"Start Profiling: {qualified_name}")
+    restapi = f'catalog/connections/{connection_id}/datasets/{qualified_name}/factsheets'
+    url = connection['url'][:-6] + restapi
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+    params = {'connectionTypye':connection_type}
+    r = requests.post(url, headers=headers, auth=connection['auth'],params=params)
 
+    response = json.loads(r.text)
+    if r.status_code != 202:
+        logging.error("Start Profiling: {}".format(response['message']))
+    return response
 
 
 #########
@@ -439,7 +475,7 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.INFO)
 
-    with open('config_demo.yaml') as yamls:
+    with open('config_usa.yaml') as yamls:
         params = yaml.safe_load(yamls)
 
     connection = {'url': urljoin(params['URL'], '/app/datahub-app-metadata/api/v1'),
@@ -468,21 +504,30 @@ if __name__ == '__main__':
 
     ALL_CONNECTION_DATASETS = True
     if ALL_CONNECTION_DATASETS:
-        connections = get_connections(connection)
-        with open(path.join('catalogs','all_connections_'+sysid+'.json'),'w') as fp:
-            json.dump(connections,fp,indent=4)
-        datasets = dict()
-        for connection_id in ['S3_Catalog','DI_DEMO'] :
-            datasets[connection_id] = get_connection_datasets(connection,connection_id)
+            connections = get_connections(connection)
+            with open(path.join('catalogs','all_connections_'+sysid+'.json'),'w') as fp:
+                json.dump(connections,fp,indent=4)
+            datasets = dict()
+            #for connection_id in ['ECC_IDES_GCP'] :
+            #    datasets[connection_id] = get_connection_datasets(connection,connection_id)
+            container = '/ODP_SAPI/SAP'
+            container = {'name':'SAP-R/3','qualifiedName':'/ODP_SAPI/SAP/SAP-R/3','parentQualifiedName':'/ODP_SAPI/SAP'}
+            datasets = get_connection_datasets(connection,connection_id='ECC_IDES_GCP',container=container,with_details=True)
 
-        with open(path.join('connections/snapshots','connection_datasets_'+sysid+'.json')) as fp:
-            latest_snapshot = json.load(fp)
-        new_datasets = compare_snapshots(latest_snapshot,datasets)
-        print(new_datasets)
+            #with open(path.join('connections/snapshots','connection_datasets_'+sysid+'.json')) as fp:
+            #    latest_snapshot = json.load(fp)
+            #datasets = compare_snapshots(latest_snapshot,datasets)
 
-        if len(new_datasets) >0 :
-            with open(path.join('connections/snapshots','connection_datasets_'+sysid+'.json'),'w') as fp:
-                json.dump(datasets,fp,indent=4)
+            #connection_id = 'S3_Catalog'
+            #connection_details = get_connection_details(connection,connection_id)
+            #connection_type = connection_details['type']
+            # Start profiling
+            #for dataset in new_datasets:
+            #    start_profiling(connection,connection_id,connection_type,dataset['qualifiedName'])
+
+            if len(datasets) >0 :
+                with open(path.join('connections/snapshots','connection_datasets_'+sysid+'.json'),'w') as fp:
+                    json.dump(datasets,fp,indent=4)
 
     CONTAINER_CALL = False
     if CONTAINER_CALL :
@@ -492,7 +537,7 @@ if __name__ == '__main__':
                      'catalogObjectType': 'ROOT_FOLDER'}
 
         containers = dict()
-        container_filter = 'connectionType eq \'SDL\''
+        container_filter = 'connectionType eq \'ABAP\''
         get_containers(connection, containers, root, container_filter=None)
 
         with open(path.join('catalogs','container_'+sysid+'.json'),'w') as fp:
