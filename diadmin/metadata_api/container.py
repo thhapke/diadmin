@@ -71,7 +71,44 @@ def get_containers(connection,containers,container = None,container_filter=None)
     sub_containers = json.loads(r.text)['containers']
     for c in sub_containers:
         get_containers(connection,containers,c,container_filter=container_filter)
-    return containers
+    return
+
+def get_datasets(connection, connection_id, container_name) :
+    logging.info(f"Get container of {container_name}")
+    container_name = urllib.parse.quote(container_name,safe='')
+    restapi = f"/catalog/connections/{connection_id}/containers/{container_name}"
+    url = connection['url'] + restapi
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+    r = requests.get(url, headers=headers, auth=connection['auth'])
+
+    if r.status_code != 200:
+        logging.error(f"Status code: {r.status_code}  - {r.text}")
+        return -1
+
+    return json.loads(r.text)['datasets']
+
+def get_ids(connection, datasets_ids, containers_ids, container=None) :
+    if container == None:
+        container = {'id': 'connectionRoot',
+                     'name': 'Root',
+                     'qualifiedName': '/',
+                     'catalogObjectType': 'ROOT_FOLDER'}
+    if not container['id'] == 'connectionRoot' :
+        datasets_ids[container['id']] = container['qualifiedName']
+
+    restapi = f"/catalog/containers/{container['id']}/children"
+    url = connection['url'] + restapi
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+    r = requests.get(url, headers=headers, auth=connection['auth'])
+
+    if r.status_code != 200:
+        logging.error(f"Status code: {r.status_code}  - {r.text}")
+        return -1
+
+    sub_containers = json.loads(r.text)['containers']
+    for c in sub_containers:
+        get_ids(connection, datasets_ids, containers_ids,c)
+    return
 
 def get_connection_datasets(connection,connection_id,datasets=None,container=None,with_details = False):
     if datasets == None:
@@ -137,7 +174,7 @@ def add_containers_graphdb(gdb,containers) :
         gdb.create_relationship(relationship_from)
 
 ### DATASETS
-def get_datasets(connection, container_id):
+def get_datasets_container(connection, container_id):
     restapi = f"/catalog/containers/{container_id}/children"
     url = connection['url'] + restapi
     headers = {'X-Requested-With': 'XMLHttpRequest'}
@@ -243,7 +280,7 @@ def export_catalog(connection) :
     datasets_cols = list()
     containers = get_containers(connection,containers)
     for name,container in containers.items() :
-        dsets = get_datasets(connection, container['id'])
+        dsets = get_datasets_container(connection, container['id'])
         if dsets and len(dsets) > 0:
             logging.info(f"Scanned container:{container['qualifiedName']} - #datasets:{len(dsets)}")
             datasets.extend(dsets)
@@ -308,7 +345,7 @@ def export_graphdb(connection):
 
     # DATASETS
     for name,container in containers.items() :
-        datasets = get_datasets(connection, container['id'])
+        datasets = get_datasets_container(connection, container['id'])
         for dataset in datasets :
             add_dataset_graphdb(gdb,dataset)
             # ATTRIBUTES
@@ -475,7 +512,7 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.INFO)
 
-    with open('config_usa.yaml') as yamls:
+    with open('config_demo.yaml') as yamls:
         params = yaml.safe_load(yamls)
 
     connection = {'url': urljoin(params['URL'], '/app/datahub-app-metadata/api/v1'),
@@ -492,6 +529,15 @@ if __name__ == '__main__':
     if NEO4J:
         export_graphdb(connection)
 
+    GET_DATASETS = False
+    if GET_DATASETS :
+        connection_id = 'HANA_Cloud_DQM'
+        datasets = get_datasets(connection, connection_id=connection_id, container_name='/')
+        for dataset in datasets:
+            q_name = dataset['remoteObjectReference']['qualifiedName']
+            dataset['tags'] = get_dataset_tags(connection,q_name,connection_id=connection_id,tag_hierarchies=None)
+        print(json.dumps(datasets,indent=4))
+
     CONNECTIONS = False
     if CONNECTIONS :
         #connection_type = "SDL"
@@ -502,7 +548,7 @@ if __name__ == '__main__':
         with open(path.join('catalogs','catalog_connections_'+sysid+'.json'),'w') as fp:
             json.dump(connections,fp,indent=4)
 
-    ALL_CONNECTION_DATASETS = True
+    ALL_CONNECTION_DATASETS = False
     if ALL_CONNECTION_DATASETS:
             connections = get_connections(connection)
             with open(path.join('catalogs','all_connections_'+sysid+'.json'),'w') as fp:
@@ -512,7 +558,7 @@ if __name__ == '__main__':
             #    datasets[connection_id] = get_connection_datasets(connection,connection_id)
             container = '/ODP_SAPI/SAP'
             container = {'name':'SAP-R/3','qualifiedName':'/ODP_SAPI/SAP/SAP-R/3','parentQualifiedName':'/ODP_SAPI/SAP'}
-            datasets = get_connection_datasets(connection,connection_id='ECC_IDES_GCP',container=container,with_details=True)
+            datasets = get_connection_datasets(connection,connection_id=g.add((nsys[t['path']],ndi.parentTag,nsys[t['parent_path']])),container=container,with_details=True)
 
             #with open(path.join('connections/snapshots','connection_datasets_'+sysid+'.json')) as fp:
             #    latest_snapshot = json.load(fp)
@@ -529,6 +575,16 @@ if __name__ == '__main__':
                 with open(path.join('connections/snapshots','connection_datasets_'+sysid+'.json'),'w') as fp:
                     json.dump(datasets,fp,indent=4)
 
+    DATASET_ID = True
+    if DATASET_ID :
+        connection_id = 'HANA_Cloud_DQM'
+        dataset_qm = '/HANA_Cloud_DQM/QMGMT/CSKA'
+        datasets_ids = dict()
+        containers_ids = dict()
+        get_ids(connection, datasets_ids,containers_ids)
+        print(json.dumps(datasets_ids,indent=4))
+        print(json.dumps(containers_ids,indent=4))
+
     CONTAINER_CALL = False
     if CONTAINER_CALL :
         root = {'id': 'connectionRoot',
@@ -537,26 +593,32 @@ if __name__ == '__main__':
                      'catalogObjectType': 'ROOT_FOLDER'}
 
         containers = dict()
-        container_filter = 'connectionType eq \'ABAP\''
-        get_containers(connection, containers, root, container_filter=None)
+        filter = 'connectionType eq \'ABAP\''
+        filter = "name eq 'HANA_Cloud_DQM'"
+        get_containers(connection, containers, root, container_filter=filter)
+        print(json.dumps(containers,indent=4))
 
-        with open(path.join('catalogs','container_'+sysid+'.json'),'w') as fp:
-            json.dump(containers,fp,indent=4)
+        #with open(path.join('catalogs','container_'+sysid+'.json'),'w') as fp:
+        #    json.dump(containers,fp,indent=4)
 
-    GET_DATASETS = False
-    if GET_DATASETS :
+    GET_DATASETS2 = False
+    if GET_DATASETS2 :
         datasets = list()
-        with open(path.join('catalogs','container_dh-1svpfuea.dhaas-live_default.json')) as fp:
-            containers = json.load(fp)
-        for name,container in containers.items() :
-            dsets = get_datasets(connection, container['id'])
+        container_id ='E37E03883CE6CAE74EDB0F1D06FDBB87F919638764B727594ECBC6794D5AD685D8DF11F38A46083FAA5D04A078120AD2DC9B77A7FD00084D8F8DF3B4EE60256D'
 
-            if len(dsets) > 0:
-                logging.info(f"Scanned container:{container['qualifiedName']} - #metadata_datasets:{len(dsets)}")
-                datasets.extend(dsets)
+        dsets = get_datasets_container(connection, container_id=None,container_filter=filter)
+        print(json.dumps(dsets,indent=4))
+        #with open(path.join('catalogs','container_dh-1svpfuea.dhaas-live_default.json')) as fp:
+        #    containers = json.load(fp)
+        #for name,container in containers.items() :
+        #    dsets = get_datasets_container(connection, container['id'])
 
-        with open(path.join('catalogs','datasets_'+sysid+'.json'),'w') as fp:
-            json.dump(datasets,fp,indent=4)
+        #    if len(dsets) > 0:
+        #        logging.info(f"Scanned container:{container['qualifiedName']} - #metadata_datasets:{len(dsets)}")
+        #        datasets.extend(dsets)
+
+        #with open(path.join('catalogs','datasets_'+sysid+'.json'),'w') as fp:
+        #    json.dump(datasets,fp,indent=4)
 
     GET_DATASET_SUMMARY = False
     if GET_DATASET_SUMMARY :

@@ -10,7 +10,7 @@ from os import path
 import urllib
 import logging
 import yaml
-from rdflib import Graph, term
+from rdflib import Graph, Literal, Namespace, URIRef
 import re
 import io
 import csv
@@ -244,6 +244,44 @@ def add_catalog_neo4j(connection) :
 
 def add_hierarchy_rdf(connection) :
 
+    # RDF Graph
+    g = Graph()
+    n = Namespace('/'.join([connection['host'],connection['tenant'],'catalog']))
+    g.namespace_manager.bind('catalog',n)
+
+
+    # HIERARCHIES
+    hierarchies = download_hierarchies(connection)
+    '''
+    for t in hierarchies.values():
+        levels = len([c for c in t['path'] if c =='/'])
+        if levels == 0 :
+            n.hierarchy
+            g.add((disystem,'hasHierarchy',))
+            node  = {'label':'CATALOG_HIERARCHY',
+                     'properties':{'id':t['hierarchy_id'],'name':t['name']},
+                     'keys':['id']}
+            gdb.create_node(node)
+        else :
+            node = {'label':'CATALOG_TAG',
+                    'properties':{'id':t['tag_id'],'name':t['name'],'path':t['path']},
+                    'keys':['id']}
+            gdb.create_node(node)
+            if levels == 1 :
+                hnode = {'label':'CATALOG_HIERARCHY','properties':{'id':t['hierarchy_id']}}
+                relation_to = {'node_from':hnode,'node_to':node,'relation':{'label':'TAG_CHILD'}}
+                relation_from = {'node_from':node,'node_to':hnode,'relation':{'label':'TAG_HIERARCHY'}}
+                gdb.create_relationship(relation_to)
+                gdb.create_relationship(relation_from)
+            else :
+                pnode = {'label':'CATALOG_TAG','properties':{'path':t['parent_path']}}
+                relation_to = {'node_from':pnode,'node_to':node,'relation':{'label':'TAG_CHILD'}}
+                relation_from = {'node_from':node,'node_to':pnode,'relation':{'label':'TAG_PARENT'}}
+                gdb.create_relationship(relation_to)
+                gdb.create_relationship(relation_from)
+
+        '''
+
 def csv_hierarchies(connection) :
     # HIERARCHIES
     hierarchies = download_hierarchies(connection)
@@ -275,6 +313,7 @@ def main() :
         params = yaml.safe_load(yamls)
 
     connection = {'url':params['URL']+'/app/datahub-app-metadata/api/v1',
+                  'host':params['URL'],'tenant':params['TENANT'],
             'auth':(params['TENANT']+'\\'+ params['USER'],params['PWD'])}
 
     if 'GRAPHDB' in params:
@@ -287,6 +326,8 @@ def main() :
     NEO4J = False
     if NEO4J:
         add_catalog_neo4j(connection)
+
+
 
     CSV = True
     if CSV :

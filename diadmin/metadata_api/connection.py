@@ -126,7 +126,6 @@ def upload_connection(connection, conn_data) :
         logging.info(f"Connection created, but open options: {response['message']}  status: {r.status_code}\n{response}")
         return None
 
-
 def delete_connection(connection,connection_id):
     url = connection['url'] + f'/catalog/connections/{connection_id}'
     logging.debug(f'Delete connection: {connection_id}')
