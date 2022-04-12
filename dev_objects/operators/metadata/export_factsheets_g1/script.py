@@ -1,6 +1,7 @@
 # Mock apis needs to be commented before used within SAP Data Intelligence
 from diadmin.dimockapi.mock_api import api
 
+
 import os
 from urllib.parse import urljoin
 import urllib
@@ -17,17 +18,17 @@ def get_dataset_factsheet(connection,connection_id,dataset_name):
     restapi = f'catalog/connections/{connection_id}/datasets/{qualified_name}/factsheets'
     url = connection['url'][:-6] + restapi
     headers = {'X-Requested-With': 'XMLHttpRequest'}
-    r = requests.get(url, headers=headers, auth=connection['auth'])
+    r = requests.get(url, headers=headers, auth=connection['auth'],verify=api.config.verify)
     if r.status_code != 200:
         api.logger.error("Get dataset factsheet: {}".format(r.text))
-        api.outputs.logging.publish(f"get_dataset_factsheet STATUS: {r.status_code} - {r.text}",header=None)
+        api.send("logging",f"get_dataset_factsheet STATUS: {r.status_code} - {r.text}")
     return r.text
 
 def get_lineage(connection,dataset_id) :
     restapi = f'catalog/datasets/{dataset_id}/lineage'
     url = connection['url'][:-6] + restapi
     headers = {'X-Requested-With': 'XMLHttpRequest'}
-    r = requests.get(url, headers=headers, auth=connection['auth'])
+    r = requests.get(url, headers=headers, auth=connection['auth'],verify=api.config.verify)
 
     response = json.loads(r.text)
     if r.status_code != 200:
@@ -57,11 +58,11 @@ def get_container_qm(connection,connection_id,container_list,container_path,cont
     api.logger.info(f"Get Connection Containers {connection_id} - {container['qualifiedName']}")
     restapi = f"catalog/connections/{connection_id}/containers/{qualified_name}/children"
     url = connection['url'][:-6] + restapi
-    r = requests.get(url, headers={'X-Requested-With': 'XMLHttpRequest'}, auth=connection['auth'])
+    r = requests.get(url, headers={'X-Requested-With': 'XMLHttpRequest'}, auth=connection['auth'],verify=api.config.verify)
 
     if r.status_code != 200:
         api.logger.error(f"Status code: {r.status_code}, {r.text}")
-        api.outputs.logging.publish(f"Get_connection_datasets STATUS: {r.status_code} - {r.text}",header=None)
+        api.send("logging",f"Get_connection_datasets STATUS: {r.status_code} - {r.text}")
         return -1
 
     sub_containers = json.loads(r.text)['nodes']
@@ -91,11 +92,11 @@ def get_connection_datasets(connection,connection_id,container=None,lineage = Fa
     restapi = f"catalog/connections/{connection_id}/containers/{qualified_name}/children"
     url = connection['url'][:-6] + restapi
     headers = {'X-Requested-With': 'XMLHttpRequest'}
-    r = requests.get(url, headers=headers, auth=connection['auth'])
+    r = requests.get(url, headers=headers, auth=connection['auth'],verify=api.config.verify)
 
     if r.status_code != 200:
         api.logger.error(f"Status code: {r.status_code}, {r.text}")
-        api.outputs.logging.publish(f"Get_connection_datasets STATUS: {r.status_code} - {r.text}",header=None)
+        api.send("logging",f"Get_connection_datasets STATUS: {r.status_code} - {r.text}")
         return -1
 
     container_item = json.loads(r.text)
@@ -112,9 +113,11 @@ def get_connection_datasets(connection,connection_id,container=None,lineage = Fa
                             api.logger.info(f"Get Lineage of {f['metadata']['uri']}  (#{i})")
                             fsheet['lineage'] = get_lineage(connection,fsheet['datasetId'])
                     ds = json.dumps(fsheet,indent=4)
-                header = {"com.sap.headers.batch":[index,False,10000000,1000000,""]}
+                att = {'index':index,'isLast':False,'count':10000000,'size':1000000,'unit':'unit','message.lastBatch':False}
+                att['name'] = c['qualifiedName'].split('/',)[-1].split('.')[0]
+                msg = api.Message(body=ds,attributes=att)
+                api.send('factsheet',msg)
                 index +=1
-                api.outputs.factsheet.publish(ds,header=header)
     else :
         ds = get_dataset_factsheet(connection,connection_id,container['qualifiedName'])
         if lineage :
@@ -124,11 +127,15 @@ def get_connection_datasets(connection,connection_id,container=None,lineage = Fa
                     api.logger.info(f"Get Lineage of {f['metadata']['uri']}  (#{i})")
                     fsheet['lineage'] = get_lineage(connection,fsheet['datasetId'])
             ds = json.dumps(fsheet,indent=4)
-        header = {"com.sap.headers.batch":[index,False,10000000,1000000,""]}
-        index +=1
-        api.outputs.factsheet.publish(ds,header=header)
 
-                
+
+        att = {'index':index,'isLast':False,'count':10000000,'size':1000000,'unit':'unit','message.lastBatch':False}
+        att['name'] = container['qualifiedName'].split('/',)[-1].split('.')[0]
+        msg = api.Message(body=ds,attributes=att)
+        api.send('factsheet',msg)
+        index +=1
+
+
 def gen():
 
     global index
@@ -144,12 +151,12 @@ def gen():
     conn = {'url':urljoin(host,path),'auth':(tenant+'\\'+ user,pwd)}
 
     datasets = get_connection_datasets(conn,connection_id=api.config.connection_id,
-                                       container=api.config.container,lineage=api.config.lineage)
+                                       container=api.config.path,lineage=api.config.lineage)
+
+    att = {'index':index-1,'isLast':True,'count':index+1,'size':0,'unit':'unit','message.lastBatch':True}
+    att['name'] = "EMPTY"
+    msg = api.Message(body='',attributes=att)
+    api.send("factsheet",msg)
 
 
-    header = [index-1,True,index,index,""]
-    header = {"com.sap.headers.batch":header}
-    api.outputs.factsheet.publish("",header=header)
-
-
-api.set_prestart(gen)
+api.add_generator(gen)

@@ -35,7 +35,7 @@ def toggle_mockapi_file(file,comment=False) :
                 # api.init(__file__)
                 if re.match('api.init\(__file__\)',line) : #api.init(__file__)
                     line = re.sub('api.init\(__file__\)','#api.init(__file__)',line)
-                # from diadmin.dimockapi.mock_api import mock_api
+                # from diadmin.dimockapi.mock_api import api
                 if re.match('from\s+diadmin.dimockapi.mock_api\s+import\s+api',line) :
                     line = re.sub('from\s+diadmin.dimockapi.mock_api\s+import\s+api','#from diadmin.dimockapi.mock_api import api',line)
             else:
@@ -45,8 +45,8 @@ def toggle_mockapi_file(file,comment=False) :
                     line = re.sub('#api\s*=\s*mock_api','api = mock_api',line)
                 if re.match('#api.init\(__file__\)',line) : #api = mock_api(__file__)
                     line = re.sub('#api.init\(__file__\)','api.init(__file__)',line)
-                # from diadmin.dimockapi.mock_api import mock_api
-                if re.match('#from\s+diadmin.dimockapi.mock_api\s+import\s+mock_api',line) :
+                # from diadmin.dimockapi.mock_api import api
+                if re.match('#from\s+diadmin.dimockapi.mock_api\s+import\s+api',line) :
                     line = re.sub('#from\s+diadmin.dimockapi.mock_api\s+import\s+api','from diadmin.dimockapi.mock_api import api',line)
 
             script += line

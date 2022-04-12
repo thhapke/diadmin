@@ -8,13 +8,14 @@ import json
 import logging
 from typing import List
 
+import pandas as pd
 
 class outport :
     def __init__(self,port_name,msg_list):
         self.port_name = port_name
         self.msgs = msg_list
-    def publish(self,data,header=None):
-        self.msgs.append({'port':self.port_name,'msg':data})
+    def publish(self,body,header=None):
+        self.msgs.append({'port':self.port_name,'msg':body})
 
 
 class mock_logger :
@@ -28,7 +29,7 @@ class mock_logger :
     def error(self,msg_str):
         logging.error(msg_str)
     def addHandler(self,handler):
-        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
         logger = logging.getLogger(name="operator")
         logger.addHandler(handler)
 

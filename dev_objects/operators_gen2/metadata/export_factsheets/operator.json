@@ -14,11 +14,11 @@
             "vtype-ID": "com.sap.core.string"
         }
     ],
-    "icon": "puzzle-piece",
     "iconsrc": "factsheet.svg",
     "config": {
         "$type": "http://sap.com/vflow/metadata.export_factsheets.configSchema.json",
         "errorHandling": "{\"type\":\"terminate on error\"}",
-        "script": "file://script.py"
+        "script": "file://script.py",
+        "lineage": false
     }
 }

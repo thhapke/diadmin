@@ -4,7 +4,7 @@
     "versionStatus": "active",
     "outports": [
         {
-            "name": "output",
+            "name": "factsheet",
             "type": "message"
         },
         {
@@ -14,7 +14,9 @@
     ],
     "iconsrc": "factsheet.svg",
     "config": {
-        "$type": "http://sap.com/vflow/metadata.export_factsheets.configSchema.json",
+        "$type": "http://sap.com/vflow/metadata.export_factsheets_g1.configSchema.json",
+        "lineage": false,
+        "verify" : true,
         "script": "file://script.py"
     }
 }

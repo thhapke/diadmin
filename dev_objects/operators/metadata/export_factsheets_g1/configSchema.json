@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "http://sap.com/vflow/metadata.export_factsheets.configSchema.json",
+    "$id": "http://sap.com/vflow/metadata.export_factsheets_g1.configSchema.json",
     "type": "object",
     "properties": {
         "codelanguage": {
@@ -31,10 +31,20 @@
             "description": "Connection ID",
             "type": "string"
         },
-        "container": {
-            "title": "Container ",
-            "description": "Container -  Path or JSON",
+        "path": {
+            "title": "Path ",
+            "description": "Path",
             "type": "string"
+        },
+        "lineage": {
+            "title": "With Lineage",
+            "description": "With Lineage",
+            "type": "boolean"
+        },
+        "verify": {
+            "title": "Verify",
+            "description": "Verify (SSL)",
+            "type": "boolean"
         }
     }
 }

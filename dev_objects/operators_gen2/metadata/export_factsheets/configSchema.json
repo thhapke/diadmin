@@ -22,6 +22,11 @@
             "description": "Path (Container)",
             "type": "string"
         },
+        "lineage": {
+            "title": "With Lineage",
+            "description": "With Lineage",
+            "type": "boolean"
+        },
         "http_connection": {
             "title": "HTTP Connection",
             "description": "HTTP Connection",
