@@ -50,6 +50,9 @@ class mock_table:
         else:
             self.type_ref = None
 
+    def get(self):
+        return self.body
+
 
 
 class api:

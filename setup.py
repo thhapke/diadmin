@@ -12,7 +12,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="diadmin",
-    version="0.0.72",
+    version="0.0.73",
     author="Thorsten Hapke",
     license_file = ("Apache-2.0.txt"),
     author_email="thorsten.hapke@sap.com",
@@ -52,7 +52,8 @@ setuptools.setup(
                             'didqm=diadmin.didqm:main',
                             'dirun=diadmin.dirun:main',
                             'ditenant=diadmin.ditenant:main',
-                            'diopenlog=diadmin.diopenlog:main']
+                            'diopenlog=diadmin.diopenlog:main',
+                            'difactsheets=diadmin.difactsheets:main']
     },
     #package_dir={"": "src"},
     #packages=setuptools.find_packages(),
