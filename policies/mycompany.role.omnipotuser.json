@@ -28,12 +28,6 @@
     ],
     "policyReferences": [
         {
-            "id": "mycompany.basic.member"
-        },
-        {
-            "id": "mycompany.basic.metadata"
-        },
-        {
             "id": "mycompany.basic.mldeveloper"
         },
         {
@@ -50,6 +44,12 @@
         },
         {
             "id": "mycompany.basic.developer"
+        },
+        {
+            "id": "mycompany.basic.member"
+        },
+        {
+            "id": "mycompany.basic.metadata"
         }
     ],
     "inheritedResources": [
@@ -452,5 +452,5 @@
             ]
         }
     ],
-    "num_id": 20
+    "num_id": 32
 }
