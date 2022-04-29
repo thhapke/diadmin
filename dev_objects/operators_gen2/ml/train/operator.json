@@ -1,0 +1,33 @@
+{
+    "description": "Train Model",
+    "component": "com.sap.system.python3Operator.v2",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "input",
+            "type": "table",
+            "vtype-ID": "*"
+        }
+    ],
+    "outports": [
+        {
+            "name": "logging",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.string"
+        },
+        {
+            "name": "model",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.binary"
+        }
+    ],
+    "iconsrc": "model.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/ml.train.configSchema.json",
+        "errorHandling": "{\"type\":\"terminate on error\"}",
+        "script": "file://script.py"
+    },
+    "tags": {
+        "sklearn": ""
+    }
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <g transform="matrix(0.702856, 0, 0, 0.665118, 6.432614, 87.394691)" style="">
+    <ellipse style="fill: rgb(16, 74, 146);" cx="65" cy="193.149" rx="35" ry="35"/>
+    <ellipse style="fill: rgb(16, 74, 146);" cx="284.186" cy="135" rx="35" ry="35"/>
+    <ellipse style="fill: rgb(16, 74, 146);" cx="165" cy="53.952" rx="35" ry="35"/>
+    <ellipse style="fill: rgb(16, 74, 146);" cx="249.673" cy="295" rx="35" ry="35" bx:origin="0.088 1.35"/>
+    <ellipse style="fill: rgb(16, 74, 146);" cx="235" cy="435" rx="35" ry="35"/>
+    <ellipse style="fill: rgb(16, 74, 146);" cx="435" cy="206.727" rx="35" ry="35"/>
+    <ellipse style="fill: rgb(16, 74, 146);" cx="394.05" cy="53.952" rx="35" ry="35"/>
+    <ellipse style="fill: rgb(16, 74, 146);" cx="414.187" cy="365" rx="35" ry="35"/>
+    <ellipse style="fill: rgb(16, 74, 146);" cx="51.781" cy="342.317" rx="35" ry="35"/>
+    <rect x="111.848" y="183.59" width="188.194" height="16.41" style="fill: rgba(16, 75, 146, 0.47);" transform="matrix(0.958612, -0.284715, 0.284715, 0.958612, -72.708313, 40.122272)"/>
+    <rect x="111.848" y="183.59" width="188.194" height="16.41" style="fill: rgba(16, 75, 146, 0.47);" transform="matrix(0.962804, -0.270202, 0.270202, 0.962804, -93.460655, 187.731857)"/>
+    <rect x="111.848" y="183.59" width="188.194" height="16.41" style="fill: rgba(16, 75, 146, 0.47);" transform="matrix(0.898829, -0.4383, 0.4383, 0.898829, 72.667152, 168.698883)"/>
+    <rect x="111.848" y="183.59" width="188.194" height="16.41" style="fill: rgba(16, 75, 146, 0.47);" transform="matrix(-0.219838, -0.975536, 0.975536, -0.219838, 266.048981, 377.620819)"/>
+    <rect x="111.848" y="183.59" width="188.194" height="16.41" style="fill: rgba(16, 75, 146, 0.47);" transform="matrix(0.999845, -0.017581, 0.017581, 0.999845, 75.675301, -137.335068)"/>
+    <rect x="111.848" y="183.59" width="188.194" height="16.41" style="fill: rgba(16, 75, 146, 0.47);" transform="matrix(0.882532, 0.470253, -0.470253, 0.882532, 270.724091, -89.453079)"/>
+    <rect x="111.848" y="183.59" width="188.194" height="16.41" style="fill: rgba(16, 75, 146, 0.47);" transform="matrix(0.909391, -0.415943, 0.415943, 0.909391, 60.402882, 307.916351)"/>
+    <rect x="97.806" y="183.59" width="164.567" height="16.41" style="fill: rgba(16, 75, 146, 0.47);" transform="matrix(0.210741, -0.977542, 0.977542, 0.210741, 16.121166, 492.824432)"/>
+    <rect x="138.711" y="183.59" width="233.394" height="16.41" style="fill: rgba(16, 75, 146, 0.47);" transform="matrix(-0.337693, -0.941256, 0.941256, -0.337693, 108.052078, 475.981201)"/>
+  </g>
+  <g transform="matrix(1.09827, 0, 0, 1.082295, -201.070389, -334.464172)" style="">
+    <rect x="111.848" y="1140.192" width="188.194" height="101.915" style="fill: rgb(16, 75, 146);" transform="matrix(0.909391, -0.415943, 0.415943, 0.909391, -212.909653, -512.079346)"/>
+    <rect x="20.319" y="1640.61" width="34.189" height="146.644" style="fill: rgb(16, 75, 146);" transform="matrix(0.909391, -0.415943, 0.415943, 0.909391, -171.887665, -1108.579712)"/>
+    <rect x="131.054" y="694.107" width="220.511" height="62.042" style="fill: rgb(16, 75, 146);" transform="matrix(0.909391, -0.415943, 0.415943, 0.909391, -224.809006, 8.959167)"/>
+  </g>
+</svg>

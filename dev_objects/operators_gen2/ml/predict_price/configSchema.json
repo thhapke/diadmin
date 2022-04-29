@@ -1,0 +1,17 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "http://sap.com/vflow/ml.predict_price.configSchema.json",
+    "type": "object",
+    "properties": {
+        "codelanguage": {
+            "type": "string"
+        },
+        "errorHandling": {
+            "type": "string"
+        },
+        "script": {
+            "type": "string"
+        }
+    },
+    "required": []
+}

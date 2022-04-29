@@ -1,0 +1,38 @@
+{
+    "description": "Predict Price",
+    "component": "com.sap.system.python3Operator.v2",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "model",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.binary"
+        },
+        {
+            "name": "data",
+            "type": "table",
+            "vtype-ID": "*"
+        }
+    ],
+    "outports": [
+        {
+            "name": "logging",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.string"
+        },
+        {
+            "name": "prediction",
+            "type": "table",
+            "vtype-ID": "mycompany.used_cars"
+        }
+    ],
+    "iconsrc": "predict.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/ml.predict_price.configSchema.json",
+        "errorHandling": "{\"type\":\"terminate on error\"}",
+        "script": "file://script.py"
+    },
+    "tags": {
+        "sklearn": ""
+    }
+}
