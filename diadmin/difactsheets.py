@@ -39,12 +39,12 @@ def main():
             'auth': (params['TENANT']+'\\' + params['USER'],params['PWD'])}
 
     factsheets = list()
+
     datasets = get_connection_datasets(conn,
                                        connection_id=args.connection_id,
                                        container=args.path,
                                        factsheets = factsheets,
-                                       lineage=args.lineage,
-                                       verify=args.verify)
+                                       lineage=args.lineage)
 
     print(json.dumps(factsheets,indent=4))
 

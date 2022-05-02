@@ -32,5 +32,4 @@ build/Release
 
 !/dev_objects/
 !/diadmin/utils/genpwds.py
-
 !/diadmin/utils/utils.py

@@ -135,15 +135,15 @@ def get_connection_datasets(connection,connection_id,datasets=None,container=Non
         return -1
 
     sub_containers = json.loads(r.text)['nodes']
-    for c in sub_containers:
-        if c['isContainer'] :
-            get_connection_datasets(connection,connection_id,datasets,c)
-        else :
-            if not with_details :
-                datasets[c['qualifiedName']] = c
-            else :
-                ds = get_dataset_factsheet(connection,connection_id,c['qualifiedName'])
-                datasets[c['qualifiedName']] = ds
+    for container in sub_containers:
+        if container['isContainer']:
+            get_connection_datasets(connection, connection_id, datasets, container)
+        else:
+            if not with_details:
+                datasets[container['qualifiedName']] = container
+            else:
+                ds = get_dataset_factsheet(connection, connection_id, container['qualifiedName'])
+                datasets[container['qualifiedName']] = ds
 
     return datasets
 

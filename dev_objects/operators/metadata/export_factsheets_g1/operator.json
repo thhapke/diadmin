@@ -16,7 +16,7 @@
     "config": {
         "$type": "http://sap.com/vflow/metadata.export_factsheets_g1.configSchema.json",
         "lineage": false,
-        "verify" : true,
-        "script": "file://script.py"
+        "script": "file://script.py",
+        "verify": true
     }
 }
