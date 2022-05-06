@@ -42,17 +42,13 @@ def re_str(pattern) :
 ### CONTAINERS
 def get_containers(connection,containers,container = None,container_filter=None):
 
-    if container == None :
+    if not container:
         container = {'id': 'connectionRoot',
                      'name': 'Root',
                      'qualifiedName': '/',
                      'catalogObjectType': 'ROOT_FOLDER'}
 
-    # exclude internal DI_Data_Lake
-    #if re.match('\/*DI_DATA_LAKE',container['qualifiedName']) :
-    #    return 1
-
-    if not container['id'] == 'connectionRoot' :
+    if not container['id'] == 'connectionRoot':
         container['qualifiedName'] = container['qualifiedName'].strip('/')
         container["parentQualifiedName"] = container['parentQualifiedName'].strip('/')
         containers[container['qualifiedName']] = container
@@ -61,7 +57,7 @@ def get_containers(connection,containers,container = None,container_filter=None)
     restapi = f"/catalog/containers/{container['id']}/children"
     url = connection['url'] + restapi
     headers = {'X-Requested-With': 'XMLHttpRequest'}
-    params = {'containerId': container['id'], 'type':'CONTAINER','$filter': container_filter}
+    params = {'containerId': container['id'], 'type':'CONTAINER', '$filter': container_filter}
     r = requests.get(url, headers=headers, auth=connection['auth'], params=params)
 
     if r.status_code != 200:
@@ -73,9 +69,10 @@ def get_containers(connection,containers,container = None,container_filter=None)
         get_containers(connection,containers,c,container_filter=container_filter)
     return
 
+
 def get_datasets(connection, connection_id, container_name) :
     logging.info(f"Get container of {container_name}")
-    container_name = urllib.parse.quote(container_name,safe='')
+    container_name = urllib.parse.quote(container_name, safe='')
     restapi = f"/catalog/connections/{connection_id}/containers/{container_name}"
     url = connection['url'] + restapi
     headers = {'X-Requested-With': 'XMLHttpRequest'}
@@ -109,6 +106,7 @@ def get_ids(connection, datasets_ids, containers_ids, container=None) :
     for c in sub_containers:
         get_ids(connection, datasets_ids, containers_ids,c)
     return
+
 
 def get_connection_datasets(connection,connection_id,datasets=None,container=None,with_details = False):
     if datasets == None:

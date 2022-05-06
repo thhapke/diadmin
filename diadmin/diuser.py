@@ -208,8 +208,8 @@ def main() :
     with open(config_file) as yamls:
         params = yaml.safe_load(yamls)
 
-    if args.generate :
-        if not args.userlist :
+    if args.generate:
+        if not args.userlist:
             newuserlist = add_defaultsuffix(args.generate,'csv')
             logging.info(f'Generic userlist: {newuserlist}')
             generate_userlist(userlist=None,
@@ -220,7 +220,7 @@ def main() :
                               tenant=params['TENANT'],
                               user_prefix=params['USERLIST']['PREFIX'],
                               role=params['USERLIST']['DEFAULT_ROLE'])
-        else :
+        else:
             logging.info(f'Generate userlist from input userlist {args.userlist}')
             generate_userlist(userlist = args.userlist,
                               filename=params['USERLIST']['LIST'],

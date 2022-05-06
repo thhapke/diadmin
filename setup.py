@@ -53,7 +53,8 @@ setuptools.setup(
                             'dirun=diadmin.dirun:main',
                             'ditenant=diadmin.ditenant:main',
                             'diopenlog=diadmin.diopenlog:main',
-                            'difactsheets=diadmin.difactsheets:main']
+                            'difactsheets=diadmin.difactsheets:main',
+                            'diontoviz=diadmin.ontoviz.ontology_viz:main']
     },
     #package_dir={"": "src"},
     #packages=setuptools.find_packages(),
@@ -63,6 +64,7 @@ setuptools.setup(
               'diadmin.dimockapi',
               'diadmin.utils',
               'diadmin.metadata_api',
-              'diadmin.pipeline_api'],
+              'diadmin.pipeline_api',
+              'diadmin.ontoviz'],
     python_requires=">=3.6",
 )
