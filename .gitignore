@@ -7,20 +7,15 @@ SPDX-License-Identifier: Apache-2.0
 .idea/
 .DS_Store
 *.yaml
-sql.txt
-.yo-rc.json
-.vscode/*
+*.egg-info
+
+# folders
+dist/*
+build/*
 users/*
 connections/*
 catalogs/*
 
-*.egg-info
-
-dist/
-
 ### Logs
 logs
 *.log
-
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
