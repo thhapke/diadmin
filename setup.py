@@ -12,7 +12,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="diadmin",
-    version="0.0.73",
+    version="0.0.74",
     author="Thorsten Hapke",
     license_file = ("Apache-2.0.txt"),
     author_email="thorsten.hapke@sap.com",
@@ -22,7 +22,7 @@ setuptools.setup(
     project_urls={'vctl':"https://launchpad.support.sap.com/#/softwarecenter/template/products/%20_APP=00200682500000001943&_EVENT=DISPHIER&HEADER=Y&FUNCTIONBAR=N&EVENT=TREE&NE=NAVIGATE&ENR=73554900100800002981&V=INST&TA=ACTUAL&PAGE=SEARCH/DATA%20INTELLIGENCE-SYS%20MGMT%20CLI"},
     url="https://github.com/thhapke/diadmin/",
     classifiers=[
-         "Programming Language :: Python :: 3.9",
+         "Programming Language :: Python :: 3.10",
          "License :: OSI Approved :: Apache Software License",
          "Operating System :: OS Independent",
     ],
@@ -32,7 +32,8 @@ setuptools.setup(
         'networkx',
         'pandas',
         'matplotlib',
-        'rdflib'
+        'rdflib',
+        'owlrl'
     ],
     entry_points = {
         'console_scripts': ['dipolicy=diadmin.dipolicy:main',
@@ -54,7 +55,7 @@ setuptools.setup(
                             'ditenant=diadmin.ditenant:main',
                             'diopenlog=diadmin.diopenlog:main',
                             'difactsheets=diadmin.difactsheets:main',
-                            'diontoviz=diadmin.ontoviz.ontology_viz:main']
+                            'thordf=diadmin.rdfutils.thordf:main']
     },
     #package_dir={"": "src"},
     #packages=setuptools.find_packages(),
@@ -65,6 +66,6 @@ setuptools.setup(
               'diadmin.utils',
               'diadmin.metadata_api',
               'diadmin.pipeline_api',
-              'diadmin.ontoviz'],
-    python_requires=">=3.6",
+              'diadmin.rdfutils'],
+    python_requires=">=3.10",
 )

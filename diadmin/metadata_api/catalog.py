@@ -329,7 +329,7 @@ def main() :
 
 
 
-    CSV = True
+    CSV = False
     if CSV :
         h_str = csv_hierarchies(connection)
         with open('catalogs/hierarchies.csv','w') as fp:
@@ -359,7 +359,11 @@ def main() :
         with open(path.join('catalogs',filename),'w') as fp:
             json.dump(hierarchies,fp,indent=4)
 
+    DOWNLOAD_HIERARCHIES_NAMES = True
+    if DOWNLOAD_HIERARCHIES_NAMES:
+        hierarchies = get_hierarchy_names(connection)
+        print(json.dumps(hierarchies,indent=4))
 
 
-if __name__ == '__main__' :
+if __name__ == '__main__':
     main()

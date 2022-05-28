@@ -104,7 +104,7 @@ if __name__ == '__main__' :
 
     logging.basicConfig(level=logging.DEBUG)
 
-    with open('config_catalog.yaml') as yamls:
+    with open('config_demo_catalog.yaml') as yamls:
         params = yaml.safe_load(yamls)
 
     glossary_resource = "/app/datahub-app-metadata"

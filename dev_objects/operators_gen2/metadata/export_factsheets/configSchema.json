@@ -7,7 +7,8 @@
             "type": "string"
         },
         "errorHandling": {
-            "type": "string"
+            "title": "Error Handling",
+            "$ref": "[http://sap.com/vflow/com.sap.error.scriptOperator.schema.json]"
         },
         "script": {
             "type": "string"

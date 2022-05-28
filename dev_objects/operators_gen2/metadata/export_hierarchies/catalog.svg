@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <rect x="44.66" y="31.979" width="303.119" height="400.038" rx="3" ry="3" style="fill: none; stroke-width: 5px; stroke: rgb(16, 74, 146);"/>
+  <path d="M 176.812 107.812 L 245.812 176.812 L 107.812 176.812 L 176.812 107.812 Z" style="fill: rgb(255, 255, 255);" transform="matrix(0.707128, -0.707086, 0.707086, 0.707128, -161.08168, 77.111336)" bx:shape="triangle 107.812 107.812 138 69 0.5 0 1@5ca878fb"/>
+  <path d="M 161.438 98.438 L 224.438 161.438 L 98.438 161.438 L 161.438 98.438 Z" style="stroke-width: 4px; fill: rgb(16, 74, 146); stroke: rgb(16, 74, 146);" transform="matrix(-0.707128, 0.707086, -0.707086, -0.707128, 319.637512, 77.239349)" bx:shape="triangle 98.438 98.438 126 63 0.5 0 1@d8eea794"/>
+  <rect x="164.353" y="158.357" width="308.605" height="184.975" rx="3" ry="3" style="fill: rgb(255, 255, 255); stroke-width: 6px; stroke: rgb(16, 74, 146);"/>
+  <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 18.1px; stroke: rgb(16, 74, 146); white-space: pre;" transform="matrix(4.113752, 0, 0, 7.172472, -677.209839, -1427.281372)" x="208.48" y="240.399">&lt; / &gt;</text>
+  <rect x="363.628" y="200" width="81.981" height="27.345" rx="17" ry="17" style="stroke: rgb(0, 0, 0); fill: rgb(16, 74, 146);"/>
+  <rect x="363.628" y="262.148" width="81.981" height="27.345" rx="17" ry="17" style="stroke: rgb(0, 0, 0); fill: rgb(16, 74, 146);"/>
+</svg>

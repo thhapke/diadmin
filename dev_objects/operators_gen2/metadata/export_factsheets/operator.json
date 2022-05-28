@@ -17,7 +17,9 @@
     "iconsrc": "factsheet.svg",
     "config": {
         "$type": "http://sap.com/vflow/metadata.export_factsheets.configSchema.json",
-        "errorHandling": "{\"type\":\"terminate on error\"}",
+        "errorHandling": {
+            "type":"terminate on error"
+        },
         "script": "file://script.py",
         "lineage": false
     }

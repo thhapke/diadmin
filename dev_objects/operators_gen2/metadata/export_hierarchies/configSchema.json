@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "http://sap.com/vflow/metadata.export_datasets.configSchema.json",
+    "$id": "http://sap.com/vflow/metadata.export_hierarchies.configSchema.json",
     "type": "object",
     "properties": {
         "codelanguage": {
@@ -12,21 +12,6 @@
         },
         "script": {
             "type": "string"
-        },
-        "connection_id": {
-            "title": "Connection ID",
-            "description": "Connection ID",
-            "type": "string"
-        },
-        "container": {
-            "title": "Path",
-            "description": "Path (Container)",
-            "type": "string"
-        },
-        "streaming": {
-            "title": "Streaming",
-            "description": "Streaming of datasets",
-            "type": "boolean"
         },
         "http_connection": {
             "title": "HTTP Connection",
@@ -44,6 +29,11 @@
                     }
                 }
             }
+        },
+        "hierarchy_name": {
+            "title": "Hierarchy Name",
+            "description": "Hierarchy Name",
+            "type": "string"
         }
     }
 }
