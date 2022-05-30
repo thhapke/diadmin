@@ -18,8 +18,8 @@ from diadmin.utils.genpwds import gen_pwd
 
 # create user from userlist
 def create_user(user,role) :
-    create_user = ['vctl','user','create',user['tenant'],user['user'],user['password'],role]
-    run(create_user)
+    create_user_cmd = ['vctl', 'user', 'create', user['tenant'], user['user'], user['password'], role]
+    return run(create_user_cmd)
 
 # assign policy to user
 def assign_policies(user,policies) :

@@ -113,16 +113,16 @@ def update_userlist(params, userlist) :
     
 
 def generate_userlist(userlist,
-                      filename = 'userlist.csv',
-                      tenant = 'default',
-                      format = '%firstname %name',
+                      filename='userlist.csv',
+                      tenant='default',
+                      format='%firstname %name',
                       num=10,
-                      user_prefix = 'user-',
+                      user_prefix='user-',
                       pwd='Welcome01!',
-                      pwd_length = 8,
-                      role='STANDARD') :
+                      pwd_length=8,
+                      role='STANDARD'):
     users = list()
-    if userlist :
+    if userlist:
         with open(path.join('users',userlist),mode='r',newline='\n') as csvfile :
             if format == '%firstname %name':
                 csvreader = csv.reader(csvfile,delimiter = ' ')
@@ -186,25 +186,26 @@ def main() :
 
     logging.basicConfig(level=logging.INFO)
 
-    description =  "User management.\nPre-requiste: vctl."
+    description = "User management.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('-c','--config', help = 'Specifies yaml-config file',default='config.yaml')
-    parser.add_argument('-p','--assign_policies', nargs='+', help = 'Assign policies to user in userlist')
-    parser.add_argument('-l','--userlist', help = 'List of user to generate new userlist. If <nameless> userlist without names are generated.')
-    parser.add_argument('-e','--deassign_policies', nargs='+', help = 'Deassign policies from user in userlist')
-    parser.add_argument('-r','--role', help = 'User role with policies defined in config.',default='STANDARD')
-    parser.add_argument('-g','--generate', help = 'Generate userlist with given filename.')
-    parser.add_argument('-o','--output', help = 'Output file of generated userlist',action='store_true')
-    parser.add_argument('-a','--add', help = 'Add users of userlist',action='store_true')
-    parser.add_argument('-d','--delete', help = 'Delete users of userlist',action='store_true')
-    parser.add_argument('-w','--download', help = 'Download user to userlist',action='store_true')
-    parser.add_argument('-s','--assignments', help = 'Download SAP Di user with assignements',action='store_true')
+    parser.add_argument('-c', '--config', help='Specifies yaml-config file', default='config.yaml')
+    parser.add_argument('-p', '--assign_policies', nargs='+', help='Assign policies to user in userlist')
+    parser.add_argument('-l', '--userlist',
+                        help='List of user to generate new userlist. If <nameless> userlist without names are generated.')
+    parser.add_argument('-e', '--deassign_policies', nargs='+', help='Deassign policies from user in userlist')
+    parser.add_argument('-r', '--role', help='User role with policies defined in config.', default='STANDARD')
+    parser.add_argument('-g', '--generate', help='Generate userlist with given filename.')
+    parser.add_argument('-o', '--output', help='Output file of generated userlist', action='store_true')
+    parser.add_argument('-a', '--add', help='Add users of userlist', action='store_true')
+    parser.add_argument('-d', '--delete', help='Delete users of userlist', action='store_true')
+    parser.add_argument('-w', '--download', help='Download user to userlist', action='store_true')
+    parser.add_argument('-s', '--assignments', help='Download SAP Di user with assignements', action='store_true')
 
     args = parser.parse_args()
 
     config_file = args.config
     if args.config:
-        config_file = add_defaultsuffix(args.config,'yaml')
+        config_file = add_defaultsuffix(args.config, 'yaml')
     with open(config_file) as yamls:
         params = yaml.safe_load(yamls)
 
@@ -231,16 +232,18 @@ def main() :
 
     userlist = csvlist(path.join('users',params['USERLIST']['LIST']))
 
-    if args.add :
+    if args.add:
         di_login(params)
         userlist.with_comments = False
-        userlist.filter = ('status','TO_ADD')
-        for u in userlist :
+        userlist.filter = ('status', 'TO_ADD')
+        for u in userlist:
             if not u['password']:
                 u['password'] = gen_pwd()
+            ret = create_user(u, 'member')
+            if not ret.returncode == 0:
+                continue
             u['status'] = 'EXISTS'
-            create_user(u,'member')
-            deassign_policy(u,'sap.dh.member')
+            deassign_policy(u, 'sap.dh.member')
             policies = params['USER_ROLE'][u['role']]
             assign_policies(u,params["USER_ROLE"][u["role"]])
             logging.info(f'Create user: {u["user"]} with role:{u["role"]} ({policies})')
