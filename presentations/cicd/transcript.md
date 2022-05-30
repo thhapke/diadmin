@@ -85,3 +85,10 @@ For copying the path to the object in the user workspace you like to export, you
 ## Export to Solution Repository
 Finally Bao is bundling the metadata operators and his pipeline to a solution and exports the solution to the solution repository. He gives a name and version to the new solution. 
 In the tenant tab you see all available solution including the newly created one. 
+
+## Thank you
+In the past couple of minutes I have shown you how an CI/CD process can be implemented with SAP Data Intelligence. The options you have and an outlook into the future.  Its flexibility should enable you to fit this data management platform into your enterprise environment wether you have a strong development department or rather occasionally develop.
+
+By the way, the transcript of the presentation and the shell-script you find on my personal [git repository](https://github.com/thhapke/diadmin/tree/main/presentations/)
+
+I hope you enjoyed this short introduction. So cheers for now and have a good time
