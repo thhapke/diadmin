@@ -10,7 +10,7 @@ from os import path
 
 import yaml
 from rdflib import Graph, Literal, Namespace, URIRef
-from rdflib.namespace import RDF
+from rdflib.namespace import RDF, RDFS
 
 
 from diadmin.metadata_api.catalog import download_hierarchies
@@ -25,35 +25,48 @@ def add_hierarchy_rdf(connection, g=None):
     ndi = Namespace('https://www.sap.com/products/data-intelligence#')
     g.namespace_manager.bind('di', URIRef(ndi))
 
-    nsys = Namespace(connection['host'] + '/' + connection['tenant'])
-    g.namespace_manager.bind('instance', URIRef(nsys))
+    instance_url = connection['host'] + '/' + connection['tenant']
+    ninstance = Namespace(instance_url)
+    g.namespace_manager.bind('instance', URIRef(ninstance))
 
-    g.add((nsys.metadata_explorer, ndi.hasCatalog, nsys.catalog))
-    g.add((nsys.catalog, RDF.type, ndi.catalog))
+    catalog_url = instance_url+'/'+'catalog'
+    ncatalog = Namespace(catalog_url+ '/' )
+    catalog = URIRef(catalog_url)
+    g.namespace_manager.bind('catalog', URIRef(ncatalog))
+
+    g.add((ninstance.metadata_explorer, ndi.hasCatalog, catalog))
+    g.add((catalog, RDF.type, ndi.catalog))
 
     # HIERARCHIES
     hierarchies = download_hierarchies(connection)
     for t in hierarchies.values():
         levels = len([c for c in t['path'] if c == '/'])
         if levels == 0:
-            g.add((nsys.catalog, ndi.hasTagHierarchy, nsys[t['name']]))
-            g.add((nsys[t['name']], RDF.type, ndi.Hierarchy))
-            g.add((nsys[t['name']], ndi.hasId, Literal(t['hierarchy_id'])))
+            g.add((catalog, ndi.hasTagHierarchy, ncatalog[t['name']]))
+            g.add((ncatalog[t['name']], RDF.type, ndi.Hierarchy))
+            g.add((ncatalog[t['name']], ndi.hasId, Literal(t['hierarchy_id'])))
+            g.add((ncatalog[t['name']], RDFS.comment, Literal(t['description'])))
+            g.add((ncatalog[t['name']], RDFS.label, Literal(t['name'])))
         else:
-            qname = urllib.parse.quote(t['path'], safe='')
-            g.add((nsys[qname], RDF.type, ndi.Tag))
-            g.add((nsys[t['hierarchy_name']], ndi.hasTag, nsys[qname]))
+            qname = urllib.parse.quote(t['path'])
+            node = ncatalog[qname]
+            g.add((ncatalog[qname], RDF.type, ndi.Tag))
+            g.add((ncatalog[qname], RDFS.comment, Literal(t['description'])))
+            g.add((ncatalog[qname], RDFS.label, Literal(t['name'])))
+            g.add((ncatalog[t['hierarchy_name']], ndi.hasTag, ncatalog[qname]))
             if levels > 1:
-                pqname = urllib.parse.quote(t['parent_path'], safe='')
-                g.add((nsys[qname], ndi.hasParentTag, nsys[pqname]))
-                g.add((nsys[pqname], ndi.hasChildTag, nsys[qname]))
+                pqname = urllib.parse.quote(t['parent_path'])
+                g.add((ncatalog[qname], RDFS.subClassOf, ncatalog[pqname]))
+                #g.add((nsys[qname], ndi.hasParentTag, nsys[pqname]))
+                #g.add((nsys[pqname], ndi.hasChildTag, nsys[qname]))
 
     return g
+
 
 #
 # MAIN
 #
-def main() :
+def main():
 
     logging.basicConfig(level=logging.INFO)
 
