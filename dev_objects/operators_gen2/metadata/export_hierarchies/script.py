@@ -88,7 +88,7 @@ def export_hierarchies(connection, hierarchy_name=None):
     hierarchy_names = get_hierarchy_names(connection, search=hierarchy_name)
     if not hierarchy_names:
         api.logger.error(f"No Hierarchies found")
-        return 0
+        return -1
     hierarchies = dict()
     for h in hierarchy_names['tagHierarchies']:
         hierarchy: object = get_hierarchy_tags(connection, h["tagHierarchy"]['id'])
@@ -113,9 +113,10 @@ def gen():
 
     hierarchies = export_hierarchies(connection, hierarchy_name=api.config.hierarchy_name)
 
+    hierarchies_json = json.dumps(hierarchies, indent=4) if not hierarchies == -1 else "{}"
+
     header = [0, True, 1, 0, ""]
     header = {"com.sap.headers.batch": header}
-    hierarchies_json = json.dumps(hierarchies, indent=4)
     api.outputs.output.publish(hierarchies_json, header=header)
 
 

@@ -16,7 +16,19 @@
         "connection_id": {
             "title": "Connection ID",
             "description": "Connection ID",
-            "type": "string"
+            "type": "object",
+            "properties": {
+                "connectionID": {
+                    "title": "ConnectionID",
+                    "type": "string",
+                    "format": "com.sap.dh.connection.id",
+                    "sap_vflow_valuehelp": {
+                        "url": "/app/datahub-app-connection/connections",
+                        "valuepath": "id",
+                        "displayStyle": "autocomplete"
+                    }
+                }
+            }
         },
         "container": {
             "title": "Path",
@@ -26,6 +38,11 @@
         "streaming": {
             "title": "Streaming",
             "description": "Streaming of datasets",
+            "type": "boolean"
+        },
+        "tags": {
+            "title": "Tags",
+            "description": "Tags of datasets",
             "type": "boolean"
         },
         "http_connection": {

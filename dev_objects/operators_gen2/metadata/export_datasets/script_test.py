@@ -16,21 +16,24 @@ api.init(__file__)  # class instance of mock_api
 # config parameter
 with open(join('http_connections', 'http_connection.json')) as fp:
     api.config.http_connection = json.load(fp)
-print(api.config.http_connection)
 
 # config parameter
 # api.config.connection_id = 'HANA_Cloud_DQM'
 api.config.connection_id = 'S3_Catalog'
-api.config.container = '/costcenter'
-api.config.streaming = True
+api.config.connection_id = 'ECC_DMIS_2018'
+api.config.container = '/TABLES/BC'
+api.config.streaming = False
+api.config.tags = True
 
 script.gen()
 
-result_str = "["
+result_str = ""
+#result_str += "["
 for m in api.msg_list:
     print(m['msg'])
     result_str += m['msg']+',\n'
 
-result_str = result_str[:-2]+']\n'
-with open('tmp/msgresults.json', 'w') as fp:
+#result_str = result_str[:-2]+']\n'
+result_str = result_str[:-2]+'\n'
+with open('tmp/datasets.json', 'w') as fp:
     fp.write(result_str)

@@ -16,6 +16,7 @@
             "type":"terminate on error"
         },
         "script": "file://script.py",
-        "streaming": false
+        "streaming": false,
+        "tags": false
     }
 }

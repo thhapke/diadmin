@@ -12,10 +12,9 @@ import requests
 #
 #  GET Datasets
 #
-def get_datasets(connection, connection_id, container_name):
-    api.logger.info(f"Get container of {container_name}")
-    container_name = urllib.parse.quote(container_name, safe='')
-    restapi = f"/catalog/connections/{connection_id}/containers/{container_name}"
+def get_datasets(connection, connection_id, dataset_path):
+    qualified_name = urllib.parse.quote(dataset_path, safe='')  # quote to use as  URL component
+    restapi = f"/catalog/connections/{connection_id}/containers/{qualified_name}"
     url = connection['url'] + restapi
     headers = {'X-Requested-With': 'XMLHttpRequest'}
     r = requests.get(url, headers=headers, auth=connection['auth'])
@@ -30,26 +29,34 @@ def get_datasets(connection, connection_id, container_name):
 #
 #  GET Tags of datasets
 #
-def get_dataset_tags(connection, dataset_path, connection_id=None, tag_hierarchies=None):
-    path_list = dataset_path.strip('/').split("/")
-    if not connection_id or connection_id == path_list[0]:
-        connection_id = path_list[0]
-        qualified_name = '/' + '/'.join(path_list[1:])
-    else:
-        qualified_name = '/' + '/'.join(path_list[0:])
-
-    qualified_name = urllib.parse.quote(qualified_name, safe='')
-    restapi = f"/catalog/connections/{connection_id}/datasets/{qualified_name}/tags"
+def get_dataset_factsheets(connection,  connection_id, dataset_path):
+    qualified_name = urllib.parse.quote(dataset_path, safe='')  # quote to use as  URL component
+    restapi = f"/catalog/connections/{connection_id}/datasets/{qualified_name}/factsheet"
     url = connection['url'] + restapi
-    api.logger.info(f'Get Dataset Tags for: {dataset_path} ({connection_id})')
     headers = {'X-Requested-With': 'XMLHttpRequest'}
-    params = {"connectionId": connection_id, "qualifiedName": dataset_path, 'tagHierarchies': tag_hierarchies}
+    params = {"connectionId": connection_id, "qualifiedName": dataset_path}
     r = requests.get(url, headers=headers, auth=connection['auth'], params=params)
 
     if r.status_code != 200:
-        api.logger.error(
-            f"Get datasets attributes unsuccessful for {dataset_path}: {r.status_code}\n{json.loads(r.text)}")
-        return None
+        api.logger.error(f"Status code: {r.status_code}  - {r.text}")
+        return -1
+    return json.loads(r.text)
+
+
+#
+#  GET Tags of datasets
+#
+def get_dataset_tags(connection, connection_id, dataset_path):
+    qualified_name = urllib.parse.quote(dataset_path, safe='')  # quote to use as  URL component
+    restapi = f"/catalog/connections/{connection_id}/datasets/{qualified_name}/tags"
+    url = connection['url'] + restapi
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+    params = {"connectionId": connection_id, "qualifiedName": dataset_path}
+    r = requests.get(url, headers=headers, auth=connection['auth'], params=params)
+
+    if r.status_code != 200:
+        api.logger.error(f"Status code: {r.status_code}  - {r.text}")
+        return -1
     return json.loads(r.text)
 
 
@@ -68,11 +75,30 @@ def gen():
 
     connection = {'url': urljoin(host, path), 'auth': (tenant + '\\' + user, pwd)}
 
-    datasets = get_datasets(connection, connection_id=api.config.connection_id, container_name=api.config.container)
-    for i, dataset in enumerate(datasets):
-        q_name = dataset['remoteObjectReference']['qualifiedName']
-        dataset['tags'] = get_dataset_tags(connection, q_name, connection_id=api.config.connection_id)
-        if api.config.streaming:
+    # Config parameters
+    connection_id = api.config.connection_id
+    container_path = api.config.container
+    tags = api.config.tags
+    streaming = api.config.streaming
+
+    # Get all catalog datasets under container path
+    api.logger.info(f"Get datasets: {connection_id} - {container_path}")
+    datasets = get_datasets(connection, connection_id, container_path)
+
+    dataset_factsheets = list()
+    for i, ds in enumerate(datasets):
+        qualified_name = ds['remoteObjectReference']['qualifiedName']
+        api.logger.info(f'Get dataset metadata: {qualified_name}')
+        dataset = get_dataset_factsheets(connection, connection_id, qualified_name)
+
+        # In case of Error (like imported data)
+        if dataset == -1:
+            continue
+
+        if tags:
+            dataset['tags'] = get_dataset_tags(connection, connection_id, qualified_name)
+
+        if streaming:
             if i == len(datasets)-1:
                 header = [i, True, i + 1, len(datasets), ""]
             else:
@@ -80,11 +106,13 @@ def gen():
             header = {"com.sap.headers.batch": header}
             datasets_json = json.dumps(dataset, indent=4)
             api.outputs.datasets.publish(datasets_json, header=header)
+        else:
+            dataset_factsheets.append(dataset)
 
-    if not api.config.streaming:
+    if not streaming:
         header = [0, True, 1, 0, ""]
         header = {"com.sap.headers.batch": header}
-        datasets_json = json.dumps(datasets, indent=4)
+        datasets_json = json.dumps(dataset_factsheets, indent=4)
         api.outputs.datasets.publish(datasets_json, header=header)
 
 

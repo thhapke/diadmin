@@ -349,17 +349,17 @@ def main() :
 
     #hierarchy_name = 'License'
     #hierarchy_name = None
-    DOWNLOAD_HIERARCHIES = False
+    DOWNLOAD_HIERARCHIES = True
     if DOWNLOAD_HIERARCHIES :
         hierarchy_name = None
-        hierarchies = download_hierarchies(connection,hierarchy_name=hierarchy_name)
+        hierarchies = download_hierarchies(connection, hierarchy_name=hierarchy_name)
         filename = 'hierarchies.json'
-        if hierarchy_name :
+        if hierarchy_name:
             filename = hierarchy_name + '.json'
-        with open(path.join('catalogs',filename),'w') as fp:
-            json.dump(hierarchies,fp,indent=4)
+        with open(path.join('catalogs', filename), 'w') as fp:
+            json.dump(hierarchies, fp, indent=4)
 
-    DOWNLOAD_HIERARCHIES_NAMES = True
+    DOWNLOAD_HIERARCHIES_NAMES = False
     if DOWNLOAD_HIERARCHIES_NAMES:
         hierarchies = get_hierarchy_names(connection)
         print(json.dumps(hierarchies,indent=4))
