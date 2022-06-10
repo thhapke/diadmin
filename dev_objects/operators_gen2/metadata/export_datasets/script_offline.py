@@ -1,11 +1,6 @@
-# Mock apis needs to be commented before used within SAP Data Intelligence
-from diadmin.dimockapi.mock_api import api
-
-import os
 from urllib.parse import urljoin
 import urllib
 import json
-
 import requests
 
 
@@ -59,7 +54,6 @@ def get_dataset_tags(connection, connection_id, dataset_path):
         return -1
     return json.loads(r.text)
 
-
 #
 #  GET Lineage of datasets
 #
@@ -80,64 +74,37 @@ def get_dataset_lineage(connection, connection_id, dataset_path):
     return json.loads(r.text)
 
 
-#
-# Callback of operator
-#
 def gen():
-    host = api.config.http_connection['connectionProperties']['host']
-    user = api.config.http_connection['connectionProperties']['user']
-    pwd = api.config.http_connection['connectionProperties']['password']
-    path = api.config.http_connection['connectionProperties']['path']
-    tenant = os.environ.get('VSYSTEM_TENANT')
-
-    if not tenant:
-        tenant = 'default'
+    host = "https://vsystem.ingress.xxxxxxxxx.dhaas-live.shoot.live.k8s-hana.ondemand.com"
+    user = "xxxx"
+    pwd = "xxxx"
+    path = "/app/datahub-app-metadata/api/v1"
+    tenant = 'default'
 
     connection = {'url': urljoin(host, path), 'auth': (tenant + '\\' + user, pwd)}
 
     # Config parameters
-    connection_id = api.config.connection_id
-    container_path = api.config.container
-    tags = api.config.tags
-    streaming = api.config.streaming
-    lineage = api.config.lineage
+    connection_id = 'ECC_DMIS_2018'
+    container_path = '/TABLES/BC'
 
     # Get all catalog datasets under container path
-    api.logger.info(f"Get datasets: {connection_id} - {container_path}")
     datasets = get_datasets(connection, connection_id, container_path)
 
     dataset_factsheets = list()
     for i, ds in enumerate(datasets):
         qualified_name = ds['remoteObjectReference']['qualifiedName']
-        api.logger.info(f'Get dataset metadata: {qualified_name}')
         dataset = get_dataset_factsheets(connection, connection_id, qualified_name)
 
-        # In case of Error (like imported data)
+        # In case of Error
         if dataset == -1:
             continue
 
-        if tags:
-            dataset['tags'] = get_dataset_tags(connection, connection_id, qualified_name)
+        dataset['tags'] = get_dataset_tags(connection, connection_id, qualified_name)
+        dataset_factsheets.append(dataset)
 
-        if lineage:
-            dataset['lineage'] = get_dataset_lineage(connection, connection_id, qualified_name)
-
-        if streaming:
-            if i == len(datasets)-1:
-                header = [i, True, i + 1, len(datasets), ""]
-            else:
-                header = [i, False, i+1, len(datasets), ""]
-            header = {"com.sap.headers.batch": header}
-            datasets_json = json.dumps(dataset, indent=4)
-            api.outputs.datasets.publish(datasets_json, header=header)
-        else:
-            dataset_factsheets.append(dataset)
-
-    if not streaming:
-        header = [0, True, 1, 0, ""]
-        header = {"com.sap.headers.batch": header}
-        datasets_json = json.dumps(dataset_factsheets, indent=4)
-        api.outputs.datasets.publish(datasets_json, header=header)
+    datasets_json = json.dumps(dataset_factsheets, indent=4)
+    print(datasets_json)
 
 
-api.set_prestart(gen)
+if __name__ == '__main__':
+    gen()

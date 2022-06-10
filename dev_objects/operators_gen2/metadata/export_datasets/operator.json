@@ -17,6 +17,7 @@
         },
         "script": "file://script.py",
         "streaming": false,
-        "tags": false
+        "tags": false,
+        "lineage": false
     }
 }

@@ -45,6 +45,11 @@
             "description": "Tags of datasets",
             "type": "boolean"
         },
+        "lineage": {
+            "title": "Lineage",
+            "description": "Lineage of datasets",
+            "type": "boolean"
+        },
         "http_connection": {
             "title": "HTTP Connection",
             "description": "HTTP Connection",
