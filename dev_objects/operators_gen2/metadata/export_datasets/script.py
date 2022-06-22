@@ -1,5 +1,5 @@
 # Mock apis needs to be commented before used within SAP Data Intelligence
-from diadmin.dimockapi.mock_api import api
+#from diadmin.dimockapi.mock_api import api
 
 import os
 from urllib.parse import urljoin
@@ -17,11 +17,12 @@ def get_datasets(connection, connection_id, dataset_path):
     restapi = f"/catalog/connections/{connection_id}/containers/{qualified_name}"
     url = connection['url'] + restapi
     headers = {'X-Requested-With': 'XMLHttpRequest'}
+    api.logger.info(f"Request URL: {url}")
     r = requests.get(url, headers=headers, auth=connection['auth'])
 
     if r.status_code != 200:
         api.logger.error(f"Status code: {r.status_code}  - {r.text}")
-        return -1
+        return None
 
     return json.loads(r.text)['datasets']
 
@@ -39,7 +40,7 @@ def get_dataset_factsheets(connection,  connection_id, dataset_path):
 
     if r.status_code != 200:
         api.logger.error(f"Status code: {r.status_code}  - {r.text}")
-        return -1
+        return None
     return json.loads(r.text)
 
 
@@ -56,7 +57,7 @@ def get_dataset_tags(connection, connection_id, dataset_path):
 
     if r.status_code != 200:
         api.logger.error(f"Status code: {r.status_code}  - {r.text}")
-        return -1
+        return None
     return json.loads(r.text)
 
 
@@ -73,10 +74,10 @@ def get_dataset_lineage(connection, connection_id, dataset_path):
 
     if r.status_code == 404:
         api.logger.error(f"Status code: {r.status_code}  - No lineage found for: {dataset_path}")
-        return -1
+        return None
     if r.status_code == 500:
         api.logger.error(f"Status code: {r.status_code}  - {r.text}")
-        return -1
+        return None
     return json.loads(r.text)
 
 
@@ -96,7 +97,7 @@ def gen():
     connection = {'url': urljoin(host, path), 'auth': (tenant + '\\' + user, pwd)}
 
     # Config parameters
-    connection_id = api.config.connection_id
+    connection_id = api.config.connection_id['connectionID']
     container_path = api.config.container
     tags = api.config.tags
     streaming = api.config.streaming
@@ -105,6 +106,10 @@ def gen():
     # Get all catalog datasets under container path
     api.logger.info(f"Get datasets: {connection_id} - {container_path}")
     datasets = get_datasets(connection, connection_id, container_path)
+    
+    if not datasets:
+        api.logger.info(f"No Datasets for: {connection_id} - {container_path} -> shutdown pipeline")
+        return None
 
     dataset_factsheets = list()
     for i, ds in enumerate(datasets):

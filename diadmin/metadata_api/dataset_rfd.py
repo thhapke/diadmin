@@ -20,6 +20,136 @@ from diadmin.utils.utils import get_system_id
 from diadmin.metadata_api.connection import get_connections
 from diadmin.metadata_api.container import get_containers, get_datasets
 
+from diadmin.dimockapi.mock_api import api
+
+import os
+from urllib.parse import urljoin
+import urllib
+import json
+
+import requests
+
+
+#
+#  GET Datasets
+#
+def get_datasets(connection, connection_id, dataset_path):
+    qualified_name = urllib.parse.quote(dataset_path, safe='')  # quote to use as  URL component
+    restapi = f"/catalog/connections/{connection_id}/containers/{qualified_name}"
+    url = connection['url'] + restapi
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+    r = requests.get(url, headers=headers, auth=connection['auth'])
+
+    if r.status_code != 200:
+        api.logger.error(f"Status code: {r.status_code}  - {r.text}")
+        return -1
+
+    return json.loads(r.text)['datasets']
+
+
+#
+#  GET Tags of datasets
+#
+def get_dataset_factsheets(connection,  connection_id, dataset_path):
+    qualified_name = urllib.parse.quote(dataset_path, safe='')  # quote to use as  URL component
+    restapi = f"/catalog/connections/{connection_id}/datasets/{qualified_name}/factsheet"
+    url = connection['url'] + restapi
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+    params = {"connectionId": connection_id, "qualifiedName": dataset_path}
+    r = requests.get(url, headers=headers, auth=connection['auth'], params=params)
+
+    if r.status_code != 200:
+        api.logger.error(f"Status code: {r.status_code}  - {r.text}")
+        return -1
+    return json.loads(r.text)
+
+
+#
+#  GET Tags of datasets
+#
+def get_dataset_tags(connection, connection_id, dataset_path):
+    qualified_name = urllib.parse.quote(dataset_path, safe='')  # quote to use as  URL component
+    restapi = f"/catalog/connections/{connection_id}/datasets/{qualified_name}/tags"
+    url = connection['url'] + restapi
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+    params = {"connectionId": connection_id, "qualifiedName": dataset_path}
+    r = requests.get(url, headers=headers, auth=connection['auth'], params=params)
+
+    if r.status_code != 200:
+        api.logger.error(f"Status code: {r.status_code}  - {r.text}")
+        return -1
+    return json.loads(r.text)
+
+
+#
+#  GET Lineage of datasets
+#
+def get_dataset_lineage(connection, connection_id, dataset_path):
+    qualified_name = urllib.parse.quote(dataset_path, safe='')  # quote to use as  URL component
+    restapi = f"/catalog/lineage/export"
+    url = connection['url'] + restapi
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+    params = {"connectionId": connection_id, "qualifiedNameFilter": dataset_path}
+    r = requests.get(url, headers=headers, auth=connection['auth'], params=params)
+
+    if r.status_code == 404:
+        api.logger.error(f"Status code: {r.status_code}  - No lineage found for: {dataset_path}")
+        return -1
+    if r.status_code == 500:
+        api.logger.error(f"Status code: {r.status_code}  - {r.text}")
+        return -1
+    return json.loads(r.text)
+
+
+#
+# Callback of operator
+#
+def main():
+    logging.basicConfig(level=logging.INFO)
+
+    with open('config_demo.yaml') as yamls:
+        params = yaml.safe_load(yamls)
+
+    connection = {'url': params['URL'] + '/app/datahub-app-metadata/api/v1',
+                  'host': params['URL'], 'tenant': params['TENANT'],
+                  'auth': (params['TENANT'] + '\\' + params['USER'], params['PWD'])}
+
+    # Config parameters
+    connection_id = 'HANA_Cloud_DQM'
+    container_path = '/QMGMT'
+    tags = True
+    lineage = True
+
+    # Get all catalog datasets under container path
+    # api.logger.info(f"Get datasets: {connection_id} - {container_path}")
+    logging.info(f"Get datasets: {connection_id} - {container_path}")
+    datasets = get_datasets(connection, connection_id, container_path)
+
+    dataset_factsheets = list()
+    for i, ds in enumerate(datasets):
+        qualified_name = ds['remoteObjectReference']['qualifiedName']
+        # api.logger.info(f'Get dataset metadata: {qualified_name}')
+        logging.info(f'Get dataset metadata: {qualified_name}')
+        dataset = get_dataset_factsheets(connection, connection_id, qualified_name)
+
+        # In case of Error (like imported data)
+        if dataset == -1:
+            continue
+
+        if tags:
+            dataset['tags'] = get_dataset_tags(connection, connection_id, qualified_name)
+
+        if lineage:
+            dataset['lineage'] = get_dataset_lineage(connection, connection_id, qualified_name)
+
+        dataset_factsheets.append(dataset)
+
+
+    header = [0, True, 1, 0, ""]
+    header = {"com.sap.headers.batch": header}
+    datasets_json = json.dumps(dataset_factsheets, indent=4)
+    api.outputs.datasets.publish(datasets_json, header=header)
+
 
 def export(connection, g=None):
 
