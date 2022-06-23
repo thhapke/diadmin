@@ -1,0 +1,30 @@
+{
+    "description": "Datasets To RDF",
+    "component": "com.sap.system.python3Operator.v2",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "input",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.string"
+        }
+    ],
+    "outports": [
+        {
+            "name": "output",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.string"
+        }
+    ],
+    "iconsrc": "rdf.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/metadata.datasets2rdf.configSchema.json",
+        "errorHandling": {
+            "type":"terminate on error"
+        },
+        "script": "file://script.py"
+    },
+    "tags": {
+        "rdflib": ""
+    }
+}

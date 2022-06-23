@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="100" height="99.264"/>
+  </defs>
+  <ellipse style="fill: rgb(16, 74, 146);" cx="104.903" cy="189.981" rx="75.603" ry="70"/>
+  <ellipse style="fill: rgb(16, 74, 146);" cx="378.242" cy="358.266" rx="70.55" ry="70"/>
+  <ellipse style="fill: rgb(16, 74, 146);" cx="370.55" cy="91.007" rx="70.55" ry="70"/>
+  <rect x="158.479" y="230.751" width="214.171" height="31.746" style="fill: rgb(16, 74, 146);" transform="matrix(0.84397, 0.536391, -0.536391, 0.84397, 159.470001, -68.199753)"/>
+  <rect x="478.813" y="266.35" width="214.378" height="31.442" style="fill: rgb(16, 74, 146);" transform="matrix(-0.036836, -0.999321, 0.999321, -0.036836, 109.567574, 823.86499)"/>
+  <rect x="121.084" y="150.804" width="214.378" height="31.442" style="fill: rgb(16, 74, 146);" transform="matrix(0.909686, -0.415297, 0.415297, 0.909686, -38.43359, 79.549484)"/>
+</svg>
