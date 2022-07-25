@@ -19,3 +19,5 @@ catalogs/*
 ### Logs
 logs
 *.log
+
+config.yaml
