@@ -57,9 +57,14 @@ def start_graph(connection,config) :
         return None
 
     r = json.loads(r.text)
-    return {'pipeline': r['src'], 'name': r['name'],'user': r['user'],'tenant': r['tenant'],
-            'status': r['status'],'config':r['configurationSubstitutions'],'handle':r['handle'],
-            'submitted': r['submitted'],'started': r['started'],'stopped': r['stopped']}
+    if not (r.get('configurationSubstitutions') is None):
+        return {'pipeline': r['src'], 'name': r['name'],'user': r['user'],'tenant': r['tenant'],
+                'status': r['status'],'config':r['configurationSubstitutions'],'handle':r['handle'],
+                'submitted': r['submitted'],'started': r['started'],'stopped': r['stopped']}
+    else:
+        return {'pipeline': r['src'], 'name': r['name'],'user': r['user'],'tenant': r['tenant'],
+                'status': r['status'],'handle':r['handle'],
+                'submitted': r['submitted'],'started': r['started'],'stopped': r['stopped']}        
 
 
 
