@@ -13,18 +13,19 @@
         {
             "name": "output",
             "type": "scalar",
-            "vtype-ID": "com.sap.core.string"
+            "vtype-ID": "com.sap.core.binary"
         }
     ],
     "iconsrc": "rdf.svg",
     "config": {
         "$type": "http://sap.com/vflow/metadata.datasets2rdf.configSchema.json",
         "errorHandling": {
-            "type":"terminate on error"
+            "type": "terminate on error"
         },
         "script": "file://script.py"
     },
     "tags": {
+        "owlrl": "",
         "rdflib": ""
     }
 }

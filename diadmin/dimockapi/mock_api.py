@@ -10,10 +10,12 @@ from typing import List
 
 import pandas as pd
 
+
 class outport :
     def __init__(self,port_name,msg_list):
         self.port_name = port_name
         self.msgs = msg_list
+
     def publish(self,body,header=None):
         self.msgs.append({'port':self.port_name,'msg':body})
 
@@ -95,7 +97,10 @@ class api:
             self.body = body
             self.attributes = attributes
 
-    def send(port,msg):
+        def get(self):
+            return self.body
+
+    def send(port, msg):
         api.msg_list.append({'port':port, 'msg':msg})
         if api.print_send_msg :
             if isinstance(msg,str) :

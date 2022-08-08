@@ -19,13 +19,18 @@ with open(join('http_connections', 'http_connection.json')) as fp:
 
 # config parameter
 # api.config.connection_id = 'HANA_Cloud_DQM'
-api.config.connection_id = 'S3_Catalog'
-api.config.connection_id = 'ECC_DMIS_2018'
-api.config.connection_id = 'HANA_Cloud_DQM'
-api.config.container = '/TABLES/BC'
-api.config.container = '/QMGMT'
+# api.config.connection_id = {'connectionID': 'S3_Catalog'}
+# api.config.connection_id = 'ECC_DMIS_2018'
+# api.config.connection_id = 'HANA_Cloud_DQM'
+# api.config.container = '/TABLES/BC'
+# api.config.container = '/QMGMT'
+# api.config.container = '/costcenter'
+#api.config.connection_id = {'connectionID': 'DI_DATA_LAKE'}
+#api.config.container = '/shared/dataqm/SAPCC/instances'
+api.config.connection_id = {'connectionID': 'S4HANA'}
+api.config.container = '/TABLES'
 api.config.streaming = False
-api.config.tags = False
+api.config.tags = True
 api.config.lineage = True
 
 script.gen()
@@ -38,5 +43,5 @@ for m in api.msg_list:
 
 # result_str = result_str[:-2]+']\n'
 result_str = result_str[:-2]+'\n'
-with open('tmp/datasets.json', 'w') as fp:
+with open(f"tmp/datasets_{api.config.connection_id['connectionID']}.json", 'w') as fp:
     fp.write(result_str)

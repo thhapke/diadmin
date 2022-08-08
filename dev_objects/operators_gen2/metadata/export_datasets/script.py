@@ -1,5 +1,5 @@
 # Mock apis needs to be commented before used within SAP Data Intelligence
-#from diadmin.dimockapi.mock_api import api
+from diadmin.dimockapi.mock_api import api
 
 import os
 from urllib.parse import urljoin
@@ -113,19 +113,27 @@ def gen():
 
     dataset_factsheets = list()
     for i, ds in enumerate(datasets):
+
+        # skip erroneous datasets
+        if ds['remoteObjectReference']['remoteObjectType'] == 'FILE.UNKNOWN' or \
+                ('size' in ds['remoteObjectReference'] and ds['remoteObjectReference']['size'] == 0):
+            continue
+
         qualified_name = ds['remoteObjectReference']['qualifiedName']
         api.logger.info(f'Get dataset metadata: {qualified_name}')
         dataset = get_dataset_factsheets(connection, connection_id, qualified_name)
 
         # In case of Error (like imported data)
-        if dataset == -1:
+        if not dataset:
             continue
 
         if tags:
             dataset['tags'] = get_dataset_tags(connection, connection_id, qualified_name)
 
         if lineage:
-            dataset['lineage'] = get_dataset_lineage(connection, connection_id, qualified_name)
+            lineage_info = get_dataset_lineage(connection, connection_id, qualified_name)
+            if lineage_info:
+                dataset['lineage'] = lineage_info
 
         if streaming:
             if i == len(datasets)-1:

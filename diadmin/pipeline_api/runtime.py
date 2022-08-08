@@ -45,7 +45,7 @@ def get_graphs(connection) :
     return data
 
 
-def start_graph(connection,config) :
+def start_graph(connection, config):
 
     restapi = "/runtime/graphs"
     url = connection['url'] + restapi
