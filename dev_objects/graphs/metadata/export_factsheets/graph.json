@@ -1,0 +1,142 @@
+{
+    "properties": {},
+    "description": "Export Factsheets",
+    "processes": {
+        "wiretap1": {
+            "component": "com.sap.util.wiretap",
+            "metadata": {
+                "label": "Wiretap",
+                "x": 196.99999904632568,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "generation": 1,
+                "ui": "dynpath",
+                "config": {}
+            }
+        },
+        "exportdatasetfactsheets1": {
+            "component": "metadata.export_factsheets",
+            "metadata": {
+                "label": "Export Dataset Factsheets",
+                "x": 12,
+                "y": 72,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "filesRequired": [
+                    "script.py"
+                ],
+                "generation": 1,
+                "config": {
+                    "http_connection": {
+                        "connectionID": "MetadataAPI"
+                    },
+                    "connection_id": "S3_Catalog",
+                    "container": "/catalog"
+                }
+            }
+        },
+        "wiretap2": {
+            "component": "com.sap.util.wiretap",
+            "metadata": {
+                "label": "Wiretap",
+                "x": 196.99999904632568,
+                "y": 132,
+                "height": 80,
+                "width": 120,
+                "generation": 1,
+                "ui": "dynpath",
+                "config": {}
+            }
+        },
+        "conditionaltermination1": {
+            "component": "utils.termination",
+            "metadata": {
+                "label": "Conditional Termination",
+                "x": 381.99999809265137,
+                "y": 72,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "filesRequired": [
+                    "script.py"
+                ],
+                "generation": 1,
+                "config": {}
+            }
+        },
+        "graphterminator1": {
+            "component": "com.sap.util.graphTerminator",
+            "metadata": {
+                "label": "Graph Terminator",
+                "x": 552,
+                "y": 77,
+                "height": 80,
+                "width": 120,
+                "generation": 1,
+                "config": {}
+            }
+        }
+    },
+    "groups": [],
+    "connections": [
+        {
+            "metadata": {
+                "points": "136,103 163.99999952316284,103 163.99999952316284,52 191.99999904632568,52"
+            },
+            "src": {
+                "port": "output",
+                "process": "exportdatasetfactsheets1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "wiretap1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "136,121 163.99999952316284,121 163.99999952316284,172 191.99999904632568,172"
+            },
+            "src": {
+                "port": "logging",
+                "process": "exportdatasetfactsheets1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "wiretap2"
+            }
+        },
+        {
+            "metadata": {
+                "points": "320.9999990463257,52 348.9999985694885,52 348.9999985694885,112 376.99999809265137,112"
+            },
+            "src": {
+                "port": "out",
+                "process": "wiretap1"
+            },
+            "tgt": {
+                "port": "input",
+                "process": "conditionaltermination1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "505.99999809265137,112 526.5,112 526.5,117 547,117"
+            },
+            "src": {
+                "port": "output",
+                "process": "conditionaltermination1"
+            },
+            "tgt": {
+                "port": "stop",
+                "process": "graphterminator1"
+            }
+        }
+    ],
+    "inports": {},
+    "outports": {},
+    "metadata": {
+        "generation": 1
+    }
+}

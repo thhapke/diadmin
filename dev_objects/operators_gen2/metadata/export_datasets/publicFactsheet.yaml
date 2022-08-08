@@ -1,0 +1,320 @@
+swagger: '2.0'
+info:
+  version: 2214.6.0
+  title: '@sap/dh-app-metadata'
+  description: Metadata Management Public API
+paths:
+  /api/v1/catalog/connections/{connectionId}/datasets/{qualifiedName}/factsheet:
+    get:
+      tags:
+        - catalog
+        - customer
+        - dataset
+        - factsheet
+      x-di-policy:
+        - resourceType: app.datahub-app-data.catalog
+          activities:
+            - read
+      x-di-metric:
+        - name: sap_metadata_customer_api_count_total
+        - name: sap_metadata_catalog_views_count_total
+      summary: Get a fact sheet using a qualified path on a connection
+      description: A fact sheet returns detailed information about a dataset such as its schema or annotations. It
+        returns the results from the last succesful profiling run, when available.
+      operationId: getPublicDatasetFactsheet
+      x-swagger-router-controller: publicFactsheetController
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: connectionId
+          description: The connection ID of a dataset
+          required: true
+          type: string
+        - in: path
+          name: qualifiedName
+          description: The qualified name of a dataset.
+            The qualified name parameter includes the path and the name of a dataset.
+            An encoding is used where all characters must be UTF-8 encoded except for A-Z a-z 0-9 - _ . ! ~ * ' ( )
+            In the qualified name parameter, all values have to be double encoded and slashes that separate values should be single encoded.
+            Such an encoding is necessary as otherwise special characters such as a slash could be interpreted as part of the URL string.
+            Functions which can create such an encoding are the encodeURIComponent() function in JavaScript or urllib.parse.quote() in Python.
+            Example /path/myfile#.csv -> encodeURIComponent(`/${encodeURIComponent("path")}/${encodeURIComponent("myfile#.csv")}`) -> %2Fpath%2Fmyfile%2523.csv
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: object
+            properties:
+              schema:
+                $ref: '#/definitions/publicFactsheet'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+definitions:
+  publicFactsheet:
+    description: Collection of detailed information about a dataset
+    properties:
+      columns:
+        $ref: '#/definitions/publicColumns'
+      metadata:
+        $ref: '#/definitions/publicMetadata'
+      version:
+        description: Version number of the public fact sheet.
+        type: string
+      compressed:
+        description: Indicates if the fact sheet is compressed or not.
+        type: boolean
+    required:
+      - columns
+      - metadata
+      - version
+      - compressed
+  publicColumns:
+    description: Details about the colum metadata of a table
+    type: array
+    items:
+      $ref: '#/definitions/publicProfileColumn'
+  publicMetadata:
+    description: Metadata of file or table
+    type: object
+    properties:
+      rowCount:
+        description: Number of rows in the dataset
+        type: string
+      owner:
+        description: Owner of the dataset
+        type: string
+      name:
+        description: Name of the dataset
+        type: string
+      uri:
+        description: Uniform resource identifier of the dataset which is equivalent to the qualified name
+        type: string
+      type:
+        description: Type of the dataset
+        type: string
+      size:
+        description: Size of the dataset in bytes
+        type: string
+      colCount:
+        description: Number of columns in the dataset
+        type: integer
+      modifiedDate:
+        type: string
+        description: Date when the dataset was modified the last time
+        # example: '1995-09-07T10:40:52Z'
+        format: date-time
+      charset:
+        type: string
+        description: CSV specific setting for the character set of the file, such as UTF-8 or UTF-16
+        # example: UTF-8
+      header:
+        type: boolean
+        description: CSV specific setting that identifies how to treat the first column,
+          column header, or data
+      colDelimiter:
+        type: string
+        description: Specific CSV setting that shows a visual representation of the column
+          delimitor such as , ; TAB
+        # example: ','
+      rowDelimiter:
+        type: string
+        description: Specific CSV setting that shows a visual representation of the row
+          delimitor such as CRLF, LF
+        # example: LF
+      textDelimiter:
+        type: string
+        description: Specific CSV setting that shows a visual representation of the text
+          delimitor such as ' ".
+        # example: '"'
+      descriptions:
+        description: Short or long texts describing the dataset
+        type: array
+        items:
+          $ref: '#/definitions/publicAnnotation'
+      uniqueKeys:
+        description: Unique keys from remote system
+        type: array
+        items:
+          $ref: '#/definitions/publicAttributeReferenceSet'
+      properties:
+        description: Properties differentiating between the dataset and the remote dataset
+        type: array
+        items:
+          $ref: '#/definitions/property'
+      connectionId:
+        description: Connection ID where the dataset exists
+        allOf:
+          - $ref: '#/definitions/connectionId'
+      connectionType:
+        description: Connection type where the dataset exists
+        type: string
+      sampleRowCount:
+        description: The number of rows that were sampled to get the profiling result.
+          If equal to the row count, then the profile was done on the full dataset.
+        type: number
+      sampled:
+        description: Indicates whether the profile was done on the full dataset or on a sample
+        type: boolean
+    required:
+      - name
+      - type
+      - uri
+  publicProfileColumn:
+    description: Metadata of profiled column
+    type: object
+    properties:
+      name:
+        description: Column name
+        type: string
+      type:
+        description: Column data type as defined in the SAP Data Intelligence system.
+        allOf:
+          - $ref: '#/definitions/publicDataTypeEnum'
+      length:
+        description: Column length
+        type: integer
+      precision:
+        description: Number of digits
+        type: integer
+      scale:
+        description: Number of digits to the right of the decimal point
+        type: integer
+      avg:
+        description: The average value of a numeric column. Only allowed for columns
+          with a numeric data type. If there are no rows or the column only contains
+          null, then this property is undefined.
+        type: number
+      avgLen:
+        description: The average length of the values in this column. Only allowed
+          for columns with a string data type. If there are no rows or the column
+          only contains null, then this property is undefined.
+        type: number
+      blankPerc:
+        description: The percentage of blank column values. Only allowed for columns
+          with a string data type. If there are no rows or the column only contains
+          null, then this property is undefined.
+        type: number
+      countDist:
+        description: The number of distinct column values, including null. Only allowed
+          for columns with a string, numeric, boolean or date/time data type. If topDistinct
+          is undefined then this property is undefined.
+        type: integer
+      lowCardinality:
+        description: If true, then this column contains a large number of repeated
+          values. Only allowed for columns with a string, numeric, boolean, or date/time
+          data type. If there are no rows or the column only contains null, then this
+          property is undefined.
+        type: boolean
+      max:
+        description: Maximum value in this column. Only allowed for columns with a
+          string, numeric, or date/time data type. If there are no rows or the column
+          only contains null, then this property is undefined.
+        type: string
+      maxLen:
+        description: Length of the maximum value in this column. Only allowed for
+          columns with a string data type. If there are no rows or the column only
+          contains null, then this property is undefined.
+        type: integer
+      min:
+        description: Minimum value in this column. Only allowed for columns with a
+          string, numeric, or date/time data type. If there are no rows or the column
+          only contains null, then this property is undefined.
+        type: string
+      minLen:
+        description: Length of the minimum value in this column. Only allowed for
+          columns with a string data type. If there are no rows or the column only
+          contains null, then this property is undefined.
+        type: integer
+      nullPerc:
+        description: The percentage of null column values. Only allowed for columns
+          with a string, numeric, boolean, or date/time data type. If there are no
+          rows or the column only contains null, then this property is undefined.
+        type: number
+      sparse:
+        description: If true, the values in the column sparsely populated. Only allowed
+          for columns with a string, numeric, boolean, or date/time data type. If there
+          are no rows or the column only contains null, then this property is
+          undefined.
+        type: boolean
+      topDistinct:
+        $ref: '#/definitions/publicProfileColumnTopDistinct'
+      unique:
+        description: If true, the populated values in the column are unique. Only
+          allowed for columns with a string, numeric, boolean, or date/time data type.
+          If there are no rows or the column only contains null, then this property
+          is undefined.
+        type: boolean
+      zeroPerc:
+        description: The percentage of zero values in a numeric column. Only allowed
+          for columns with a numeric data type. If there are no rows or the column
+          only contains null, then this property is undefined.
+        type: number
+      descriptions:
+        description: Short or long texts describing the dataset. For catalog objects this
+          could include remote descriptions extracted from systems along with customer defined descriptions.
+        type: array
+        items:
+          $ref: '#/definitions/publicAnnotation'
+      uniqueGroup:
+        description: List of unique groups associated with the column. Group
+          identifiers are numeric starting at 1
+        type: string
+      properties:
+        description: Properties describing the column from the remote dataset
+        type: array
+        items:
+          $ref: '#/definitions/property'
+      templateType:
+        $ref: '#/definitions/publicTemplateTypeEnum'
+      columns:
+        description: Used to describe nested objects. For example, in the Excel file format the outer
+          columns represent sheets and the inner columns represent columns in a sheet.
+        type: array
+        items:
+          $ref: '#/definitions/publicProfileColumn'
+    required:
+      - name
+      - type
+  publicProfileColumnTopDistinct:
+    description: Top distinct values for a column. Only allowed for columns with a
+      string, numeric, boolean, or date/time data type. If there are no rows, then
+      this property is undefined.
+    type: array
+    items:
+      $ref: '#/definitions/publicProfileColumnDistinctValue'
+  publicProfileColumnDistinctValue:
+    description: Distinct value for a column
+    type: object
+    properties:
+      value:
+        description: The value of the entry as found in the data set
+        type: string
+      count:
+        description: The number of distinct column values, including null
+        type: integer
+    required:
+      - value
+      - count
+  publicAnnotation:
+    description: Description or annotation for a dataset
+    type: object
+    properties:
+      value:
+        description: The text of the description or annotation
+        type: string
+      origin:
+        description: CATALOG for user defined descriptions and REMOTE for extracted from remote source.
+        type: string
+        enum:
+          - REMOTE
+          - CATALOG
+      type:
+        type: string
+        enum:
+          - LONG
+          - SHORT

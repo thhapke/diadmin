@@ -1,0 +1,148 @@
+{
+    "properties": {},
+    "description": "Big Data Generator",
+    "processes": {
+        "wiretap1": {
+            "component": "com.sap.util.wiretap.v2",
+            "metadata": {
+                "label": "Wiretap",
+                "x": 196.99999904632568,
+                "y": 132,
+                "height": 80,
+                "width": 120,
+                "generation": 2,
+                "isNewAPI": true,
+                "ui": "dynpath",
+                "config": {}
+            }
+        },
+        "graphterminator1": {
+            "component": "com.sap.util.graphTerminator.v2",
+            "metadata": {
+                "label": "Graph Terminator",
+                "x": 196.99999904632568,
+                "y": 252,
+                "height": 80,
+                "width": 120,
+                "generation": 2,
+                "isNewAPI": true,
+                "config": {}
+            }
+        },
+        "wiretap2": {
+            "component": "com.sap.util.wiretap.v2",
+            "metadata": {
+                "label": "Wiretap",
+                "x": 381.99999809265137,
+                "y": 132,
+                "height": 80,
+                "width": 120,
+                "generation": 2,
+                "isNewAPI": true,
+                "ui": "dynpath",
+                "config": {}
+            }
+        },
+        "bigdatagenerator1": {
+            "component": "utils.big_data_generator",
+            "metadata": {
+                "label": "Big Data Generator",
+                "x": 12,
+                "y": 132,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "filesRequired": [
+                    "script.py"
+                ],
+                "generation": 2,
+                "isNewAPI": true,
+                "config": {
+                    "periodicity": "${periodicity}",
+                    "crash_index": "${crash_index}",
+                    "snapshot_time": "${snapshot_wait_time}",
+                    "num_rows": "${num_rows}",
+                    "max_index": "${max_number_generations}",
+                    "max_time": "${max_time}"
+                }
+            }
+        },
+        "devicenull1": {
+            "component": "utils.device_null",
+            "metadata": {
+                "label": "Device Null",
+                "x": 196.99999904632568,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "filesRequired": [
+                    "script.py"
+                ],
+                "generation": 2,
+                "isNewAPI": true,
+                "config": {}
+            }
+        }
+    },
+    "groups": [],
+    "connections": [
+        {
+            "metadata": {
+                "points": "136,190 163.99999952316284,190 163.99999952316284,292 191.99999904632568,292"
+            },
+            "src": {
+                "port": "stop",
+                "process": "bigdatagenerator1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "graphterminator1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "136,172 191.99999904632568,172"
+            },
+            "src": {
+                "port": "log",
+                "process": "bigdatagenerator1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "wiretap1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "136,154 163.99999952316284,154 163.99999952316284,52 191.99999904632568,52"
+            },
+            "src": {
+                "port": "output",
+                "process": "bigdatagenerator1"
+            },
+            "tgt": {
+                "port": "input",
+                "process": "devicenull1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "320.9999990463257,52 348.9999985694885,52 348.9999985694885,172 376.99999809265137,172"
+            },
+            "src": {
+                "port": "log",
+                "process": "devicenull1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "wiretap2"
+            }
+        }
+    ],
+    "inports": {},
+    "outports": {},
+    "metadata": {
+        "generation": 2
+    }
+}
