@@ -37,7 +37,7 @@ def main() :
     #
     # command line args
     #
-    description =  "Policy utility script for SAP Data Intelligence.\nPre-requiste: vctl."
+    description = "Policy utility script for SAP Data Intelligence.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-c',
                         '--config', help = 'Specifies yaml-config file')
@@ -141,7 +141,7 @@ def main() :
             upload_files = [join(params['POLICIES_PATH'],f) for f in listdir(params['POLICIES_PATH']) \
                             if isfile(join(params['POLICIES_PATH'],f))
                             and re.match('.+\.json$',f) and not f == 'policies.json']
-        else :
+        else:
             parent_dir = dirname(args.upload)
             bname = basename(args.upload)
             upload_files = [join(parent_dir,f) for f in listdir(parent_dir) \
