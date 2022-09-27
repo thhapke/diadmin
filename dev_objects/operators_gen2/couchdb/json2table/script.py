@@ -1,5 +1,5 @@
 # Mock apis needs to be commented before used within SAP Data Intelligence
-#from diadmin.dimockapi.mock_api import api
+from diadmin.dimockapi.mock_api import api
 
 import json
 import pandas as pd
@@ -9,7 +9,7 @@ def on_input(msg_id, header, body):
     query_result = json.loads(body.get())
 
     # Extract the values from the couchdb records
-    records = [ v['value'] for v in query_result['rows']]
+    records = [v['value'] for v in query_result['rows']]
 
     # Create a DataFrame (use modified keywords for column names
     df = pd.DataFrame(records)
@@ -17,14 +17,17 @@ def on_input(msg_id, header, body):
     df.rename(columns=col_map,inplace=True)
 
     # Fill empty values with '' or 0
-    for c in df.select_dtypes(include=['float64','int64']):
-        df[c].fillna(0,inplace=True)
+    for c in df.select_dtypes(include=['float64', 'int64']):
+        df[c].fillna(0, inplace=True)
     for c in df.select_dtypes(include=['object']):
-        df[c].fillna('',inplace=True)
+        df[c].fillna('', inplace=True)
 
     # Ensure received data sequence is the same as required from outport (Required update: outport vtype retrieval)
-    output_info = api.type_context.get_vtype(api.DataTypeReference("table", "diadmin.mc.visits"))
-    output_col_names = list(output_info.columns.keys())
+    #output_info = api.type_context.get_vtype(api.DataTypeReference("table", "diadmin.mc.visits"))
+    #output_col_names = list(output_info.columns.keys())
+
+    output_col_names = df.columns
+    api.logger.info(f"Column names: {output_col_names}")
     table_list = df[output_col_names].values.tolist()
 
     # OPTION: Write into stream
@@ -38,7 +41,7 @@ def on_input(msg_id, header, body):
     #writer.close()
 
     # Publish data
-    api.outputs.table.publish(api.Table(table_list),header=header)
+    api.outputs.table.publish(api.Table(table_list), header=header)
     
 
 api.set_port_callback('JSON',on_input)

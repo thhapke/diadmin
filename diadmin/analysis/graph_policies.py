@@ -18,8 +18,8 @@ import matplotlib.pyplot as plt
 
 def get_default_resource_classes() :
     return  {
-        "connectionConfiguration":"admin",
-        "connection":"admin",
+        "connectionConfiguration":"pipeline",
+        "connection":"pipeline",
         "connectionContent":"dev_data",
         "app.datahub-app-dev_data.qualityDashboard":"metadata",
         "app.datahub-app-core.connectionCredentials":"metadata",
@@ -33,14 +33,14 @@ def get_default_resource_classes() :
         "app.datahub-app-dev_data.preparation":"metadata",
         "app.datahub-app-dev_data.publication":"metadata",
         "application":"application",
-        "systemManagement":"admin",
-        "certificate":"admin",
-        "connectionCredential":"admin"
+        "systemManagement":"pipeline",
+        "certificate":"pipeline",
+        "connectionCredential":"pipeline"
     }
 
 def get_default_color_map() :
     return {
-        "admin":"black",
+        "pipeline":"black",
         "metadata":"green",
         "application":"orange",
         "dev_data":"blue",

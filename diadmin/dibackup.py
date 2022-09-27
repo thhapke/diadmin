@@ -31,7 +31,7 @@ def main() :
     #
     # command line args
     #
-    description =  "Backup development objects of all users.\nPre-requiste: vctl."
+    description = "Backup development objects of all users.\nPre-requiste: vctl."
     parser = argparse.ArgumentParser(description=description)
 
     parser.add_argument('cluster', help = 'URL of cluster')

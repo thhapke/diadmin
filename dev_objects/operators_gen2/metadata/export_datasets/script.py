@@ -149,6 +149,8 @@ def gen():
     if not streaming:
         header = [0, True, 1, 0, ""]
         header = {"com.sap.headers.batch": header}
+        header_connection = [host, user, pwd]
+        header["com.collibra.connection"] = header_connection
         datasets_json = json.dumps(dataset_factsheets, indent=4)
         api.outputs.datasets.publish(datasets_json, header=header)
 

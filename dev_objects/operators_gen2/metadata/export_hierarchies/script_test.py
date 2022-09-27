@@ -22,3 +22,5 @@ script.gen()
 
 for m in api.msg_list:
     print(m['msg'])
+    with open(join('tmp', 'hierarchies.json'), 'w') as fp:
+        fp.write(m['msg'])

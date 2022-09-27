@@ -70,7 +70,7 @@ class api:
         op_dir = ""
 
     class outputs :
-        pass
+        output = None
 
     def add_config(source_path):
         api.config.op_dir = os.path.dirname(source_path)
