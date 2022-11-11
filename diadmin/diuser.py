@@ -24,7 +24,7 @@ from diadmin.vctl_cmds.policy import get_policy_list_assignments
 from diadmin.utils.genpwds import gen_pwd
 from diadmin.utils.utils import add_defaultsuffix, csvlist
 
-MAX_DELETE = 3
+MAX_DELETE = 100
 
 
 # Create pwd for new user
@@ -135,7 +135,7 @@ def generate_userlist(userlist,
                 for line in csvreader:
                     if line[0][0] == '#' :
                         continue
-                    users.append({'tenant':tenant,'user':line[-1].lower(),'name':' '.join(line),'pwd':gen_pwd(pwd_length),'role':role})
+                    users.append({'tenant':tenant,'user':line[-1].lower(),'name':' '.join(line),'password':gen_pwd(pwd_length),'role':role})
             else :
                 raise ValueError(f'Unknown format: {format}')
     else:
@@ -145,7 +145,7 @@ def generate_userlist(userlist,
             if pwd and pwd != 'RANDOM':
                 newuser['password'] = pwd
             else :
-                newuser['pwd'] = gen_pwd(pwd_length)
+                newuser['password'] = gen_pwd(pwd_length)
             users.append(newuser)
 
     # Test on duplicates
@@ -210,27 +210,27 @@ def main() :
         params = yaml.safe_load(yamls)
 
     if args.generate:
-        if not args.userlist:
-            newuserlist = add_defaultsuffix(args.generate,'csv')
-            logging.info(f'Generic userlist: {newuserlist}')
-            generate_userlist(userlist=None,
-                              filename=newuserlist,
-                              num=params['USERLIST']['NUMBER'],
-                              pwd= params['USERLIST']['PASSWORD'],
-                              pwd_length= params['USERLIST']['PWD_LENGTH'],
-                              tenant=params['TENANT'],
-                              user_prefix=params['USERLIST']['PREFIX'],
-                              role=params['USERLIST']['DEFAULT_ROLE'])
-        else:
+        if args.userlist:
             logging.info(f'Generate userlist from input userlist {args.userlist}')
-            generate_userlist(userlist = args.userlist,
+            generate_userlist(userlist=args.userlist,
                               filename=params['USERLIST']['LIST'],
                               format = params['USERLIST']['FORMAT'],
                               pwd= params['USERLIST']['PASSWORD'],
                               pwd_length= params['USERLIST']['PWD_LENGTH'],
                               tenant=params['TENANT'])
+        else:
+            new_userlist = add_defaultsuffix(args.generate, 'csv')
+            logging.info(f'Generic userlist: {new_userlist}')
+            generate_userlist(userlist=None,
+                              filename=new_userlist,
+                              num=params['USERLIST']['NUMBER'],
+                              pwd=params['USERLIST']['PASSWORD'],
+                              pwd_length=params['USERLIST']['PWD_LENGTH'],
+                              tenant=params['TENANT'],
+                              user_prefix=params['USERLIST']['PREFIX'],
+                              role=params['USERLIST']['DEFAULT_ROLE'])
 
-    userlist = csvlist(path.join('users',params['USERLIST']['LIST']))
+    userlist = csvlist(path.join('users', params['USERLIST']['LIST']))
 
     if args.add:
         di_login(params)
@@ -249,11 +249,11 @@ def main() :
             logging.info(f'Create user: {u["user"]} with role:{u["role"]} ({policies})')
         userlist.save()
 
-    if args.delete :
+    if args.delete:
         di_login(params)
-        userlist.filter = ('status','TO_DELETE')
+        userlist.filter = ('status', 'TO_DELETE')
         logging.info(f"Delete user marked in user list with \'status\': \'TO_DELETE\'.")
-        for i,u in enumerate(userlist) :
+        for i, u in enumerate(userlist) :
             if i >= MAX_DELETE:
                 break
             delete_user(u)
