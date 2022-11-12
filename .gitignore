@@ -19,3 +19,6 @@ catalogs/*
 ### Logs
 logs
 *.log
+
+### Custom
+diadmin/config.yaml
