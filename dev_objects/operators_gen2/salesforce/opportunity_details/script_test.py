@@ -20,10 +20,10 @@ api.config.httpconnection_basic = { 'connectionProperties':
                        }
 
 api.config.httpconnection_details = { 'connectionProperties':
-                           {'host': 'https://api-staging.pwc.com/',
+                           {'host': '',
                             'user': '',
                             'password': '',
-                            'path': '/de-ip_temp'
+                            'path': ''
                             }
                        }
 
