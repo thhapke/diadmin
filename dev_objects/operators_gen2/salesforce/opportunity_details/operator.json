@@ -1,0 +1,29 @@
+{
+    "description": "Opportunity Details",
+    "component": "com.sap.system.python3Operator.v2",
+    "versionStatus": "active",
+    "inports": [
+        {
+            "name": "input",
+            "type": "scalar",
+            "vtype-ID": "com.sap.core.string"
+        }
+    ],
+    "outports": [
+        {
+            "name": "output",
+            "type": "table",
+            "vtype-ID": "salesforce.opportunity"
+        }
+    ],
+    "icon": "sf_logo.svg",
+    "iconsrc": "sf_logo.svg",
+    "config": {
+        "$type": "http://sap.com/vflow/salesforce.opportunity_details.configSchema.json",
+        "errorHandling": {
+            "type": "terminate on error"
+        },
+        "script": "file://script.py",
+        "territory": "DE"
+    }
+}

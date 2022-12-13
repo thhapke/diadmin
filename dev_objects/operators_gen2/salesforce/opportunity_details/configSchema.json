@@ -1,0 +1,56 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "http://sap.com/vflow/salesforce.opportunity_details.configSchema.json",
+    "type": "object",
+    "properties": {
+        "codelanguage": {
+            "type": "string"
+        },
+        "errorHandling": {
+            "title": "Error Handling",
+            "$ref": "http://sap.com/vflow/com.sap.error.scriptOperator.schema.json"
+        },
+        "script": {
+            "type": "string"
+        },
+        "territory": {
+            "title": "Territory",
+            "description": "Territory",
+            "type": "string"
+        },
+        "httpconnection_basic": {
+            "title": "Basic HTTP Connection",
+            "description": "Basic HTTP Connection",
+            "type": "object",
+            "properties": {
+                "connectionID": {
+                    "title": "ConnectionID",
+                    "type": "string",
+                    "format": "com.sap.dh.connection.id",
+                    "sap_vflow_valuehelp": {
+                        "url": "/app/datahub-app-connection/connections?connectionTypes=HTTP",
+                        "valuepath": "id",
+                        "displayStyle": "autocomplete"
+                    }
+                }
+            }
+        },
+        "httpconnection_details": {
+            "title": "Details HTTP Connection",
+            "description": "Details HTTP Connection",
+            "type": "object",
+            "properties": {
+                "connectionID": {
+                    "title": "ConnectionID",
+                    "type": "string",
+                    "format": "com.sap.dh.connection.id",
+                    "sap_vflow_valuehelp": {
+                        "url": "/app/datahub-app-connection/connections?connectionTypes=HTTP",
+                        "valuepath": "id",
+                        "displayStyle": "autocomplete"
+                    }
+                }
+            }
+        }
+    }
+}
